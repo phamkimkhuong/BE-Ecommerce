@@ -1,0 +1,534 @@
+2025-02-20T21:29:59.237+07:00  INFO 12296 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 23.0.2 with PID 12296 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\user_service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\service-registry)
+2025-02-20T21:29:59.240+07:00  INFO 12296 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-02-20T21:29:59.314+07:00  INFO 12296 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-20T21:29:59.324+07:00  INFO 12296 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-20T21:30:00.602+07:00  INFO 12296 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-20T21:30:00.836+07:00  INFO 12296 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 222 ms. Found 2 JPA repository interfaces.
+2025-02-20T21:30:01.331+07:00  INFO 12296 --- [user_service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a7012c48-b7e2-301e-a737-e2edf99df8b3
+2025-02-20T21:30:02.082+07:00  INFO 12296 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9995 (http)
+2025-02-20T21:30:02.106+07:00  INFO 12296 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-20T21:30:02.106+07:00  INFO 12296 --- [user_service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-20T21:30:02.209+07:00  INFO 12296 --- [user_service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-20T21:30:02.210+07:00  INFO 12296 --- [user_service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2885 ms
+2025-02-20T21:30:02.850+07:00  INFO 12296 --- [user_service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-20T21:30:02.889+07:00  INFO 12296 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-20T21:30:03.989+07:00 ERROR 12296 --- [user_service] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : Socket fail to connect to address=(host=localhost)(port=3306)(type=primary). Connection refused: getsockopt
+2025-02-20T21:30:03.990+07:00 ERROR 12296 --- [user_service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2025-02-20T21:30:03.991+07:00  WARN 12296 --- [user_service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2025-02-20T21:30:03.997+07:00  INFO 12296 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-02-20T21:30:04.019+07:00  INFO 12296 --- [user_service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-02-20T21:30:04.045+07:00 ERROR 12296 --- [user_service] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at iuh.fit.se.UserServiceApplication.main(UserServiceApplication.java:16)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:276)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	... 18 common frames omitted
+Caused by: org.hibernate.HibernateException: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:191)
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:87)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentWithDefaults(JdbcEnvironmentInitiator.java:181)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:392)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	... 33 common frames omitted
+
+2025-02-20T21:32:23.814+07:00  INFO 20548 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 23.0.2 with PID 20548 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\user_service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\service-registry)
+2025-02-20T21:32:23.817+07:00  INFO 20548 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-02-20T21:32:23.889+07:00  INFO 20548 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-20T21:32:23.890+07:00  INFO 20548 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-20T21:32:25.103+07:00  INFO 20548 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-20T21:32:25.316+07:00  INFO 20548 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 200 ms. Found 2 JPA repository interfaces.
+2025-02-20T21:32:25.766+07:00  INFO 20548 --- [user_service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a7012c48-b7e2-301e-a737-e2edf99df8b3
+2025-02-20T21:32:26.401+07:00  INFO 20548 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9995 (http)
+2025-02-20T21:32:26.420+07:00  INFO 20548 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-20T21:32:26.420+07:00  INFO 20548 --- [user_service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-20T21:32:26.523+07:00  INFO 20548 --- [user_service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-20T21:32:26.524+07:00  INFO 20548 --- [user_service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2634 ms
+2025-02-20T21:32:27.148+07:00  INFO 20548 --- [user_service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-20T21:32:27.186+07:00  INFO 20548 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-20T21:32:27.292+07:00  WARN 20548 --- [user_service] [restartedMain] o.m.jdbc.message.server.ErrorPacket      : Error: 1049-42000: Unknown database 'user_service'
+2025-02-20T21:32:28.306+07:00 ERROR 20548 --- [user_service] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : (conn=7) Unknown database 'user_service'
+2025-02-20T21:32:28.307+07:00 ERROR 20548 --- [user_service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2025-02-20T21:32:28.308+07:00  WARN 20548 --- [user_service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2025-02-20T21:32:28.313+07:00  INFO 20548 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-02-20T21:32:28.328+07:00  INFO 20548 --- [user_service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-02-20T21:32:28.360+07:00 ERROR 20548 --- [user_service] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at iuh.fit.se.UserServiceApplication.main(UserServiceApplication.java:16)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:276)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194)
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	... 18 common frames omitted
+Caused by: org.hibernate.HibernateException: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:191)
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:87)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentWithDefaults(JdbcEnvironmentInitiator.java:181)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:392)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	... 33 common frames omitted
+
+2025-02-20T21:33:29.920+07:00  INFO 5136 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 23.0.2 with PID 5136 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\user_service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\service-registry)
+2025-02-20T21:33:29.923+07:00  INFO 5136 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-02-20T21:33:30.000+07:00  INFO 5136 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-20T21:33:30.001+07:00  INFO 5136 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-20T21:33:31.208+07:00  INFO 5136 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-20T21:33:31.412+07:00  INFO 5136 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 194 ms. Found 2 JPA repository interfaces.
+2025-02-20T21:33:31.827+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a7012c48-b7e2-301e-a737-e2edf99df8b3
+2025-02-20T21:33:32.441+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9995 (http)
+2025-02-20T21:33:32.459+07:00  INFO 5136 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-20T21:33:32.459+07:00  INFO 5136 --- [user_service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-20T21:33:32.558+07:00  INFO 5136 --- [user_service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-20T21:33:32.558+07:00  INFO 5136 --- [user_service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2556 ms
+2025-02-20T21:33:33.179+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-20T21:33:33.216+07:00  INFO 5136 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-20T21:33:33.332+07:00  INFO 5136 --- [user_service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@2803ebc0
+2025-02-20T21:33:33.334+07:00  INFO 5136 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-02-20T21:33:34.665+07:00  INFO 5136 --- [user_service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-20T21:33:35.205+07:00  WARN 5136 --- [user_service] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-20T21:33:35.582+07:00 DEBUG 5136 --- [user_service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2025-02-20T21:33:35.715+07:00 DEBUG 5136 --- [user_service] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-02-20T21:33:35.759+07:00 DEBUG 5136 --- [user_service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-02-20T21:33:35.824+07:00 DEBUG 5136 --- [user_service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 3 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-02-20T21:33:35.866+07:00 DEBUG 5136 --- [user_service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 3 @ExceptionHandler, 0 ResponseBodyAdvice
+2025-02-20T21:33:36.346+07:00  WARN 5136 --- [user_service] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-02-20T21:33:37.370+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T21:33:38.408+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T21:33:38.449+07:00  INFO 5136 --- [user_service] [restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2025-02-20T21:33:38.590+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-02-20T21:33:38.623+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-02-20T21:33:38.631+07:00  INFO 5136 --- [user_service] [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-20T21:33:38.647+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-02-20T21:33:38.647+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-02-20T21:33:38.647+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-02-20T21:33:38.648+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-02-20T21:33:38.648+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-02-20T21:33:38.648+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-02-20T21:33:38.648+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-02-20T21:33:38.926+07:00 DEBUG 5136 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-02-20T21:33:39.068+07:00 DEBUG 5136 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:33:39.299+07:00 DEBUG 5136 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:33:39.302+07:00 DEBUG 5136 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:33:39.327+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-02-20T21:33:39.329+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2025-02-20T21:33:39.332+07:00  INFO 5136 --- [user_service] [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-02-20T21:33:39.335+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1740062019334 with initial instances count: 0
+2025-02-20T21:33:39.340+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application USER_SERVICE with eureka with status UP
+2025-02-20T21:33:39.341+07:00  INFO 5136 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1740062019341, current=UP, previous=STARTING]
+2025-02-20T21:33:39.344+07:00  INFO 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995: registering service...
+2025-02-20T21:33:39.353+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/USER_SERVICE
+2025-02-20T21:33:39.355+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:33:39.367+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9995 (http) with context path '/'
+2025-02-20T21:33:39.368+07:00  INFO 5136 --- [user_service] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9995
+2025-02-20T21:33:39.374+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = localhost:user_service:9995, appName = USER_SERVICE, hostName = localhost, status = UP, ipAddr = 192.168.56.1, port = 9995, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@55202288] as "application/json"
+2025-02-20T21:33:39.475+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Response 204 NO_CONTENT
+2025-02-20T21:33:39.476+07:00  INFO 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995 - registration status: 204
+2025-02-20T21:33:40.381+07:00  INFO 5136 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T21:33:40.397+07:00  INFO 5136 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Started UserServiceApplication in 12.248 seconds (process running for 13.719)
+2025-02-20T21:33:40.402+07:00  INFO 5136 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : RestApiDemoApplication Start
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2025-02-20T21:34:09.340+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-02-20T21:34:09.340+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-02-20T21:34:09.340+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:34:09.340+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:34:09.340+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:34:09.356+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:34:09.356+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:34:09.374+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:34:09.382+07:00  INFO 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-02-20T21:34:11.448+07:00  INFO 5136 --- [user_service] [http-nio-9995-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-20T21:34:11.449+07:00  INFO 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-02-20T21:34:11.450+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2025-02-20T21:34:11.450+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2025-02-20T21:34:11.450+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2025-02-20T21:34:11.452+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4000b3ea
+2025-02-20T21:34:11.453+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@7bc17e76
+2025-02-20T21:34:11.455+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-02-20T21:34:11.456+07:00  INFO 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2025-02-20T21:34:11.471+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/actuator/info", parameters={}
+2025-02-20T21:34:11.490+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-02-20T21:34:11.503+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2025-02-20T21:34:11.512+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler iuh.fit.se.exceptions.GlobalExceptionHandler#handleException(Exception, WebRequest)
+2025-02-20T21:34:11.529+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/problem+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/problem+json]
+2025-02-20T21:34:11.532+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ProblemDetail[type='about:blank', title='Not Found', status=404, detail='No static resource actuator (truncated)...]
+2025-02-20T21:34:11.532+07:00  WARN 5136 --- [user_service] [http-nio-9995-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource actuator/info.]
+2025-02-20T21:34:11.545+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2025-02-20T21:34:12.886+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/favicon.ico", parameters={}
+2025-02-20T21:34:12.888+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-02-20T21:34:12.892+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2025-02-20T21:34:12.892+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler iuh.fit.se.exceptions.GlobalExceptionHandler#handleException(Exception, WebRequest)
+2025-02-20T21:34:12.893+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/problem+json;q=0.8', given [image/avif, image/webp, image/apng, image/svg+xml, image/*, */*;q=0.8] and supported [application/problem+json]
+2025-02-20T21:34:12.893+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ProblemDetail[type='about:blank', title='Not Found', status=404, detail='No static resource favicon. (truncated)...]
+2025-02-20T21:34:12.897+07:00  WARN 5136 --- [user_service] [http-nio-9995-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico.]
+2025-02-20T21:34:12.898+07:00 DEBUG 5136 --- [user_service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2025-02-20T21:34:39.380+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:34:39.380+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:34:39.395+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:34:39.396+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:34:39.402+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:34:39.415+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:34:39.416+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:35:09.413+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:35:09.414+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:35:09.429+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:35:09.430+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:35:09.434+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:35:09.449+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:35:09.450+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:35:39.447+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:35:39.448+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:35:39.462+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:35:39.463+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:35:39.469+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:35:39.483+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:35:39.484+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:36:09.478+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:36:09.478+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:36:09.493+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:36:09.493+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:36:09.497+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:36:09.512+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:36:09.513+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:36:39.505+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:36:39.505+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:36:39.521+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:36:39.522+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:36:39.527+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:36:39.541+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:36:39.541+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:37:09.530+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:37:09.531+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:37:09.545+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:37:09.546+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:37:09.551+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:37:09.565+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:37:09.565+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:37:39.556+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:37:39.557+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:37:39.572+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:37:39.572+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:37:39.575+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:37:39.591+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:37:39.591+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:38:09.577+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:38:09.577+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:38:09.595+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:38:09.596+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:38:09.597+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:38:09.610+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:38:09.611+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:38:38.652+07:00  INFO 5136 --- [user_service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-20T21:38:39.598+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:38:39.599+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:38:39.614+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:38:39.614+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:38:39.617+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:38:39.633+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:38:39.633+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:39:09.619+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:39:09.620+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:39:09.637+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:39:09.638+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:39:09.638+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:39:09.653+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:39:09.653+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:39:39.640+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:39:39.641+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:39:39.655+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:39:39.656+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:39:39.661+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:39:39.675+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:39:39.675+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:40:09.676+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:40:09.677+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:40:09.692+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:40:09.692+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:40:09.695+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:40:09.711+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:40:09.711+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:40:39.701+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:40:39.702+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:40:39.716+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:40:39.716+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:40:39.720+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:40:39.736+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:40:39.736+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:41:09.726+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:41:09.727+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:41:09.741+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:41:09.742+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:41:09.746+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:41:09.760+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:41:09.761+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:41:39.754+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:41:39.754+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:41:39.769+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:41:39.769+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:41:39.774+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:41:39.787+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:41:39.787+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:42:09.784+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:42:09.784+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:42:09.799+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:42:09.799+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:42:09.802+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:42:09.818+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:42:09.818+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:42:39.812+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:42:39.813+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:42:39.827+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:42:39.828+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:42:39.832+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:42:39.846+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:42:39.847+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:43:09.838+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:43:09.839+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:43:09.854+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:43:09.855+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:43:09.859+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:43:09.875+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:43:09.875+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:43:38.661+07:00  INFO 5136 --- [user_service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-20T21:43:39.874+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:43:39.875+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:43:39.892+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:43:39.893+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:43:39.895+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:43:39.911+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:43:39.912+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:44:09.908+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740062019340
+2025-02-20T21:44:09.909+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:44:09.924+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T21:44:09.925+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:44:09.928+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:44:09.945+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:44:09.945+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T21:44:10.795+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER_SERVICE with eureka with status DOWN
+2025-02-20T21:44:10.796+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1740062650796, current=DOWN, previous=UP]
+2025-02-20T21:44:10.796+07:00  INFO 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995: registering service...
+2025-02-20T21:44:10.796+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/USER_SERVICE
+2025-02-20T21:44:10.797+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:44:10.797+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = localhost:user_service:9995, appName = USER_SERVICE, hostName = localhost, status = DOWN, ipAddr = 192.168.56.1, port = 9995, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@55202288] as "application/json"
+2025-02-20T21:44:10.801+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-20T21:44:10.804+07:00 DEBUG 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Response 204 NO_CONTENT
+2025-02-20T21:44:10.805+07:00  INFO 5136 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995 - registration status: 204
+2025-02-20T21:44:10.813+07:00  INFO 5136 --- [user_service] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-02-20T21:44:10.827+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-02-20T21:44:10.834+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-02-20T21:44:10.840+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-02-20T21:44:10.842+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2025-02-20T21:44:13.851+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2025-02-20T21:44:13.852+07:00 DEBUG 5136 --- [user_service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : HTTP DELETE http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995
+2025-02-20T21:44:13.853+07:00 DEBUG 5136 --- [user_service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T21:44:13.873+07:00 DEBUG 5136 --- [user_service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T21:44:13.873+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995 - deregister  status: 200
+2025-02-20T21:44:13.874+07:00  INFO 5136 --- [user_service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2025-02-20T22:13:29.810+07:00  INFO 13252 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 23.0.2 with PID 13252 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\user_service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\service-registry)
+2025-02-20T22:13:29.812+07:00  INFO 13252 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-02-20T22:13:29.885+07:00  INFO 13252 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-20T22:13:29.886+07:00  INFO 13252 --- [user_service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-20T22:13:31.114+07:00  INFO 13252 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-20T22:13:31.309+07:00  INFO 13252 --- [user_service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 185 ms. Found 2 JPA repository interfaces.
+2025-02-20T22:13:31.723+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a7012c48-b7e2-301e-a737-e2edf99df8b3
+2025-02-20T22:13:32.356+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9995 (http)
+2025-02-20T22:13:32.372+07:00  INFO 13252 --- [user_service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-20T22:13:32.373+07:00  INFO 13252 --- [user_service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-20T22:13:32.456+07:00  INFO 13252 --- [user_service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-20T22:13:32.457+07:00  INFO 13252 --- [user_service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2570 ms
+2025-02-20T22:13:33.332+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-20T22:13:33.381+07:00  INFO 13252 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-20T22:13:33.524+07:00  INFO 13252 --- [user_service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@263269f9
+2025-02-20T22:13:33.526+07:00  INFO 13252 --- [user_service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-02-20T22:13:34.819+07:00  INFO 13252 --- [user_service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-20T22:13:35.314+07:00  WARN 13252 --- [user_service] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-20T22:13:35.686+07:00 DEBUG 13252 --- [user_service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2025-02-20T22:13:35.828+07:00 DEBUG 13252 --- [user_service] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-02-20T22:13:35.874+07:00 DEBUG 13252 --- [user_service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-02-20T22:13:35.939+07:00 DEBUG 13252 --- [user_service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 3 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-02-20T22:13:35.981+07:00 DEBUG 13252 --- [user_service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 3 @ExceptionHandler, 0 ResponseBodyAdvice
+2025-02-20T22:13:36.438+07:00  WARN 13252 --- [user_service] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-02-20T22:13:37.470+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T22:13:38.508+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T22:13:38.540+07:00  INFO 13252 --- [user_service] [restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2025-02-20T22:13:38.704+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-02-20T22:13:38.745+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-02-20T22:13:38.755+07:00  INFO 13252 --- [user_service] [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-02-20T22:13:38.770+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-02-20T22:13:39.006+07:00 DEBUG 13252 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-02-20T22:13:39.173+07:00 DEBUG 13252 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:13:39.482+07:00 DEBUG 13252 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:13:39.485+07:00 DEBUG 13252 --- [user_service] [restartedMain] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:13:39.519+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-02-20T22:13:39.521+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2025-02-20T22:13:39.524+07:00  INFO 13252 --- [user_service] [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-02-20T22:13:39.527+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1740064419526 with initial instances count: 0
+2025-02-20T22:13:39.532+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application USER_SERVICE with eureka with status UP
+2025-02-20T22:13:39.533+07:00  INFO 13252 --- [user_service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1740064419533, current=UP, previous=STARTING]
+2025-02-20T22:13:39.536+07:00  INFO 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995: registering service...
+2025-02-20T22:13:39.544+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/USER_SERVICE
+2025-02-20T22:13:39.546+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:13:39.559+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9995 (http) with context path '/'
+2025-02-20T22:13:39.560+07:00  INFO 13252 --- [user_service] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9995
+2025-02-20T22:13:39.562+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = localhost:user_service:9995, appName = USER_SERVICE, hostName = localhost, status = UP, ipAddr = 192.168.56.1, port = 9995, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@2b8b7496] as "application/json"
+2025-02-20T22:13:39.669+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Response 204 NO_CONTENT
+2025-02-20T22:13:39.670+07:00  INFO 13252 --- [user_service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER_SERVICE/localhost:user_service:9995 - registration status: 204
+2025-02-20T22:13:40.572+07:00  INFO 13252 --- [user_service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-20T22:13:40.591+07:00  INFO 13252 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : Started UserServiceApplication in 12.561 seconds (process running for 14.017)
+2025-02-20T22:13:40.596+07:00  INFO 13252 --- [user_service] [restartedMain] iuh.fit.se.UserServiceApplication        : RestApiDemoApplication Start
+2025-02-20T22:14:09.523+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-02-20T22:14:09.523+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-02-20T22:14:09.523+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-02-20T22:14:09.523+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-02-20T22:14:09.524+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-02-20T22:14:09.524+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2025-02-20T22:14:09.524+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-02-20T22:14:09.525+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-02-20T22:14:09.525+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:14:09.540+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:14:09.546+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:14:09.546+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:14:09.548+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:14:09.564+07:00  INFO 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-02-20T22:14:09.571+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:14:39.574+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:14:39.575+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:14:39.575+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:14:39.576+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:14:39.595+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:14:39.596+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:14:39.596+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:15:09.598+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:15:09.598+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:15:09.614+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:15:09.614+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:15:09.617+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:15:09.634+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:15:09.634+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:15:39.619+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:15:39.620+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:15:39.639+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:15:39.640+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:15:39.641+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:15:39.653+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:15:39.654+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:16:09.654+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:16:09.655+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:16:09.670+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:16:09.670+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:16:09.674+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:16:09.690+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:16:09.690+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:16:39.683+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:16:39.684+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:16:39.699+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:16:39.700+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:16:39.702+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:16:39.719+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:16:39.719+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:17:09.715+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:17:09.716+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:17:09.731+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:17:09.732+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:17:09.736+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:17:09.749+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:17:09.749+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:17:39.751+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:17:39.752+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:17:39.766+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:17:39.766+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:17:39.770+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:17:39.785+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:17:39.785+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-02-20T22:18:09.777+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER_SERVICE/localhost:user_service:9995?status=UP&lastDirtyTimestamp=1740064419532
+2025-02-20T22:18:09.777+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:18:09.793+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
+2025-02-20T22:18:09.793+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-02-20T22:18:09.793+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:18:09.808+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-02-20T22:18:09.808+07:00 DEBUG 13252 --- [user_service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
