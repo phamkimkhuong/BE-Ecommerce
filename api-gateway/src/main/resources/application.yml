@@ -18,9 +18,9 @@ spring:
           predicates:
             - Path=/api/nguoidung/**
         - id : product-service
-          uri: lb://product_service
+          uri: lb://product-service
           predicates:
-            - Path=/api/sanpham/**
+            - Path=/api/products/**
           # Cấu hình rate limit cho service product-service
           filters:
             - name: RequestRateLimiter
