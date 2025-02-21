@@ -9,8 +9,11 @@ package com.backend.productservice.services.serviceImpl;
  */
 
 import com.backend.productservice.domain.Category;
+import com.backend.productservice.dto.CategoryDTO;
 import com.backend.productservice.repository.CategorytRepository;
 import com.backend.productservice.services.CategoryService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,32 +21,48 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private CategorytRepository categoryRep;
+    @Autowired
+    private ModelMapper modelMapper;
+
     public CategoryServiceImpl(CategorytRepository categoryRep) {
         this.categoryRep = categoryRep;
     }
 
-    @Override
-    public List<Category> getAll() {
-        return categoryRep.findAll();
+    //    Convert Entity to DTO
+    public Category convertToEntity(CategoryDTO category) {
+        return modelMapper.map(category, Category.class);
+    }
+    //    Convert DTO to Entity
+    public CategoryDTO convertToDTO(Category category) {
+        return modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
-    public Category getById(Long id) {
-        return categoryRep.findById(id).get();
+    public List<CategoryDTO> getAll() {
+        return categoryRep.findAll().stream().map(this::convertToDTO).toList();
     }
 
     @Override
-    public Category save(Category category) {
-        return categoryRep.save(category);
+    public CategoryDTO getById(Long id) {
+        return categoryRep.findById(id).map(this::convertToDTO).orElse(null);
     }
 
     @Override
-    public Category update(Category category) {
-        return categoryRep.save(category);
+    public CategoryDTO save(CategoryDTO category) {
+        Category c = categoryRep.save(convertToEntity(category));
+        return convertToDTO(c);
     }
 
     @Override
-    public void delete(Long id) {
+    public CategoryDTO update(Long id,CategoryDTO category) {
+        categoryRep.findById(id);
+        Category c = categoryRep.save(convertToEntity(category));
+        return convertToDTO(c);
+    }
+
+    @Override
+    public boolean delete(Long id) {
         categoryRep.deleteById(id);
+        return true;
     }
 }

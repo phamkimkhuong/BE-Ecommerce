@@ -1,7 +1,6 @@
 package com.backend.productservice.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
-    @Column(name = "ten_loai")
-    @NotEmpty(message = "Tên loại không được để trống")
+    @Column(name = "ten_loai",unique = true)
     private String tenLoai;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
