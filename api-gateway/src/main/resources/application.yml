@@ -3,6 +3,10 @@ server:
 spring:
   main:
     web-application-type: reactive
+  data:
+    redis:
+      port: 6379
+      host: localhost
   cloud:
     gateway:
       discovery:
@@ -12,7 +16,21 @@ spring:
         - id: user-service
           uri: lb://user_service
           predicates:
-            - Path=/nguoidung/**
+            - Path=/api/nguoidung/**
+        - id : product-service
+          uri: lb://product_service
+          predicates:
+            - Path=/api/sanpham/**
+          # Cấu hình rate limit cho service product-service
+          filters:
+            - name: RequestRateLimiter
+              args:
+                # Trong 1s nap 10 tokens
+                redis-rate-limiter.replenishRate: 10
+                # Số lượng token tối đa trong 1s
+                redis-rate-limiter.burstCapacity: 20
+                # Số lượng token cần để thực hiện 1 request
+                redis-rate-limiter.requestedTokens: 1
   eureka:
     instance:
       hostname: localhost
