@@ -37,7 +37,9 @@ public class ProductController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful operation"),
+                            description = "Successful operation",
+                            content = {@io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json")}
+                    ),
                     @ApiResponse(
                             responseCode = "404",
                             description = "Product not found"),
@@ -72,7 +74,19 @@ public class ProductController {
             }
     )
     @PostMapping
-    public ResponseEntity<ProductDTO> saveProduct(@Valid @RequestBody ProductDTO productDTO
+    public ResponseEntity<ProductDTO> saveProduct(@Valid @RequestBody
+                                                  @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                          description = "Product object that needs to be added to the store",
+                                                          required = true,
+                                                          content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                  mediaType = "application/json",
+                                                                  schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductDTO.class)
+                                                          )
+                                                  )
+
+                                                  ProductDTO productDTO
+
+
     ) {
         productService.saveProduct(productDTO);
         return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
@@ -117,7 +131,15 @@ public class ProductController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDTO productDTO
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody
+                                                    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                            description = "Product object that needs to be updated to the store",
+                                                            required = true,
+                                                            content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                    mediaType = "application/json",
+                                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductDTO.class)
+                                                            )
+                                                    ) ProductDTO productDTO
     ) {
         productService.updateProduct(id, productDTO);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);

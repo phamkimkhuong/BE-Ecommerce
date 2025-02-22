@@ -1,5 +1,6 @@
 package com.backend.productservice.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
  * @version: 1.0
  * @created: 21-February-2025 7:55 PM
  */
+
 @Data
 @Entity
 @Table

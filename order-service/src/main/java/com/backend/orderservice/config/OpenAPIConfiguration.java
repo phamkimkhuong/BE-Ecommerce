@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.productservice.config;
+package com.backend.orderservice.config;
 
 /*
  * @description
@@ -27,13 +27,13 @@ public class OpenAPIConfiguration {
     @Bean
     public OpenAPI defineOpenApi() {
         Server server = new Server();
-        server.setUrl("http://localhost:9898");
-        server.setDescription("Product Management REST API Documentation");
+        server.setUrl("http://localhost:9292");
+        server.setDescription("Order Management REST API Documentation");
 
         Info information = new Info()
-                .title("Product Management REST API Documentation")
+                .title("Order Management REST API Documentation")
                 .version("1.0")
-                .description("This API exposes endpoints to manage products.")
+                .description("This API exposes endpoints to manage orders.")
                 .contact(
                         new Contact()
                                 .email("phamkhuong436@gmail.com")
