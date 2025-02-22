@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.productservice.exceptions;
+package com.backend.commonservice.advice;
 
 /*
  * @description
@@ -13,6 +13,7 @@ package com.backend.productservice.exceptions;
  * @created: 2/21/2025 3:17 PM
  */
 
+import com.backend.commonservice.model.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -24,8 +25,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 @ControllerAdvice
-public class GlobalExceptionHandler  {
+public class GlobalExceptionHandler {
+
     @ExceptionHandler(ItemNotFoundException.class)
     public ResponseEntity<Map<String, Object>> userNotFoundException(ItemNotFoundException ex) {
         Map<String, Object> errors = new LinkedHashMap<>();

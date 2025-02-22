@@ -43,14 +43,14 @@ public class NguoiDungController {
     public ResponseEntity<Map<String, Object>> saveNguoiDung(
             @Valid @RequestBody NguoiDung nguoiDung,
             BindingResult bindingResult) {
-        Map<String, Object> response = new LinkedHashMap<String, Object>();
+        Map<String, Object> response = new LinkedHashMap<>();
 
         if (bindingResult.hasErrors()) {
-            Map<String, Object> errors = new LinkedHashMap<String, Object>();
+            Map<String, Object> errors = new LinkedHashMap<>();
 
-            bindingResult.getFieldErrors().stream().forEach(result -> {
-                errors.put(result.getField(), result.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(result ->
+                errors.put(result.getField(), result.getDefaultMessage())
+            );
 
             System.out.println(bindingResult);
             response.put("status", HttpStatus.BAD_REQUEST.value());

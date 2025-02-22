@@ -8,9 +8,9 @@ package com.backend.productservice.services.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
+import com.backend.commonservice.model.ItemNotFoundException;
 import com.backend.productservice.domain.Product;
 import com.backend.productservice.dto.ProductDTO;
-import com.backend.productservice.exceptions.ItemNotFoundException;
 import com.backend.productservice.repository.ProductRepository;
 import com.backend.productservice.services.ProductService;
 import org.modelmapper.ModelMapper;

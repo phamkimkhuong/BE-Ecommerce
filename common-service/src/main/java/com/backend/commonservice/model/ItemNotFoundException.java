@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.productservice.exceptions;
+package com.backend.commonservice.model;
 
 /*
  * @description
