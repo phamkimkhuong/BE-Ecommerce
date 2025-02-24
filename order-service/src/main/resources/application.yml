@@ -12,7 +12,7 @@ spring:
   # JPA configuration
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     defer-datasource-initialization: true
   # SQL script to initialize the database
@@ -20,12 +20,12 @@ spring:
     init:
       # Only run the script for first time
       #      mode: always
-      mode: never
+#      mode: never
 #      data-locations: classpath:/sql/data.sql
 
-  data:
-    rest:
-      base-path: /api/v1
+#  data:
+#    rest:
+#      base-path: /api/v1
 # Register with Eureka
 eureka:
   client:

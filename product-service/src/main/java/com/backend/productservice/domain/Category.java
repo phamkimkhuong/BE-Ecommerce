@@ -23,7 +23,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
-    @Column(name = "ten_loai",unique = true)
+    @Column(name = "ten_loai",unique = true,nullable = false)
     private String tenLoai;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;

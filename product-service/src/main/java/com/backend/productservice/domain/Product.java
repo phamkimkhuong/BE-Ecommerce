@@ -25,7 +25,7 @@ public class Product {
     private Long id;
     @Column(name = "ten_sp", nullable = false,unique = true)
     private String tensp;
-    @Column(name = "mo_ta")
+    @Column(name = "mo_ta",length = 1000)
     private String moTa;
     @Column(name = "hinh_anh")
     private String hinhAnh;
@@ -33,6 +33,8 @@ public class Product {
     private Double giaBan;
     @Column(name = "gia_nhap", nullable = false)
     private Double giaNhap;
+    @Column(name = "gia_goc", nullable = false)
+    private Double giaGoc;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")

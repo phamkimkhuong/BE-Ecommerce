@@ -8,8 +8,8 @@ package com.backend.orderservice.controllers;
  * @created: 2/23/2025 8:26 AM
  */
 
-import com.backend.orderservice.dtos.OrderDTO;
-import com.backend.orderservice.service.OrderService;
+import com.backend.orderservice.dtos.OrderDetailDTO;
+import com.backend.orderservice.service.OrderDetailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,19 +22,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/orders")
-@Tag(name = "Order Query", description = "Order API")
-public class OrderController {
-    private final OrderService orderService;
+@RequestMapping("/api/v1/order-details")
+@Tag(name = "Order Detail Query", description = "Order Detail API")
+public class OrderDetailController {
+    private final OrderDetailService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderDetailController(OrderDetailService orderService) {
         this.orderService = orderService;
     }
 
     @Operation(
-            description = "Get all orders",
-            summary = "Get all orders",
-            tags = {"Order Query"},
+            description = "Get all order details",
+            summary = "Get all order details",
+            tags = {"Order Detail Query"},
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -63,9 +63,9 @@ public class OrderController {
     }
 
     @Operation(
-            description = "Save order",
-            summary = "Save order",
-            tags = {"Order Query"},
+            description = "Save order detail",
+            summary = "Save order detail",
+            tags = {"Order Detail Query"},
             responses = {
                     @ApiResponse(
                             responseCode = "201",
@@ -81,17 +81,17 @@ public class OrderController {
             }
     )
     @PostMapping
-    public ResponseEntity<OrderDTO> save(@Valid @RequestBody
-                                         @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                 description = "Order object that needs to be added to the store",
-                                                 required = true,
-                                                 content = @io.swagger.v3.oas.annotations.media.Content(
-                                                         mediaType = "application/json",
-                                                         schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDTO.class)
-                                                 )
-                                         )
+    public ResponseEntity<OrderDetailDTO> save(@Valid @RequestBody
+                                               @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                       description = "Order object that needs to be added to the store",
+                                                       required = true,
+                                                       content = @io.swagger.v3.oas.annotations.media.Content(
+                                                               mediaType = "application/json",
+                                                               schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDetailDTO.class)
+                                                       )
+                                               )
 
-                                         OrderDTO orderDTO
+                                               OrderDetailDTO orderDTO
 
 
     ) {
@@ -100,9 +100,9 @@ public class OrderController {
     }
 
     @Operation(
-            description = "Delete order",
-            summary = "Delete order",
-            tags = {"Order Query"},
+            description = "Delete order detail",
+            summary = "Delete order detail",
+            tags = {"Order Detail Query"},
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -131,9 +131,9 @@ public class OrderController {
     }
 
     @Operation(
-            description = "Update order",
-            summary = "Update order",
-            tags = {"Order Query"},
+            description = "Update order detail",
+            summary = "Update order detail",
+            tags = {"Order Detail Query"},
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -154,15 +154,15 @@ public class OrderController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDTO> update(@PathVariable Long id, @Valid @RequestBody
-                                           @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                   description = "Order object that needs to be updated to the store",
-                                                   required = true,
-                                                   content = @io.swagger.v3.oas.annotations.media.Content(
-                                                           mediaType = "application/json",
-                                                           schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDTO.class)
-                                                   )
-                                           ) OrderDTO orderDTO
+    public ResponseEntity<OrderDetailDTO> update(@PathVariable Long id, @Valid @RequestBody
+                                                 @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                         description = "Order object that needs to be updated to the store",
+                                                         required = true,
+                                                         content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                 mediaType = "application/json",
+                                                                 schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDetailDTO.class)
+                                                         )
+                                                 ) OrderDetailDTO orderDTO
     ) {
         orderService.update(id, orderDTO);
         return new ResponseEntity<>(orderDTO, HttpStatus.OK);
@@ -170,9 +170,9 @@ public class OrderController {
     }
 
     @Operation(
-            description = "Get order by ID",
-            summary = "Get order by ID",
-            tags = {"Order Query"},
+            description = "Get order detail by ID",
+            summary = "Get order detail by ID",
+            tags = {"Order Detail Query"},
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -193,16 +193,16 @@ public class OrderController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> getById(@PathVariable
-                                            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                    description = "ID of order to return",
-                                                    required = true,
-                                                    content = @io.swagger.v3.oas.annotations.media.Content(
-                                                            mediaType = "application/json",
-                                                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Long.class)
-                                                    )
-                                            )
-                                            Long id
+    public ResponseEntity<OrderDetailDTO> getById(@PathVariable
+                                                  @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                          description = "ID of order to return",
+                                                          required = true,
+                                                          content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                  mediaType = "application/json",
+                                                                  schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Long.class)
+                                                          )
+                                                  )
+                                                  Long id
     ) {
         return new ResponseEntity<>(orderService.getById(id), HttpStatus.OK);
     }

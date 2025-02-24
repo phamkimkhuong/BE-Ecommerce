@@ -8,6 +8,8 @@ package com.backend.orderservice.dtos;
  * @created: 2/22/2025 11:36 PM
  */
 
+import com.backend.orderservice.domain.OrderDetail;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,11 +34,13 @@ public class OrderDTO {
     @NotNull
     @Schema(description = "Tổng tiền đơn hàng", example = "1000000")
     private Double tongTien;
-    @Schema(description = "Mã khách hàng", example = "1")
-    @NotNull(message = "Mã khách hàng không được để trống")
-    private Long customerId;
     @Schema(description = "Trạng thái đơn hàng", example = "Đã giao hàng")
     @NotEmpty(message = "Trạng thái đơn hàng không được để trống")
     private String status;
+    @Schema(description = "Mã khách hàng", example = "1")
+    @NotNull(message = "Mã khách hàng không được để trống")
+    private Long customerId;
+    @JsonIgnore
+    private OrderDetail orderDetail;
 
 }

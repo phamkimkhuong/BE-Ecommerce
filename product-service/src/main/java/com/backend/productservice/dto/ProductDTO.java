@@ -29,6 +29,9 @@ public class ProductDTO {
     @NotNull(message = "Giá nhập không được để trống")
     @Schema(description = "Giá nhập sản phẩm", example = "25000000")
     private Double giaNhap;
+    @Schema(description = "Giá gốc sản phẩm", example = "25000000")
+    @NotNull(message = "Giá gốc không được để trống")
+    private Double giaGoc;
     @JsonIgnore
     private Category category;
 }

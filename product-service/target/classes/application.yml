@@ -19,8 +19,7 @@ spring:
   sql:
     init:
       # Only run the script for first time
-      #      mode: always
-      mode: never
+#      mode: always
 #      data-locations: classpath:/sql/data.sql
 
 #  data:
