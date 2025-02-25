@@ -2,10 +2,10 @@ spring:
   application:
     name: product-service
   config:
-    import: optional:configserver:http://localhost:8888
+    import: configserver:http://localhost:8888
   cloud:
     config:
       fail-fast: true
-      name: config-server
+
 
 

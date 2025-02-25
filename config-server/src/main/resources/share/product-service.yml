@@ -1,6 +1,7 @@
 server:
   port: 9898
   # Datasource configuration
+spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/product_service?createDatabaseIfNotExist=true
@@ -13,8 +14,8 @@ server:
     show-sql: true
     defer-datasource-initialization: true
   # SQL script to initialize the database
-  sql:
-    init:
+#  sql:
+#    init:
     # Only run the script for first time
 #      mode: always
 #      data-locations: classpath:/sql/productDB.sql

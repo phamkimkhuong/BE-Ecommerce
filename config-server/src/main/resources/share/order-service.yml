@@ -1,6 +1,7 @@
 server:
   port: 9292
   # Datasource configuration
+spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/order_service?createDatabaseIfNotExist=true
