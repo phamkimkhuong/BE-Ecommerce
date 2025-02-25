@@ -7,3 +7,15 @@ spring:
     config:
       fail-fast: true
 
+#  data:
+#    rest:
+#      base-path: /api/v1
+# Register with Eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

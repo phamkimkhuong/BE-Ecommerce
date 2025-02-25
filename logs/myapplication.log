@@ -1,0 +1,33 @@
+2025-02-25T15:12:45.741+07:00  INFO 22196 --- [service-registry] [restartedMain] c.i.backend.ServiceRegistryApplication   : Starting ServiceRegistryApplication using Java 23.0.2 with PID 22196 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\service-registry\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-02-25T15:12:45.744+07:00  INFO 22196 --- [service-registry] [restartedMain] c.i.backend.ServiceRegistryApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-02-25T15:12:45.831+07:00  INFO 22196 --- [service-registry] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-25T15:12:45.832+07:00  INFO 22196 --- [service-registry] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-25T15:12:47.632+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=51ee9334-c37b-3b31-b32a-c9ef52744e9f
+2025-02-25T15:12:48.135+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8761 (http)
+2025-02-25T15:12:48.155+07:00  INFO 22196 --- [service-registry] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-25T15:12:48.156+07:00  INFO 22196 --- [service-registry] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-25T15:12:48.237+07:00  INFO 22196 --- [service-registry] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-25T15:12:48.237+07:00  INFO 22196 --- [service-registry] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2404 ms
+2025-02-25T15:12:50.079+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-02-25T15:12:51.583+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-25T15:12:52.229+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-02-25T15:12:53.245+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-25T15:12:53.339+07:00  WARN 22196 --- [service-registry] [restartedMain] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-02-25T15:12:53.378+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-02-25T15:12:53.515+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-02-25T15:12:53.597+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application SERVICE-REGISTRY with eureka with status UP
+2025-02-25T15:12:53.614+07:00  INFO 22196 --- [service-registry] [Thread-16] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2025-02-25T15:12:53.615+07:00  INFO 22196 --- [service-registry] [Thread-16] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2025-02-25T15:12:53.619+07:00  INFO 22196 --- [service-registry] [Thread-16] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2025-02-25T15:12:53.624+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8761 (http) with context path '/'
+2025-02-25T15:12:53.626+07:00  INFO 22196 --- [service-registry] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8761
+2025-02-25T15:12:54.685+07:00  INFO 22196 --- [service-registry] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-02-25T15:12:54.710+07:00  INFO 22196 --- [service-registry] [restartedMain] c.i.backend.ServiceRegistryApplication   : Started ServiceRegistryApplication in 10.763 seconds (process running for 12.627)
+2025-02-25T15:12:55.360+07:00  INFO 22196 --- [service-registry] [RMI TCP Connection(1)-192.168.56.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-25T15:12:55.361+07:00  INFO 22196 --- [service-registry] [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-02-25T15:12:55.365+07:00  INFO 22196 --- [service-registry] [RMI TCP Connection(1)-192.168.56.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-02-25T16:24:57.996+07:00  INFO 22196 --- [service-registry] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application SERVICE-REGISTRY with eureka with status DOWN
+2025-02-25T16:24:58.004+07:00  INFO 22196 --- [service-registry] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-25T16:24:58.017+07:00  INFO 22196 --- [service-registry] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-02-25T16:24:58.024+07:00  INFO 22196 --- [service-registry] [SpringApplicationShutdownHook] o.s.c.n.e.server.EurekaServerBootstrap   : Shutting down Eureka Server..
+2025-02-25T16:24:58.025+07:00  INFO 22196 --- [service-registry] [SpringApplicationShutdownHook] o.s.c.n.e.server.EurekaServerBootstrap   : Eureka Service is now shutdown...
