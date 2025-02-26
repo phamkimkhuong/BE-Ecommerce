@@ -13,7 +13,7 @@ package iuh.fit.se.controllers;
  * @created: 13-February-2025 8:26 PM
  */
 
-import iuh.fit.se.entities.NguoiDung;
+import iuh.fit.se.dtos.NguoiDungDTO;
 import iuh.fit.se.services.NguoiDungService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,10 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,17 +43,17 @@ public class NguoiDungController {
     }
 
     @PostMapping("/nguoidung")
-    public ResponseEntity<Map<String, Object>> saveNguoiDung(
-            @Valid @RequestBody NguoiDung nguoiDung,
+    public ResponseEntity<Map<String, Object>> saveEmployee(
+            @Valid @RequestBody NguoiDungDTO nguoiDungDTO,
             BindingResult bindingResult) {
-        Map<String, Object> response = new LinkedHashMap<>();
+        Map<String, Object> response = new LinkedHashMap<String, Object>();
 
         if (bindingResult.hasErrors()) {
-            Map<String, Object> errors = new LinkedHashMap<>();
+            Map<String, Object> errors = new LinkedHashMap<String, Object>();
 
-            bindingResult.getFieldErrors().forEach(result ->
-                errors.put(result.getField(), result.getDefaultMessage())
-            );
+            bindingResult.getFieldErrors().stream().forEach(result -> {
+                errors.put(result.getField(), result.getDefaultMessage());
+            });
 
             System.out.println(bindingResult);
             response.put("status", HttpStatus.BAD_REQUEST.value());
@@ -59,10 +62,9 @@ public class NguoiDungController {
         }
         else {
             response.put("status", HttpStatus.OK.value());
-            response.put("data", nguoiDungService.save(nguoiDung));
-            System.out.println(nguoiDung);
+            response.put("data", nguoiDungService.save(nguoiDungDTO));
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-    }
 
+    }
 }

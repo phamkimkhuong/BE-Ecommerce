@@ -13,7 +13,9 @@ package iuh.fit.se.services.impl;
  * @created: 13-February-2025 8:15 PM
  */
 
+import iuh.fit.se.dtos.NguoiDungDTO;
 import iuh.fit.se.entities.NguoiDung;
+import iuh.fit.se.exceptions.ItemNotFoundException;
 import iuh.fit.se.repositories.NguoiDungRepository;
 import iuh.fit.se.services.NguoiDungService;
 import jakarta.transaction.Transactional;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NguoiDungServiceImpl implements NguoiDungService {
@@ -29,23 +32,40 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     @Autowired
     NguoiDungRepository nguoiDungRepository;
 
-//    @Autowired
-//    ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
-    @Override
-    public NguoiDung findById(int id) {
-        return nguoiDungRepository.findById(id).orElseThrow(()-> new RuntimeException("cannot find user"));
+    private NguoiDungDTO convertToDTO(NguoiDung nguoiDung) {
+        NguoiDungDTO nguoiDungDTO = modelMapper.map(nguoiDung, NguoiDungDTO.class);
+        return nguoiDungDTO;
     }
 
+    private NguoiDung convertToEntity(NguoiDungDTO nguoiDungDTO) {
+        NguoiDung nguoiDung = modelMapper.map(nguoiDungDTO, NguoiDung.class);
+        return nguoiDung;
+    }
+
+
     @Override
-    public List<NguoiDung> findAll() {
-        return nguoiDungRepository.findAll().stream().toList();
+    public NguoiDungDTO findById(int id) {
+        NguoiDung nguoiDung = nguoiDungRepository.findById(id)
+                .orElseThrow(()-> new ItemNotFoundException("Can not find Employee with id: " + id));
+
+        return this.convertToDTO(nguoiDung);
     }
 
     @Transactional
     @Override
-    public NguoiDung save(NguoiDung nguoiDung) {
-        return nguoiDungRepository.save(nguoiDung);
+    public List<NguoiDungDTO> findAll() {
+        return nguoiDungRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public NguoiDungDTO save(NguoiDungDTO nguoiDungDTO) {
+        NguoiDung nguoiDung = this.convertToEntity(nguoiDungDTO);
+        nguoiDung = nguoiDungRepository.save(nguoiDung);
+        return this.convertToDTO(nguoiDung);
     }
 
     @Override

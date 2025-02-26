@@ -20,10 +20,6 @@ import java.util.List;
  * @version: 1.0
  * @created: 13-February-2025 7:55 PM
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 
 @Entity
 @Table(name = "quyen")
@@ -38,4 +34,21 @@ public class Quyen {
             joinColumns = @JoinColumn(name = "ma_quyen"),
             inverseJoinColumns = @JoinColumn(name = "ma_nguoi_dung"))
     private List<NguoiDung> danhSachNguoiDung;
+
+    public int getMaQuyen() {
+        return maQuyen;
+    }
+
+    public void setMaQuyen(int maQuyen) {
+        this.maQuyen = maQuyen;
+    }
+
+    public String getTenQuyen() {
+        return tenQuyen;
+    }
+
+    public void setTenQuyen(String tenQuyen) {
+        this.tenQuyen = tenQuyen;
+    }
+
 }
