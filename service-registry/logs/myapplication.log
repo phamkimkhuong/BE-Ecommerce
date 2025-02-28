@@ -944,7 +944,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:41:24.046+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
 2025-02-22T20:41:24.059+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:41:24.236+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:41:24.238+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@64687021}]
+2025-02-22T20:41:24.238+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@64687021}]
 2025-02-22T20:41:24.249+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:41:24.309+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/favicon.ico", parameters={}
 2025-02-22T20:41:24.313+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
@@ -956,7 +956,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:41:24.340+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
 2025-02-22T20:41:27.320+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:41:27.500+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:41:27.514+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@62bd6489, links: [<http: (truncated)...]
+2025-02-22T20:41:27.514+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@62bd6489, links: [<http: (truncated)...]
 2025-02-22T20:41:27.577+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:41:28.790+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T20:41:28.790+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740231658791
@@ -1051,7 +1051,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:42:05.941+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
 2025-02-22T20:42:05.942+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:42:05.959+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:42:05.962+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@1bd2b857, links: [<http: (truncated)...]
+2025-02-22T20:42:05.962+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@1bd2b857, links: [<http: (truncated)...]
 2025-02-22T20:42:05.976+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:42:20.995+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T20:42:20.996+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
@@ -1062,7 +1062,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:42:21.014+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:42:40.695+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:42:40.703+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:42:40.703+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@7758a988, links: [<http: (truncated)...]
+2025-02-22T20:42:40.703+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@7758a988, links: [<http: (truncated)...]
 2025-02-22T20:42:40.706+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:42:41.371+07:00  INFO 18044 --- [user-service] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
 2025-02-22T20:42:41.372+07:00  INFO 18044 --- [user-service] [Thread-7] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
@@ -1150,7 +1150,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:42:43.114+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T20:42:43.114+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:42:43.128+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:42:43.130+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@3d69dfc8, links: [<http: (truncated)...]
+2025-02-22T20:42:43.130+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@3d69dfc8, links: [<http: (truncated)...]
 2025-02-22T20:42:43.146+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:42:44.093+07:00  INFO 18044 --- [user-service] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
 2025-02-22T20:42:44.095+07:00  INFO 18044 --- [user-service] [Thread-13] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
@@ -1238,7 +1238,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:42:48.773+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2025-02-22T20:42:48.773+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:42:48.795+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:42:48.795+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@c8cb2db, links: [<http:/ (truncated)...]
+2025-02-22T20:42:48.795+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@c8cb2db, links: [<http:/ (truncated)...]
 2025-02-22T20:42:48.813+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:43:18.720+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740231768712
 2025-02-22T20:43:18.720+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -1270,15 +1270,15 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:44:48.840+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:44:54.189+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:44:54.196+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:44:54.196+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@a014551, links: [<http:/ (truncated)...]
+2025-02-22T20:44:54.196+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@a014551, links: [<http:/ (truncated)...]
 2025-02-22T20:44:54.198+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:45:00.115+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:45:00.134+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:45:00.134+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@37d876f5}]
+2025-02-22T20:45:00.134+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@37d876f5}]
 2025-02-22T20:45:00.169+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:45:03.111+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:45:03.122+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:45:03.123+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@3c83a190, links: [<http: (truncated)...]
+2025-02-22T20:45:03.123+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@3c83a190, links: [<http: (truncated)...]
 2025-02-22T20:45:03.125+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:45:18.837+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740231768712
 2025-02-22T20:45:18.837+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
@@ -1548,7 +1548,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:53:32.795+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T20:53:32.796+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:53:32.805+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:53:32.807+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@6ecb4b91, links: [<http: (truncated)...]
+2025-02-22T20:53:32.807+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@6ecb4b91, links: [<http: (truncated)...]
 2025-02-22T20:53:32.818+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:54:02.520+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232412516
 2025-02-22T20:54:02.520+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -1566,7 +1566,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:54:32.561+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:54:35.781+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:54:35.789+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:54:35.789+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@351dfecc, links: [<http: (truncated)...]
+2025-02-22T20:54:35.789+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@351dfecc, links: [<http: (truncated)...]
 2025-02-22T20:54:35.791+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:54:36.368+07:00  INFO 18044 --- [user-service] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
 2025-02-22T20:54:36.369+07:00  INFO 18044 --- [user-service] [Thread-31] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
@@ -1654,11 +1654,11 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:54:38.023+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T20:54:38.023+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:54:38.032+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:54:38.032+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@384c242d}]
+2025-02-22T20:54:38.032+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@384c242d}]
 2025-02-22T20:54:38.033+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:54:40.153+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:54:40.162+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:54:40.167+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@3df299e1, links: [<http: (truncated)...]
+2025-02-22T20:54:40.167+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@3df299e1, links: [<http: (truncated)...]
 2025-02-22T20:54:40.178+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:54:55.171+07:00  INFO 18044 --- [user-service] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
 2025-02-22T20:54:55.172+07:00  INFO 18044 --- [user-service] [Thread-37] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
@@ -1821,15 +1821,15 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:55:07.115+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T20:55:07.115+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:55:07.127+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:55:07.129+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@7e37a7fe, links: [<http: (truncated)...]
+2025-02-22T20:55:07.129+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@7e37a7fe, links: [<http: (truncated)...]
 2025-02-22T20:55:07.138+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:55:09.504+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:55:09.512+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:55:09.512+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@2a239b7c}]
+2025-02-22T20:55:09.512+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@2a239b7c}]
 2025-02-22T20:55:09.514+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:55:11.561+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:55:11.576+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:55:11.576+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@6764d559, links: [<http: (truncated)...]
+2025-02-22T20:55:11.576+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@6764d559, links: [<http: (truncated)...]
 2025-02-22T20:55:11.576+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:55:32.049+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232502044
 2025-02-22T20:55:32.049+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -1854,7 +1854,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:56:32.115+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:56:39.718+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:56:39.726+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:56:39.726+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@72ab8f59, links: [<http: (truncated)...]
+2025-02-22T20:56:39.726+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@72ab8f59, links: [<http: (truncated)...]
 2025-02-22T20:56:39.728+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:57:02.130+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232502044
 2025-02-22T20:57:02.130+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -1872,7 +1872,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:57:32.181+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:57:49.883+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:57:49.889+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:57:49.889+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@2dd70bea}]
+2025-02-22T20:57:49.889+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@2dd70bea}]
 2025-02-22T20:57:49.890+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:58:02.197+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T20:58:02.197+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232502044
@@ -1883,7 +1883,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:58:02.215+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T20:58:30.750+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:58:30.756+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:58:30.756+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@162f3cce}]
+2025-02-22T20:58:30.756+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@162f3cce}]
 2025-02-22T20:58:30.757+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:58:32.226+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232502044
 2025-02-22T20:58:32.226+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -1978,11 +1978,11 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T20:58:39.863+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T20:58:39.863+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T20:58:39.875+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:58:39.875+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@6c4701cc}]
+2025-02-22T20:58:39.875+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@6c4701cc}]
 2025-02-22T20:58:39.879+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:58:42.572+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T20:58:42.582+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T20:58:42.582+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@130b3ab5, links: [<http: (truncated)...]
+2025-02-22T20:58:42.582+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@130b3ab5, links: [<http: (truncated)...]
 2025-02-22T20:58:42.597+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T20:59:07.235+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232717236
 2025-02-22T20:59:07.235+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
@@ -2140,7 +2140,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:04:27.365+07:00  INFO 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2025-02-22T21:04:27.365+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:04:27.379+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:04:27.380+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@165ccb8b, links: [<http: (truncated)...]
+2025-02-22T21:04:27.380+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@165ccb8b, links: [<http: (truncated)...]
 2025-02-22T21:04:27.391+07:00 DEBUG 18044 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:04:28.098+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T21:04:28.098+07:00 DEBUG 18044 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740232978037
@@ -2385,15 +2385,15 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:05:40.332+07:00  INFO 18424 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
 2025-02-22T21:05:40.341+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:05:40.583+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:05:40.596+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@51a9f77e, links: [<http: (truncated)...]
+2025-02-22T21:05:40.596+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@51a9f77e, links: [<http: (truncated)...]
 2025-02-22T21:05:40.629+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:05:43.244+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T21:05:43.270+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:05:43.270+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@3cc36117}]
+2025-02-22T21:05:43.270+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@3cc36117}]
 2025-02-22T21:05:43.274+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:05:45.937+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:05:45.946+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:05:45.946+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@304bf515, links: [<http: (truncated)...]
+2025-02-22T21:05:45.946+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@304bf515, links: [<http: (truncated)...]
 2025-02-22T21:05:45.946+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:06:10.208+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T21:06:10.208+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740233140204
@@ -2509,7 +2509,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:07:56.523+07:00  INFO 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
 2025-02-22T21:07:56.523+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:07:56.537+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:07:56.539+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@412e45ad, links: [<http: (truncated)...]
+2025-02-22T21:07:56.539+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@412e45ad, links: [<http: (truncated)...]
 2025-02-22T21:07:56.550+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:07:56.825+07:00  INFO 18424 --- [user-service] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
 2025-02-22T21:07:56.827+07:00  INFO 18424 --- [user-service] [Thread-7] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
@@ -2597,7 +2597,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:08:01.236+07:00  INFO 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T21:08:01.237+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T21:08:01.245+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:08:01.246+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.NguoiDung@65e796f6}]
+2025-02-22T21:08:01.246+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.entities.User@65e796f6}]
 2025-02-22T21:08:01.294+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler iuh.fit.se.exceptions.GlobalExceptionHandler#handleException(Exception, WebRequest)
 2025-02-22T21:08:01.297+07:00  WARN 18424 --- [user-service] [http-nio-9995-exec-1] i.f.s.exceptions.GlobalExceptionHandler  : Response already committed. Ignoring: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
 2025-02-22T21:08:01.299+07:00  WARN 18424 --- [user-service] [http-nio-9995-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
@@ -2611,7 +2611,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:08:31.097+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T21:08:34.199+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:08:34.212+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:08:34.214+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@333062b1, links: [<http: (truncated)...]
+2025-02-22T21:08:34.214+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@333062b1, links: [<http: (truncated)...]
 2025-02-22T21:08:34.224+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:09:01.105+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T21:09:01.105+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740233281071
@@ -2665,13 +2665,13 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 2025-02-22T21:10:50.407+07:00  INFO 18424 --- [user-service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 21.0.5 with PID 18424 (C:\Users\DELL\IdeaProjects\Web-Ecommerce-\user_service\target\classes started by DELL in C:\Users\DELL\IdeaProjects\Web-Ecommerce-\service-registry)
 2025-02-22T21:10:50.407+07:00  INFO 18424 --- [user-service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
 2025-02-22T21:10:50.722+07:00  INFO 18424 --- [user-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-02-22T21:10:50.729+07:00  WARN 18424 --- [user-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.TypeNotPresentException: Type iuh.fit.se.entities.NguoiDung not present
+2025-02-22T21:10:50.729+07:00  WARN 18424 --- [user-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: java.lang.TypeNotPresentException: Type iuh.fit.se.entities.User not present
 2025-02-22T21:10:50.733+07:00  INFO 18424 --- [user-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
 2025-02-22T21:10:50.762+07:00 ERROR 18424 --- [user-service] [restartedMain] o.s.boot.SpringApplication               : Application run failed
 
-java.lang.TypeNotPresentException: Type iuh.fit.se.entities.NguoiDung not present
+java.lang.TypeNotPresentException: Type iuh.fit.se.entities.User not present
 	at java.base/sun.reflect.generics.factory.CoreReflectionFactory.makeNamedType(CoreReflectionFactory.java:117)
 	at java.base/sun.reflect.generics.visitor.Reifier.visitClassTypeSignature(Reifier.java:125)
 	at java.base/sun.reflect.generics.tree.ClassTypeSignature.accept(ClassTypeSignature.java:49)
@@ -2712,7 +2712,7 @@ java.lang.TypeNotPresentException: Type iuh.fit.se.entities.NguoiDung not presen
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
-Caused by: java.lang.ClassNotFoundException: iuh.fit.se.entities.NguoiDung
+Caused by: java.lang.ClassNotFoundException: iuh.fit.se.entities.User
 	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
 	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
@@ -3084,7 +3084,7 @@ Caused by: java.lang.ClassNotFoundException: iuh.fit.se.entities.NguoiDung
 2025-02-22T21:14:43.511+07:00  INFO 18424 --- [user-service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection org.mariadb.jdbc.Connection@499e5a38
 2025-02-22T21:14:43.511+07:00  INFO 18424 --- [user-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
 2025-02-22T21:14:43.580+07:00  INFO 18424 --- [user-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-02-22T21:14:43.588+07:00  WARN 18424 --- [user-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'nguoiDungController': Unsatisfied dependency expressed through field 'nguoiDungService': No qualifying bean of type 'iuh.fit.se.services.NguoiDungService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2025-02-22T21:14:43.588+07:00  WARN 18424 --- [user-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'nguoiDungController': Unsatisfied dependency expressed through field 'nguoiDungService': No qualifying bean of type 'iuh.fit.se.services.UserService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
 2025-02-22T21:14:43.588+07:00  INFO 18424 --- [user-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-02-22T21:14:43.588+07:00  INFO 18424 --- [user-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
 2025-02-22T21:14:43.589+07:00  INFO 18424 --- [user-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
@@ -3100,7 +3100,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Field nguoiDungService in iuh.fit.se.controllers.NguoiDungController required a bean of type 'iuh.fit.se.services.NguoiDungService' that could not be found.
+Field nguoiDungService in iuh.fit.se.controllers.UserController required a bean of type 'iuh.fit.se.services.UserService' that could not be found.
 
 The injection point has the following annotations:
 	- @org.springframework.beans.factory.annotation.Autowired(required=true)
@@ -3108,7 +3108,7 @@ The injection point has the following annotations:
 
 Action:
 
-Consider defining a bean of type 'iuh.fit.se.services.NguoiDungService' in your configuration.
+Consider defining a bean of type 'iuh.fit.se.services.UserService' in your configuration.
 
 2025-02-22T21:16:40.537+07:00  INFO 18424 --- [user-service] [restartedMain] iuh.fit.se.UserServiceApplication        : Starting UserServiceApplication using Java 21.0.5 with PID 18424 (C:\Users\DELL\IdeaProjects\Web-Ecommerce-\user_service\target\classes started by DELL in C:\Users\DELL\IdeaProjects\Web-Ecommerce-\service-registry)
 2025-02-22T21:16:40.537+07:00  INFO 18424 --- [user-service] [restartedMain] iuh.fit.se.UserServiceApplication        : No active profile set, falling back to 1 default profile: "default"
@@ -4335,7 +4335,7 @@ Consider defining a bean of type 'iuh.fit.se.services.NguoiDungService' in your 
 2025-02-22T21:22:36.868+07:00  INFO 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2025-02-22T21:22:36.868+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung", parameters={}
 2025-02-22T21:22:36.883+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json;q=0.8', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [application/hal+json]
-2025-02-22T21:22:36.885+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@5277b7c8, links: [<http: (truncated)...]
+2025-02-22T21:22:36.885+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@5277b7c8, links: [<http: (truncated)...]
 2025-02-22T21:22:36.897+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:22:43.113+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/index.html", parameters={}
 2025-02-22T21:22:43.117+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
@@ -4371,11 +4371,11 @@ Consider defining a bean of type 'iuh.fit.se.services.NguoiDungService' in your 
 2025-02-22T21:22:43.774+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:22:48.391+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung?page=0&size=20", parameters={masked}
 2025-02-22T21:22:48.398+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/hal+json', given [application/hal+json] and supported [application/hal+json]
-2025-02-22T21:22:48.398+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.NguoiDung@2f079f00, links: [<http: (truncated)...]
+2025-02-22T21:22:48.398+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [PagedModel { content: [EntityModel { content: iuh.fit.se.entities.User@2f079f00, links: [<http: (truncated)...]
 2025-02-22T21:22:48.402+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:22:55.139+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/1", parameters={}
 2025-02-22T21:22:55.184+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json', given [application/hal+json] and supported [application/hal+json]
-2025-02-22T21:22:55.184+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.NguoiDungDTO@fe5a30d}]
+2025-02-22T21:22:55.184+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.UserDTO@fe5a30d}]
 2025-02-22T21:22:55.186+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:23:06.836+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T21:23:06.836+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740234156836
@@ -4385,14 +4385,14 @@ Consider defining a bean of type 'iuh.fit.se.services.NguoiDungService' in your 
 2025-02-22T21:23:06.852+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
 2025-02-22T21:23:06.853+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T21:23:20.156+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/api/nguoidung", parameters={}
-2025-02-22T21:23:20.163+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [iuh.fit.se.dtos.NguoiDungDTO@4472a7be]
+2025-02-22T21:23:20.163+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [iuh.fit.se.dtos.UserDTO@4472a7be]
 2025-02-22T21:23:20.204+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json', given [application/hal+json] and supported [application/hal+json]
 2025-02-22T21:23:20.204+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=400, errors={tenNguoiDung=Tên người dùng không được để trống}}]
 2025-02-22T21:23:20.205+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
 2025-02-22T21:23:27.926+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/api/nguoidung", parameters={}
-2025-02-22T21:23:27.928+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [iuh.fit.se.dtos.NguoiDungDTO@6d97f51f]
+2025-02-22T21:23:27.928+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [iuh.fit.se.dtos.UserDTO@6d97f51f]
 2025-02-22T21:23:27.985+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json', given [application/hal+json] and supported [application/hal+json]
-2025-02-22T21:23:27.985+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.NguoiDungDTO@74932729}]
+2025-02-22T21:23:27.985+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.UserDTO@74932729}]
 2025-02-22T21:23:27.986+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:23:36.863+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/delta
 2025-02-22T21:23:36.863+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/USER-SERVICE/DESKTOP-KGVH809:user-service:9995?status=UP&lastDirtyTimestamp=1740234156836
@@ -4403,7 +4403,7 @@ Consider defining a bean of type 'iuh.fit.se.services.NguoiDungService' in your 
 2025-02-22T21:23:36.880+07:00 DEBUG 18424 --- [user-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
 2025-02-22T21:23:42.951+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/nguoidung/12", parameters={}
 2025-02-22T21:23:42.957+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/hal+json', given [application/hal+json] and supported [application/hal+json]
-2025-02-22T21:23:42.958+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.NguoiDungDTO@7b50c8ea}]
+2025-02-22T21:23:42.958+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{status=200, data=iuh.fit.se.dtos.UserDTO@7b50c8ea}]
 2025-02-22T21:23:42.959+07:00 DEBUG 18424 --- [user-service] [http-nio-9995-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2025-02-22T21:23:51.744+07:00  INFO 18424 --- [user-service] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application USER-SERVICE with eureka with status DOWN
 2025-02-22T21:23:51.744+07:00  INFO 18424 --- [user-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1740234231744, current=DOWN, previous=UP]
