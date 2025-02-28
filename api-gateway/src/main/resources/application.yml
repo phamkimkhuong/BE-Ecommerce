@@ -16,7 +16,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/nguoidung/**
+            - Path=/api/user/**
         - id: product-service
           uri: lb://product-service
           predicates:
@@ -25,6 +25,10 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/api/v1/orders/**,/api/v1/order-details/**
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/account/**
           # Config rate limit for service product-service
           filters:
 #            - name: CircuitBreaker
