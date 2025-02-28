@@ -22,7 +22,7 @@
         </processorPath>
         <module name="user_service" />
       </profile>
-      <profile name="Annotation profile for product-service" enabled="true">
+      <profile name="Annotation profile for order-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -33,9 +33,6 @@
         <module name="order-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="monitora-admin" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
