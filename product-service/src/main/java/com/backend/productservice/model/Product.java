@@ -1,10 +1,13 @@
-package com.backend.productservice.domain;
+package com.backend.productservice.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /*
  * @description
@@ -18,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,7 @@ public class Product {
     private Long id;
     @Column(name = "ten_sp", nullable = false,unique = true)
     private String tensp;
-    @Column(name = "mo_ta",length = 1000)
+    @Column(name = "mo_ta",columnDefinition = "TEXT")
     private String moTa;
     @Column(name = "hinh_anh")
     private String hinhAnh;
@@ -36,7 +40,11 @@ public class Product {
     @Column(name = "gia_goc", nullable = false)
     private Double giaGoc;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ProductAttribute> productAttributes;
 }

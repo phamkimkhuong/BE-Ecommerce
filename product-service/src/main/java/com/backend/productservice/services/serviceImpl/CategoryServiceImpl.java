@@ -8,7 +8,7 @@ package com.backend.productservice.services.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
-import com.backend.productservice.domain.Category;
+import com.backend.productservice.model.Category;
 import com.backend.productservice.dto.CategoryDTO;
 import com.backend.productservice.repository.CategorytRepository;
 import com.backend.productservice.services.CategoryService;

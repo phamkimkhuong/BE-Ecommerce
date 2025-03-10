@@ -1,4 +1,12 @@
-package com.backend.productservice.dto;
+package com.backend.productservice.dto.request;
+
+
+/*
+ * @description
+ * @author: Pham Kim Khuong
+ * @version: 1.0
+ * @created: 3/10/2025 10:24 PM
+ */
 
 import com.backend.productservice.model.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +25,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductDTO {
+public class ProductCreationRequest {
     @Schema(description = "Mã sản phẩm", hidden = true)
     Long id;
     @NotEmpty(message = "Tên sản phẩm không được để trống")
