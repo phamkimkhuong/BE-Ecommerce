@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/monitora-admin/pom.xml" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Multi-Module-Project/pom.xml" />
       </list>
     </option>
   </component>

@@ -24,7 +24,7 @@
         </processorPath>
         <module name="user_service" />
       </profile>
-      <profile name="Annotation profile for product-service" enabled="true">
+      <profile name="Annotation profile for multi-module-project" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -38,6 +38,7 @@
     <bytecodeTargetLevel>
       <module name="auth-service" target="21" />
       <module name="clothes_shops" target="21" />
+      <module name="product" target="21" />
       <module name="user-service" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -47,8 +48,10 @@
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="monitora-admin" options="-parameters" />
+      <module name="multi-module-project" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="product" options="-parameters" />
       <module name="product-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="spring-boot" options="-parameters" />

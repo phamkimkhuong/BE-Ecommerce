@@ -24,7 +24,6 @@ public class EventConsumer {
     @RetryableTopic(
             attempts = "4", // 3 retry attempts + 1 DLQ attempt
             backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
-            autoCreateTopics = "true",
             dltStrategy = DltStrategy.FAIL_ON_ERROR,
             include = {RuntimeException.class, RetriableException.class}
     )
@@ -32,7 +31,7 @@ public class EventConsumer {
     public void consume(String message) {
         log.info("Consumed message -> {}", message);
         // Processing logic
-//        throw new RuntimeException("Simulated error");
+        throw new RuntimeException("Simulated error");
     }
 
     @DltHandler
