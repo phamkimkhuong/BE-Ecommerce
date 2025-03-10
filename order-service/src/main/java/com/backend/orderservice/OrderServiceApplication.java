@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScans;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({"com.backend.orderservice","com.backend.commonservice"})
+@ComponentScan(basePackages = {"com.backend.orderservice","com.backend.commonservice"})
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {

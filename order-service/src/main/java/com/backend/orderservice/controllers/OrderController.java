@@ -8,6 +8,7 @@ package com.backend.orderservice.controllers;
  * @created: 2/23/2025 8:26 AM
  */
 
+import com.backend.commonservice.service.KafkaService;
 import com.backend.orderservice.dtos.OrderDTO;
 import com.backend.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,9 +27,13 @@ import java.util.Map;
 @Tag(name = "Order Query", description = "Order API")
 public class OrderController {
     private final OrderService orderService;
+    private final KafkaService kafkaService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService
+            , KafkaService kafkaService
+    ) {
         this.orderService = orderService;
+        this.kafkaService = kafkaService;
     }
 
     @Operation(
@@ -205,6 +210,11 @@ public class OrderController {
                                             Long id
     ) {
         return new ResponseEntity<>(orderService.getById(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/sendMessage")
+    public void sendMessage(@RequestBody String message) {
+        kafkaService.sendMessage("test", message);
     }
 
 }
