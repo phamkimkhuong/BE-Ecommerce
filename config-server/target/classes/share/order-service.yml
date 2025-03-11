@@ -1,0 +1,26 @@
+server:
+  port: 9292
+  # Datasource configuration
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/order_service?createDatabaseIfNotExist=true
+    username: root
+    password: root
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    defer-datasource-initialization: true
+  # SQL script to initialize the database
+  sql:
+    init:
+    # Only run the script for first time
+    #      mode: always
+#      mode: never
+#      data-locations: classpath:/sql/data.sql
+
+#  data:
+#    rest:
+#      base-path: /api/v1

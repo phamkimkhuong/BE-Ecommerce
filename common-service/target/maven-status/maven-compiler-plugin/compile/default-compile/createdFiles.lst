@@ -1,0 +1,4 @@
+com\backend\commonservice\advice\GlobalExceptionHandler.class
+com\backend\commonservice\CommonServiceApplication.class
+com\backend\commonservice\model\ItemNotFoundException.class
+com\backend\commonservice\model\ErrorMessage.class
