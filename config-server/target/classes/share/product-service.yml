@@ -1,0 +1,30 @@
+server:
+  port: 9898
+  # Datasource configuration
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/product_service?createDatabaseIfNotExist=true
+    username: root
+    password: root
+  # JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    defer-datasource-initialization: true
+  # SQL script to initialize the database
+#  sql:
+#    init:
+    # Only run the script for first time
+#      mode: always
+#      data-locations: classpath:/sql/productDB.sql
+
+#  data:
+#    rest:
+#      base-path: /api/v1
+# Register with Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

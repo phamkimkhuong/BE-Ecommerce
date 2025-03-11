@@ -10,7 +10,6 @@
         <module name="config-server" />
         <module name="common-service" />
         <module name="api-gateway" />
-        <module name="spring-boot" />
         <module name="service-registry" />
         <module name="notification-service" />
         <module name="monitora-admin" />
@@ -44,7 +43,6 @@
       <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
-      <module name="spring-boot" options="-parameters" />
       <module name="user_service" options="-parameters" />
     </option>
   </component>
