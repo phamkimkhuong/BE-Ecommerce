@@ -9,8 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="common-service" />
-        <module name="api-gateway" />
-        <module name="spring-boot" />
+        <module name="apt-gateway" />
         <module name="service-registry" />
         <module name="notification-service" />
         <module name="monitora-admin" />
@@ -54,6 +53,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
+      <module name="apt-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
@@ -63,7 +63,6 @@
       <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
-      <module name="spring-boot" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="user_service" options="-parameters" />
     </option>
