@@ -22,7 +22,7 @@
         </processorPath>
         <module name="user_service" />
       </profile>
-      <profile name="Annotation profile for promotion-service" enabled="true">
+      <profile name="Annotation profile for cart-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,13 +30,15 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="product-service" />
-        <module name="promotion-service" />
+        <module name="cart-service" />
         <module name="order-service" />
+        <module name="promotion-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cart-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="monitora-admin" options="-parameters" />
