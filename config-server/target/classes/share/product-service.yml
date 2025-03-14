@@ -10,7 +10,7 @@ spring:
   # JPA configuration
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     defer-datasource-initialization: true
   # SQL script to initialize the database
@@ -28,3 +28,20 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+resilience4j:
+  circuitbreaker:
+    instances:
+      product-service:  # name instance
+        slidingWindowSize: 10  # size request to keep track
+        minimumNumberOfCalls: 5  # minimum number of calls
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50  # % error rate
+        waitDurationInOpenState: 10000  # time to wait before retry
+        permittedNumberOfCallsInHalfOpenState: 3  # number calls  back
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+  timelimiter:
+    instances:
+      userService:
+        timeoutDuration: 3s  # Giới hạn thời gian
+        cancelRunningFuture: true
