@@ -14,13 +14,13 @@ import com.backend.productservice.dto.request.ProductCreationRequest;
 import java.util.List;
 
 public interface ProductService {
-    public List<ProductReponse> getAllProduct();
+    List<ProductReponse> getAllProduct();
 
-    public ProductReponse getProductById(Long id);
+    ProductReponse getProductById(Long id);
 
-    public ProductReponse saveProduct(ProductCreationRequest product);
+    ProductReponse saveProduct(ProductCreationRequest product);
 
-    public ProductReponse updateProduct(Long id, ProductCreationRequest product);
+    ProductReponse updateProduct(Long id, ProductCreationRequest product);
 
-    public boolean deleteProduct(Long id);
+    boolean deleteProduct(Long id);
 }

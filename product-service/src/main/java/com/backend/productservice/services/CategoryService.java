@@ -13,13 +13,13 @@ import com.backend.productservice.dto.CategoryDTO;
 import java.util.List;
 
 public interface CategoryService {
-    public List<CategoryDTO> getAll();
+    List<CategoryDTO> getAll();
 
-    public CategoryDTO getById(Long id);
+    CategoryDTO getById(Long id);
 
-    public CategoryDTO save(CategoryDTO category);
+    CategoryDTO save(CategoryDTO category);
 
-    public CategoryDTO update(Long id, CategoryDTO category);
+    CategoryDTO update(Long id, CategoryDTO category);
 
-    public boolean delete(Long id);
+    boolean delete(Long id);
 }

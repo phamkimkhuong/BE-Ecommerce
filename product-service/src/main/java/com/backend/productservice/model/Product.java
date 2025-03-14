@@ -1,12 +1,9 @@
 package com.backend.productservice.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.util.List;
 
 /*
  * @description
@@ -20,7 +17,6 @@ import java.util.List;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE) // Set private level for all fields
 public class Product {
     @Id

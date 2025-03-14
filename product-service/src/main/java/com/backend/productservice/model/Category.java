@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE) // Set private level for all fields
 public class Category {
     @Id
