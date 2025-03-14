@@ -1,28 +1,36 @@
 package fit.se.cartservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-
 @Entity
 @Getter
 @Setter
 public class Cart {
 
     @Id
-    private Long id; // ID giỏ hàng, sẽ được tạo tự động
-    private Long customerId; // ID khách hàng, để liên kết với khách hàng
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @OneToMany(mappedBy = "cart") // Liên kết với các chi tiết giỏ hàng
-    private List<CartItem> cartItems; // Danh sách sản phẩm trong giỏ hàng
+    @Column(nullable = false)
+    private Long customerId;
 
-    private double totalPrice; // Tổng giá trị của giỏ hàng
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+    @Transient
+    private double totalPrice;
 
     public void updateTotalPrice() {
-        this.totalPrice = cartItems.stream().mapToDouble(CartItem::getTotalPrice).sum(); // Cập nhật tổng giá trị giỏ hàng
+        this.totalPrice = cartItems.stream()
+                .mapToDouble(CartItem::getTotalPrice)
+                .sum();
+    }
+
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+        updateTotalPrice();
     }
 }

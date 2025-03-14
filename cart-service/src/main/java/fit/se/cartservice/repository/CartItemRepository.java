@@ -1,4 +1,5 @@
 package fit.se.cartservice.repository;
+
 import fit.se.cartservice.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
