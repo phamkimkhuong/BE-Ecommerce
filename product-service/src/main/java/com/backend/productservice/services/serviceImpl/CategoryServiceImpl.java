@@ -8,30 +8,32 @@ package com.backend.productservice.services.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
-import com.backend.productservice.model.Category;
 import com.backend.productservice.dto.CategoryDTO;
+import com.backend.productservice.model.Category;
 import com.backend.productservice.repository.CategorytRepository;
 import com.backend.productservice.services.CategoryService;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CategoryServiceImpl implements CategoryService {
-    private CategorytRepository categoryRep;
-    @Autowired
-    private ModelMapper modelMapper;
+    CategorytRepository categoryRep;
+    ModelMapper modelMapper;
 
-    public CategoryServiceImpl(CategorytRepository categoryRep) {
+    public CategoryServiceImpl(CategorytRepository categoryRep, ModelMapper modelMapper) {
         this.categoryRep = categoryRep;
+        this.modelMapper = modelMapper;
     }
-
     //    Convert Entity to DTO
     public Category convertToEntity(CategoryDTO category) {
         return modelMapper.map(category, Category.class);
     }
+
     //    Convert DTO to Entity
     public CategoryDTO convertToDTO(Category category) {
         return modelMapper.map(category, CategoryDTO.class);
@@ -54,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO update(Long id,CategoryDTO category) {
+    public CategoryDTO update(Long id, CategoryDTO category) {
         categoryRep.findById(id);
         Category c = categoryRep.save(convertToEntity(category));
         return convertToDTO(c);

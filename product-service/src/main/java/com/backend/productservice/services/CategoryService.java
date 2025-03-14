@@ -9,13 +9,20 @@ package com.backend.productservice.services;
  */
 
 import com.backend.productservice.dto.CategoryDTO;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+@FieldDefaults(level = AccessLevel.PUBLIC)
 public interface CategoryService {
-    public List<CategoryDTO> getAll();
-    public CategoryDTO getById(Long id);
-    public CategoryDTO save(CategoryDTO category);
-    public CategoryDTO update(Long id,CategoryDTO category);
-    public boolean delete(Long id);
+    List<CategoryDTO> getAll();
+
+    CategoryDTO getById(Long id);
+
+    CategoryDTO save(CategoryDTO category);
+
+    CategoryDTO update(Long id, CategoryDTO category);
+
+    boolean delete(Long id);
 }

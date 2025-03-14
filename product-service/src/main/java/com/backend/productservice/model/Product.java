@@ -2,10 +2,8 @@ package com.backend.productservice.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -22,29 +20,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE) // Set private level for all fields
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private Long id;
-    @Column(name = "ten_sp", nullable = false,unique = true)
-    private String tensp;
-    @Column(name = "mo_ta",columnDefinition = "TEXT")
-    private String moTa;
+    Long id;
+    @Column(name = "ten_sp", nullable = false, unique = true)
+    String tensp;
+    @Column(name = "mo_ta", columnDefinition = "TEXT")
+    String moTa;
     @Column(name = "hinh_anh")
-    private String hinhAnh;
+    String hinhAnh;
     @Column(name = "gia_ban", nullable = false)
-    private Double giaBan;
+    Double giaBan;
     @Column(name = "gia_nhap", nullable = false)
-    private Double giaNhap;
+    Double giaNhap;
     @Column(name = "gia_goc", nullable = false)
-    private Double giaGoc;
+    Double giaGoc;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "category_id")
-    private Category category;
+    Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<ProductAttribute> productAttributes;
+    List<ProductAttribute> productAttributes;
 }
