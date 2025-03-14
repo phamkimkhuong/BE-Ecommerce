@@ -8,18 +8,19 @@ package com.backend.productservice.services;
  * @created: 2/21/2025 12:53 PM
  */
 
-import com.backend.productservice.dto.ProductDTO;
+import com.backend.productservice.dto.reponse.ProductReponse;
+import com.backend.productservice.dto.request.ProductCreationRequest;
 
 import java.util.List;
 
 public interface ProductService {
-    public List<ProductDTO> getAllProduct();
+    public List<ProductReponse> getAllProduct();
 
-    public ProductDTO getProductById(Long id);
+    public ProductReponse getProductById(Long id);
 
-    public ProductDTO saveProduct(ProductDTO product);
+    public ProductReponse saveProduct(ProductCreationRequest product);
 
-    public ProductDTO updateProduct(Long id, ProductDTO product);
+    public ProductReponse updateProduct(Long id, ProductCreationRequest product);
 
     public boolean deleteProduct(Long id);
 }

@@ -8,7 +8,6 @@ package com.backend.productservice.dto.request;
  * @created: 3/10/2025 10:24 PM
  */
 
-import com.backend.productservice.dto.ProductAttributeDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,8 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Schema(name = "Product Model", description = "Product Model Information")
 @Data
@@ -51,5 +48,12 @@ public class ProductCreationRequest {
     @NotNull(message = "Giá gốc không được để trống")
     @Positive(message = "Giá gốc phải lớn hơn 0")
     Double giaGoc;
-    Set<ProductAttributeDTO> productAttributes;
+    @Positive(message = "Số lượng phải lớn hơn 0")
+    int soLuong;
+    @NotEmpty(message = "Màu sắc không được để trống")
+    @Schema(description = "Mau sac sản phẩm", example = "Đen")
+    String mauSac;
+    @NotEmpty(message = "Kích cỡ không được để trống")
+    @Schema(description = "Kích cỡ sản phẩm", example = "XL")
+    String kichCo;
 }

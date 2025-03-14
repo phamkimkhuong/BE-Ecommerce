@@ -40,4 +40,12 @@ public class ProductDTO {
     @NotNull(message = "Giá gốc không được để trống")
     @Positive(message = "Giá gốc phải lớn hơn 0")
     Double giaGoc;
+    @Positive(message = "Số lượng phải lớn hơn 0")
+    int soLuong;
+    @NotEmpty(message = "Màu sắc không được để trống")
+    @Schema(description = "Mau sac sản phẩm", example = "Đen")
+    String mauSac;
+    @NotEmpty(message = "Kích cỡ không được để trống")
+    @Schema(description = "Kích cỡ sản phẩm", example = "XL")
+    String kichCo;
 }

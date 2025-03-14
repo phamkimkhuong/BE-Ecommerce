@@ -16,7 +16,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE) // Set private level for all fields
 //@JsonInclude(JsonInclude.Include.NON_NULL) // Ignore all null fields when return response
-public class ProductCreationReponse {
+public class ProductReponse {
     Long id;
     String tensp;
     String moTa;
@@ -24,8 +24,7 @@ public class ProductCreationReponse {
     Double giaBan;
     Double giaNhap;
     Double giaGoc;
-    String tenloai;
     int soLuong;
-    String kiCo;
     String mauSac;
+    String kichCo;
 }

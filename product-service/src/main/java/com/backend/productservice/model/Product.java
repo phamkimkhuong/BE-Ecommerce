@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -38,12 +39,15 @@ public class Product {
     Double giaNhap;
     @Column(name = "gia_goc", nullable = false)
     Double giaGoc;
+    @Column(name = "so_luong", nullable = false)
+    @ColumnDefault("0")
+    int soLuong;
+    @Column(name = "mau_sac", nullable = false)
+    String mauSac;
+    @Column(name = "kich_co", nullable = false)
+    String kichCo;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "category_id")
     Category category;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    List<ProductAttribute> productAttributes;
 }

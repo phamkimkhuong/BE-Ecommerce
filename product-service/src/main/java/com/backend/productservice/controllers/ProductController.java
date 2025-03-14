@@ -1,7 +1,8 @@
 package com.backend.productservice.controllers;
 
 
-import com.backend.productservice.dto.ProductDTO;
+import com.backend.productservice.dto.reponse.ProductReponse;
+import com.backend.productservice.dto.request.ProductCreationRequest;
 import com.backend.productservice.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -74,22 +75,22 @@ public class ProductController {
             }
     )
     @PostMapping
-    public ResponseEntity<ProductDTO> saveProduct(@Valid @RequestBody
-                                                  @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                          description = "Product object that needs to be added to the store",
-                                                          required = true,
-                                                          content = @io.swagger.v3.oas.annotations.media.Content(
-                                                                  mediaType = "application/json",
-                                                                  schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductDTO.class)
-                                                          )
-                                                  )
+    public ResponseEntity<ProductReponse> saveProduct(@Valid @RequestBody
+                                                      @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                              description = "Product object that needs to be added to the store",
+                                                              required = true,
+                                                              content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                      mediaType = "application/json",
+                                                                      schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
+                                                              )
+                                                      )
 
-                                                  ProductDTO productDTO
+                                                      ProductCreationRequest productDTO
 
 
     ) {
-        productService.saveProduct(productDTO);
-        return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+        ProductReponse p = productService.saveProduct(productDTO);
+        return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
     @Operation(
@@ -131,19 +132,18 @@ public class ProductController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody
-                                                    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                            description = "Product object that needs to be updated to the store",
-                                                            required = true,
-                                                            content = @io.swagger.v3.oas.annotations.media.Content(
-                                                                    mediaType = "application/json",
-                                                                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductDTO.class)
-                                                            )
-                                                    ) ProductDTO productDTO
+    public ResponseEntity<ProductReponse> updateProduct(@PathVariable Long id, @Valid @RequestBody
+                                                        @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                                description = "Product object that needs to be updated to the store",
+                                                                required = true,
+                                                                content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                        mediaType = "application/json",
+                                                                        schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
+                                                                )
+                                                        ) ProductCreationRequest productDTO
     ) {
-        productService.updateProduct(id, productDTO);
-        return new ResponseEntity<>(productDTO, HttpStatus.OK);
-
+        ProductReponse p = productService.updateProduct(id, productDTO);
+        return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
     @Operation(
