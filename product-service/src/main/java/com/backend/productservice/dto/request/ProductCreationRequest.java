@@ -56,4 +56,7 @@ public class ProductCreationRequest {
     @NotEmpty(message = "Kích cỡ không được để trống")
     @Schema(description = "Kích cỡ sản phẩm", example = "XL")
     String kichCo;
+    @NotNull(message = "Thương hiệu không được để trống")
+    @Schema(description = "Thương hiệu sản phẩm", example = "1")
+    Long category_id;
 }

@@ -8,12 +8,23 @@ package com.backend.commonservice.model;
  * @created: 2/22/2025 7:38 PM
  */
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
-public class ErrorMessage {
-    private String message;
-    private String code;
-    private HttpStatus status;
+@Getter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public enum ErrorMessage {
+    USER_NOT_FOUND("User not found", 404, HttpStatus.NOT_FOUND),
+    ITEM_NOT_FOUND("Item not found", 404, HttpStatus.NOT_FOUND),
+    ;
+
+    String message;
+    int code;
+    HttpStatus httpStatus;
 
 
 }

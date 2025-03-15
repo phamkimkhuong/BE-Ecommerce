@@ -43,7 +43,7 @@ public class Product {
     @Column(name = "kich_co", nullable = false)
     String kichCo;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "category_id")
     Category category;
 }

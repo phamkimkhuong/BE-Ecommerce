@@ -10,8 +10,9 @@ spring:
   # JPA configuration
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
+    open-in-view: false
     defer-datasource-initialization: true
   # SQL script to initialize the database
 #  sql:
