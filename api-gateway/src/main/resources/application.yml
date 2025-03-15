@@ -1,14 +1,18 @@
 server:
   port: 8080
+app:
+  api-prefix: /api/v1
 spring:
   application:
     name: gateway-service
-#  data:
-#    redis:
-#      port: 6379
-#      host: localhost
+  #  data:
+  #    redis:
+  #      port: 6379
+  #      host: localhost
   cloud:
     gateway:
+#      default-filters:
+#        - StripPrefix=1 # Remove prefix /api-gateway from request path
       discovery:
         locator:
           enabled: true
@@ -20,21 +24,25 @@ spring:
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/v1/products/**,/api/v1/categories/**
+            - Path=${app.api-prefix}/products/**,${app.api-prefix}/categories/**
+          filters:
+            - StripPrefix=2 # Remove prefix /api/v1 from request path
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/v1/orders/**,/api/v1/order-details/**
+            - Path=${app.api-prefix}/orders/**,${app.api-prefix}/order-details/**
+          filters:
+            - StripPrefix=2 # Remove prefix /api/v1 from request path
         - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/api/account/**
           # Config rate limit for service product-service
           filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: default
-#                fallbackUri: forward:/fallback/product-service
+            #            - name: CircuitBreaker
+            #              args:
+            #                name: default
+            #                fallbackUri: forward:/fallback/product-service
             - name: RequestRateLimiter
               args:
                 # Trong 1s nap 10 tokens
@@ -44,10 +52,10 @@ spring:
                 # Số lượng token cần để thực hiện 1 request
                 redis-rate-limiter.requestedTokens: 1
 eureka:
-    instance:
-      hostname: localhost
-    client:
-      service-url:
-        defaultZone: http://localhost:8761/eureka
-        register-with-eureka: true
-        fetch-registry: true
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      register-with-eureka: true
+      fetch-registry: true

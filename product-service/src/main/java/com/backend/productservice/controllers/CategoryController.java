@@ -22,7 +22,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/api/v1/category")
+@RequestMapping("/category")
 @Tag(name = "Category Query", description = "Category API")
 public class CategoryController {
     private final CategoryService categoryService;

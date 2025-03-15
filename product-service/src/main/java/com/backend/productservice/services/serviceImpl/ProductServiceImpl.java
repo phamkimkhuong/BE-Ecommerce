@@ -16,6 +16,7 @@ import com.backend.productservice.model.Product;
 import com.backend.productservice.repository.CategorytRepository;
 import com.backend.productservice.repository.ProductRepository;
 import com.backend.productservice.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -26,18 +27,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor // Only create Contructor for final fields
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class ProductServiceImpl implements ProductService {
     ProductRepository productRep;
     CategorytRepository categorytRep;
     ModelMapper modelMapper;
-
-    public ProductServiceImpl(ProductRepository productRep, CategorytRepository categorytRep, ModelMapper modelMapper) {
-        this.productRep = productRep;
-        this.categorytRep = categorytRep;
-        this.modelMapper = modelMapper;
-    }
 
     //    Convert Entity to DTO
     public ProductReponse toProductReponse(Product product) {

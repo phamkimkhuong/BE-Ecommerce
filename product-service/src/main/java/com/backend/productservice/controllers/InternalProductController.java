@@ -23,43 +23,13 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/internal/products")
 @Tag(name = "Product Query", description = "Product API")
-public class ProductController {
+public class InternalProductController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public InternalProductController(ProductService productService) {
         this.productService = productService;
-    }
-
-    @Operation(
-            summary = "Get List Product",
-            description = "Get all Product",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Successful operation",
-                            content = {@io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json")}
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Product not found"),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error"),
-            }
-    )
-    @GetMapping
-    public ResponseEntity<Map<String, Object>> getProducts(@RequestParam(required = false) String keyword) {
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("status", HttpStatus.OK.value());
-        if (keyword == null || keyword.isEmpty()) {
-            response.put("data", productService.getAllProduct());
-        } else {
-//            response.put("data", productService.search(keyword));
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @Operation(
@@ -144,28 +114,5 @@ public class ProductController {
     ) {
         ProductReponse p = productService.updateProduct(id, productDTO);
         return new ResponseEntity<>(p, HttpStatus.OK);
-    }
-
-    @Operation(
-            summary = "Get Product by ID",
-            description = "Get a Product by ID",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Successful"),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Product not found"),
-                    @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error"),
-            }
-    )
-    @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable Long id) {
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("status", HttpStatus.OK.value());
-        response.put("data", productService.getProductById(id));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
