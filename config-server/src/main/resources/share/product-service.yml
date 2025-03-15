@@ -25,10 +25,6 @@ spring:
 #    rest:
 #      base-path: /api/v1
 # Register with Eureka
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 resilience4j:
   circuitbreaker:
     instances:
