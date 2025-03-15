@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="common-service" />
-        <module name="apt-gateway" />
         <module name="api-gateway" />
         <module name="service-registry" />
         <module name="notification-service" />
@@ -22,8 +21,9 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="product-service" />
-        <module name="order-service" />
+          <module name="danhgia_service" />
+          <module name="product-service" />
+          <module name="order-service" />
       </profile>
       <profile name="Annotation profile for auth-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -46,24 +46,23 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="spring-boot" target="21" />
+      <module name="api-gateway" target="21" />
       <module name="user_service" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
-      <module name="apt-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
+      <module name="danhgia_service" options="-parameters" />
       <module name="monitora-admin" options="-parameters" />
       <module name="multi-module-project" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
-      <module name="user-service" options="-parameters" />
       <module name="user_service" options="-parameters" />
     </option>
   </component>
