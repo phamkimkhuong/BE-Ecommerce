@@ -24,6 +24,7 @@ import com.backend.services.AccountService;
 import com.backend.services.JWTService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,6 +61,7 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Autowired
+    @Lazy
     private JWTService jwtService;
 
     @Autowired
@@ -102,6 +104,11 @@ public class AccountServiceImpl implements AccountService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tên đăng nhập hoặc mật khẩu không chính xác.");
         }
         return ResponseEntity.badRequest().body("Xác thực không thành công.");
+    }
+
+    @Override
+    public Account findByUsername(String username) {
+        return accountRepository.findAccountByUsername(username);
     }
 
     @Override

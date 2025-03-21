@@ -35,4 +35,6 @@ public interface JWTService {
 
     // Kiểm tra tính hợp lệ
     public Boolean validateToken(String token, UserDetails userDetails);
+
+    public Claims extractAllClaims(String token);
 }

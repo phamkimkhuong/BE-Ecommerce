@@ -32,5 +32,4 @@ public class Endpoints {
             "/api/account",
             "/api/account/**",
     };
-
 }

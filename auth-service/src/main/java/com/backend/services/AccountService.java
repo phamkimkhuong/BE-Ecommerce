@@ -9,6 +9,7 @@ package com.backend.services;
 
 import com.backend.dtos.SignInRequest;
 import com.backend.dtos.SignUpRequest;
+import com.backend.entities.Account;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,5 +23,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AccountService extends UserDetailsService {
     public ResponseEntity<?> signUp(SignUpRequest account);
     public ResponseEntity<?> signIn(SignInRequest account, AuthenticationManager authenticationManager);
+    public Account findByUsername(String username);
 }
 

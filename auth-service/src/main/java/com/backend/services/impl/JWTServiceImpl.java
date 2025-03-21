@@ -6,18 +6,23 @@
 
 package com.backend.services.impl;
 
+import com.backend.entities.Account;
+import com.backend.entities.Role;
+import com.backend.services.AccountService;
 import com.backend.services.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -30,39 +35,47 @@ import java.util.function.Function;
 @Component
 public class JWTServiceImpl implements JWTService {
 
-    public static final String SERECT = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+    public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+
+    @Autowired
+    private AccountService accountService;
 
     @Override
-    public String generateToken(String tenDangNhap) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("isAdmin", true);
-        claims.put("x", "ABC");
-        return createToken(claims, tenDangNhap);
+        Account account = accountService.findByUsername(username);
 
+        if (account != null) {
+            List<String> roles = account.getRoles().stream().map(Role::getName).toList();
+            claims.put("roles", roles);
+        }
+
+        return createToken(claims, username);
     }
 
-    // Tạo JWT với các claim đã chọn
-    private String createToken(Map<String, Object> claims, String tenDangNhap) {
+    private String createToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(tenDangNhap)
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // JWT hết hạn sau 30 phút
-                .signWith(SignatureAlgorithm.HS256, getSigneKey())
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // 30 phút
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // Lấy serect key
-    private Key getSigneKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SERECT);
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Trích xuất thông tin
-    private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(getSigneKey()).parseClaimsJws(token).getBody();
+    @Override
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
-
 
     @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsTFunction) {
@@ -80,15 +93,17 @@ public class JWTServiceImpl implements JWTService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // Kiểm tra cái JWT đã hết hạn
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     @Override
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String tenDangNhap = extractUsername(token);
-        System.out.println(tenDangNhap);
-        return (tenDangNhap.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String username = extractUsername(token);
+        final List<String> roles = extractAllClaims(token).get("roles", List.class);
+
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
 }
+
