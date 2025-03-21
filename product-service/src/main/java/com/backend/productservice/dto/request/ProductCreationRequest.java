@@ -33,9 +33,6 @@ public class ProductCreationRequest {
     String tensp;
     @Schema(description = "Mô tả sản phẩm", example = "Điện thoại Iphone 12 Pro Max")
     String moTa;
-    @NotEmpty(message = "Hình ảnh không được để trống")
-    @Schema(description = "Hình ảnh sản phẩm", example = "https://www.google.com.vn")
-    String hinhAnh;
     @NotNull(message = "Giá bán không được để trống")
     @Schema(description = "Giá bán sản phẩm", example = "30000000")
     @Positive(message = "Giá bán phải lớn hơn 0")

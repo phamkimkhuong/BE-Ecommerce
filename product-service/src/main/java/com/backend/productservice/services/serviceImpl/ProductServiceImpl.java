@@ -15,6 +15,7 @@ import com.backend.productservice.model.Category;
 import com.backend.productservice.model.Product;
 import com.backend.productservice.repository.CategorytRepository;
 import com.backend.productservice.repository.ProductRepository;
+import com.backend.productservice.services.CloudinaryService;
 import com.backend.productservice.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
     ProductRepository productRep;
     CategorytRepository categorytRep;
     ModelMapper modelMapper;
+    CloudinaryService cloudinaryService;
 
     //    Convert Entity to DTO
     public ProductReponse toProductReponse(Product product) {
@@ -60,10 +63,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public ProductReponse saveProduct(ProductCreationRequest product) {
-        log.info("In method save Product");
+    public ProductReponse saveProduct(ProductCreationRequest product, MultipartFile hinhAnh) {
+        log.info("ProductService: method save Product");
         Category c = categorytRep.findById(product.getCategory_id()).orElseThrow(() -> new ItemNotFoundException("Category", "id", product.getCategory_id()));
         Product p = toProduct(product);
+        String hinhAnhURL = cloudinaryService.uploadImage(hinhAnh);
+        p.setHinhAnh(hinhAnhURL);
         p.setCategory(c);
         productRep.save(p);
         return toProductReponse(p);

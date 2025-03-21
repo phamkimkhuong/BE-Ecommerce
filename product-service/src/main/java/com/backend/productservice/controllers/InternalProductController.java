@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class InternalProductController {
             }
     )
     @PostMapping
-    public ResponseEntity<ProductReponse> saveProduct(@Valid @RequestBody
+    public ResponseEntity<ProductReponse> saveProduct(@RequestPart(name = "request") @Valid
                                                       @io.swagger.v3.oas.annotations.parameters.RequestBody(
                                                               description = "Product object that needs to be added to the store",
                                                               required = true,
@@ -55,11 +56,10 @@ public class InternalProductController {
                                                               )
                                                       )
 
-                                                      ProductCreationRequest productDTO
-
-
+                                                      ProductCreationRequest request
+            , @RequestPart(name = "hinhAnh") MultipartFile hinhAnh
     ) {
-        ProductReponse p = productService.saveProduct(productDTO);
+        ProductReponse p = productService.saveProduct(request, hinhAnh);
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 

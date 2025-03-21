@@ -8,20 +8,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /*
  * @description
- * @author: pham kim khuong
+ * author: pham kim khuong
  * @version: 1.0
  * @created: 2/21/2025 1:07 PM
  */
 
+@Slf4j
 @RestController
 @RequestMapping("/products")
 @Tag(name = "Product Query", description = "Product API")
@@ -64,7 +68,7 @@ public class ProductController {
 
     @Operation(
             summary = "Add Product",
-            description = "Save a Product to database",
+            description = "Save a Product to database with image upload",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -74,22 +78,31 @@ public class ProductController {
                             description = "Internal server error"),
             }
     )
-    @PostMapping
-    public ResponseEntity<ProductReponse> saveProduct(@Valid @RequestBody
-                                                      @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                              description = "Product object that needs to be added to the store",
-                                                              required = true,
-                                                              content = @io.swagger.v3.oas.annotations.media.Content(
-                                                                      mediaType = "application/json",
-                                                                      schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
-                                                              )
-                                                      )
-
-                                                      ProductCreationRequest productDTO
-
-
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductReponse> saveProduct(
+            @RequestPart(name = "request") @Valid 
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Product object that needs to be added to the store",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            mediaType = "application/json",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
+                    )
+            ) ProductCreationRequest request,
+            
+            @RequestPart(name = "hinhAnh") 
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Image file to upload",
+                    required = true,
+                    content = @io.swagger.v3.oas.annotations.media.Content(
+                            mediaType = "multipart/form-data",
+                            schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary")
+                    )
+            ) MultipartFile hinhAnh
     ) {
-        ProductReponse p = productService.saveProduct(productDTO);
+        log.info("Save Product Controller start...");
+        log.info("request: {}", request);
+        ProductReponse p = productService.saveProduct(request, hinhAnh);
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
