@@ -10,6 +10,7 @@ package com.backend.productservice.services;
 
 import com.backend.productservice.dto.reponse.ProductReponse;
 import com.backend.productservice.dto.request.ProductCreationRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ProductService {
 
     ProductReponse getProductById(Long id);
 
-    ProductReponse saveProduct(ProductCreationRequest product);
+    ProductReponse saveProduct(ProductCreationRequest product, MultipartFile hinhAnh);
 
     ProductReponse updateProduct(Long id, ProductCreationRequest product);
 

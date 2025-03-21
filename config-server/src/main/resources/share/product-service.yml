@@ -1,6 +1,10 @@
 server:
   port: 9898
   # Datasource configuration
+cloudinary:
+  cloud-name: ${CLOUD-NAME}
+  api-key: ${API-KEY-CLOUDINARY}
+  api-secret: ${API-SECRET-KEY-CLOUDINARY}
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -14,9 +18,9 @@ spring:
     show-sql: true
     open-in-view: false
     defer-datasource-initialization: true
-  # SQL script to initialize the database
-#  sql:
-#    init:
+    # SQL script to initialize the database
+    #  sql:
+    #    init:
     # Only run the script for first time
 #      mode: always
 #      data-locations: classpath:/sql/productDB.sql
@@ -28,7 +32,7 @@ spring:
 resilience4j:
   circuitbreaker:
     instances:
-      product-service:  # name instance
+      product-service: # name instance
         slidingWindowSize: 10  # size request to keep track
         minimumNumberOfCalls: 5  # minimum number of calls
         automaticTransitionFromOpenToHalfOpenEnabled: true
