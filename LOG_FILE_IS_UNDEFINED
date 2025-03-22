@@ -1,0 +1,602 @@
+2025-03-22T00:17:57.807+07:00  INFO 12876 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 12876 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:17:57.813+07:00  INFO 12876 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:17:57.899+07:00  INFO 12876 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:17:57.900+07:00  INFO 12876 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:17:57.902+07:00  INFO 12876 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:17:57.903+07:00  INFO 12876 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:17:59.180+07:00  INFO 12876 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:17:59.451+07:00  INFO 12876 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 259 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:18:00.737+07:00  INFO 12876 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=0b0928c4-8be6-3431-b98a-c5942f620d53
+2025-03-22T00:18:01.693+07:00  INFO 12876 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:18:01.710+07:00  INFO 12876 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:18:01.710+07:00  INFO 12876 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:18:01.869+07:00  INFO 12876 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:18:01.870+07:00  INFO 12876 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3967 ms
+2025-03-22T00:18:01.955+07:00 ERROR 12876 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on AuthServiceApplication: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:18:02.005+07:00  INFO 12876 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:18:02.021+07:00  WARN 12876 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:18:02.052+07:00  INFO 12876 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:18:02.122+07:00 ERROR 12876 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:27:18.628+07:00  INFO 6688 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 6688 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:27:18.631+07:00  INFO 6688 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:27:18.689+07:00  INFO 6688 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:27:18.689+07:00  INFO 6688 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:27:18.691+07:00  INFO 6688 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:27:18.691+07:00  INFO 6688 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:27:20.551+07:00  INFO 6688 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:27:20.777+07:00  INFO 6688 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 213 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:27:21.505+07:00  INFO 6688 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2343e724-60b7-3781-8127-7d7a5bd07a7f
+2025-03-22T00:27:22.424+07:00  INFO 6688 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:27:22.459+07:00  INFO 6688 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:27:22.460+07:00  INFO 6688 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:27:22.632+07:00  INFO 6688 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:27:22.633+07:00  INFO 6688 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3941 ms
+2025-03-22T00:27:22.705+07:00 ERROR 6688 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:27:22.740+07:00  INFO 6688 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:27:22.755+07:00  WARN 6688 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:27:22.775+07:00  INFO 6688 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:27:22.822+07:00 ERROR 6688 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:34:28.457+07:00  INFO 23092 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 23092 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:34:28.460+07:00  INFO 23092 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:34:28.527+07:00  INFO 23092 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:34:28.527+07:00  INFO 23092 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:34:28.530+07:00  INFO 23092 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:34:28.530+07:00  INFO 23092 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:34:30.363+07:00  INFO 23092 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:34:30.652+07:00  INFO 23092 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 270 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:34:31.340+07:00  INFO 23092 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=234239cd-a51e-3d68-a0e1-5f26ce56d8ae
+2025-03-22T00:34:32.218+07:00  INFO 23092 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:34:32.253+07:00  INFO 23092 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:34:32.254+07:00  INFO 23092 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:34:32.453+07:00  INFO 23092 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:34:32.454+07:00  INFO 23092 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3923 ms
+2025-03-22T00:34:32.570+07:00 ERROR 23092 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:34:32.619+07:00  INFO 23092 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:34:32.634+07:00  WARN 23092 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:34:32.666+07:00  INFO 23092 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:34:32.753+07:00 ERROR 23092 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:40:11.355+07:00  INFO 15016 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 15016 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:40:11.358+07:00  INFO 15016 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:40:11.449+07:00  INFO 15016 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:40:11.449+07:00  INFO 15016 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:40:11.453+07:00  INFO 15016 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:40:11.453+07:00  INFO 15016 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:40:12.976+07:00  INFO 15016 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:40:13.332+07:00  INFO 15016 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 322 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:40:14.632+07:00  INFO 15016 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=0b0928c4-8be6-3431-b98a-c5942f620d53
+2025-03-22T00:40:15.609+07:00  INFO 15016 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:40:15.628+07:00  INFO 15016 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:40:15.628+07:00  INFO 15016 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:40:15.780+07:00  INFO 15016 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:40:15.781+07:00  INFO 15016 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4327 ms
+2025-03-22T00:40:15.870+07:00 ERROR 15016 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on AuthServiceApplication: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:40:15.908+07:00  INFO 15016 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:40:15.929+07:00  WARN 15016 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:40:15.955+07:00  INFO 15016 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:40:16.014+07:00 ERROR 15016 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:48:59.599+07:00  INFO 24424 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 24424 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:48:59.603+07:00  INFO 24424 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:48:59.689+07:00  INFO 24424 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:48:59.689+07:00  INFO 24424 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:48:59.693+07:00  INFO 24424 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:48:59.693+07:00  INFO 24424 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:49:01.756+07:00  INFO 24424 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:49:02.151+07:00  INFO 24424 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 375 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:49:02.867+07:00  INFO 24424 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2343e724-60b7-3781-8127-7d7a5bd07a7f
+2025-03-22T00:49:03.897+07:00  INFO 24424 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:49:03.918+07:00  INFO 24424 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:49:03.919+07:00  INFO 24424 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:49:04.074+07:00  INFO 24424 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:49:04.075+07:00  INFO 24424 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4380 ms
+2025-03-22T00:49:04.155+07:00 ERROR 24424 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\filter\JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'JWTServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\JWTServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:49:04.196+07:00  INFO 24424 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:49:04.217+07:00  WARN 24424 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:49:04.242+07:00  INFO 24424 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:49:04.303+07:00 ERROR 24424 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:50:16.186+07:00  INFO 2344 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 2344 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:50:16.190+07:00  INFO 2344 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:50:16.285+07:00  INFO 2344 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:50:16.285+07:00  INFO 2344 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:50:16.289+07:00  INFO 2344 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:50:16.289+07:00  INFO 2344 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:50:18.455+07:00  INFO 2344 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:50:18.736+07:00  INFO 2344 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 265 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:50:19.550+07:00  INFO 2344 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2343e724-60b7-3781-8127-7d7a5bd07a7f
+2025-03-22T00:50:20.608+07:00  INFO 2344 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:50:20.626+07:00  INFO 2344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:50:20.627+07:00  INFO 2344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:50:20.811+07:00  INFO 2344 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:50:20.812+07:00  INFO 2344 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4521 ms
+2025-03-22T00:50:20.909+07:00 ERROR 2344 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\filter\JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'JWTServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\JWTServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:50:20.958+07:00  INFO 2344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:50:20.975+07:00  WARN 2344 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:50:21.006+07:00  INFO 2344 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:50:21.082+07:00 ERROR 2344 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:51:16.174+07:00  INFO 9580 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 9580 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:51:16.178+07:00  INFO 9580 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:51:16.276+07:00  INFO 9580 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:51:16.277+07:00  INFO 9580 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:51:16.281+07:00  INFO 9580 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:51:16.282+07:00  INFO 9580 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:51:19.752+07:00  INFO 9580 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:51:20.271+07:00  INFO 9580 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 492 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:51:21.299+07:00  INFO 9580 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2343e724-60b7-3781-8127-7d7a5bd07a7f
+2025-03-22T00:51:22.707+07:00  INFO 9580 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:51:22.753+07:00  INFO 9580 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:51:22.755+07:00  INFO 9580 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:51:23.005+07:00  INFO 9580 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:51:23.006+07:00  INFO 9580 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6723 ms
+2025-03-22T00:51:23.104+07:00 ERROR 9580 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:51:23.146+07:00  INFO 9580 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:51:23.159+07:00  WARN 9580 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:51:23.178+07:00  INFO 9580 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:51:23.243+07:00 ERROR 9580 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:52:02.185+07:00  INFO 17344 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 17344 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:52:02.193+07:00  INFO 17344 --- [common-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:52:02.323+07:00  INFO 17344 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:52:02.323+07:00  INFO 17344 --- [common-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=common-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:52:02.327+07:00  INFO 17344 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:52:02.328+07:00  INFO 17344 --- [common-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:52:04.200+07:00  INFO 17344 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:52:04.476+07:00  INFO 17344 --- [common-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 262 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:52:05.060+07:00  INFO 17344 --- [common-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=2343e724-60b7-3781-8127-7d7a5bd07a7f
+2025-03-22T00:52:05.867+07:00  INFO 17344 --- [common-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-22T00:52:05.896+07:00  INFO 17344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:52:05.897+07:00  INFO 17344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:52:06.148+07:00  INFO 17344 --- [common-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:52:06.151+07:00  INFO 17344 --- [common-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3821 ms
+2025-03-22T00:52:06.253+07:00 ERROR 17344 --- [common-service] [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter': Unsatisfied dependency expressed through field 'jwtService': Error creating bean with name 'JWTServiceImpl': Unsatisfied dependency expressed through field 'accountService': Error creating bean with name 'accountServiceImpl' defined in file [D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes\com\backend\services\impl\AccountServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'accountRepository' defined in com.backend.repositories.AccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-03-22T00:52:06.288+07:00  INFO 17344 --- [common-service] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-22T00:52:06.301+07:00  WARN 17344 --- [common-service] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-03-22T00:52:06.322+07:00  INFO 17344 --- [common-service] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-22T00:52:06.374+07:00 ERROR 17344 --- [common-service] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2025-03-22T00:52:50.955+07:00  INFO 24148 --- [auth-service] [restartedMain] com.backend.AuthServiceApplication       : Starting AuthServiceApplication using Java 21.0.6 with PID 24148 (D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-\auth-service\target\classes started by phamk in D:\Dowload\Nam4_HK2_Khuong\KienTrucVaThietKe\Web-Ecommerce-)
+2025-03-22T00:52:50.958+07:00  INFO 24148 --- [auth-service] [restartedMain] com.backend.AuthServiceApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-03-22T00:52:51.019+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-03-22T00:52:51.020+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=auth-service, profiles=[default], label=null, version=null, state=null
+2025-03-22T00:52:51.023+07:00  INFO 24148 --- [auth-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-22T00:52:51.023+07:00  INFO 24148 --- [auth-service] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-22T00:52:52.468+07:00  INFO 24148 --- [auth-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-22T00:52:52.730+07:00  INFO 24148 --- [auth-service] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 248 ms. Found 2 JPA repository interfaces.
+2025-03-22T00:52:53.245+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=01baf70c-5d16-3306-8b94-e390c6d616be
+2025-03-22T00:52:54.107+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9996 (http)
+2025-03-22T00:52:54.130+07:00  INFO 24148 --- [auth-service] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-22T00:52:54.130+07:00  INFO 24148 --- [auth-service] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-22T00:52:54.241+07:00  INFO 24148 --- [auth-service] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-22T00:52:54.241+07:00  INFO 24148 --- [auth-service] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3217 ms
+2025-03-22T00:52:54.993+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-22T00:52:55.042+07:00  INFO 24148 --- [auth-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-22T00:52:55.207+07:00  INFO 24148 --- [auth-service] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@49908a65
+2025-03-22T00:52:55.212+07:00  INFO 24148 --- [auth-service] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-22T00:52:57.612+07:00  INFO 24148 --- [auth-service] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-22T00:52:58.274+07:00  WARN 24148 --- [auth-service] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-03-22T00:52:58.275+07:00  WARN 24148 --- [auth-service] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2025-03-22T00:52:58.580+07:00  INFO 24148 --- [auth-service] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-03-22T00:52:58.581+07:00  WARN 24148 --- [auth-service] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-03-22T00:52:58.778+07:00  WARN 24148 --- [auth-service] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-22T00:52:59.471+07:00 DEBUG 24148 --- [auth-service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2025-03-22T00:52:59.630+07:00 DEBUG 24148 --- [auth-service] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-03-22T00:52:59.942+07:00 DEBUG 24148 --- [auth-service] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-03-22T00:53:00.025+07:00 DEBUG 24148 --- [auth-service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-03-22T00:53:00.073+07:00 DEBUG 24148 --- [auth-service] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 0 ResponseBodyAdvice
+2025-03-22T00:53:00.635+07:00  WARN 24148 --- [auth-service] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-03-22T00:53:01.672+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-03-22T00:53:02.733+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-03-22T00:53:02.765+07:00  INFO 24148 --- [auth-service] [restartedMain] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2025-03-22T00:53:02.964+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-03-22T00:53:02.995+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-03-22T00:53:03.002+07:00  INFO 24148 --- [auth-service] [restartedMain] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-03-22T00:53:03.016+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-03-22T00:53:03.017+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-03-22T00:53:03.273+07:00 DEBUG 24148 --- [auth-service] [restartedMain] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-03-22T00:53:03.372+07:00 DEBUG 24148 --- [auth-service] [restartedMain] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:03.452+07:00 DEBUG 24148 --- [auth-service] [restartedMain] o.s.web.client.RestTemplate              : Response 200 OK
+2025-03-22T00:53:03.454+07:00 DEBUG 24148 --- [auth-service] [restartedMain] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-03-22T00:53:03.468+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-03-22T00:53:03.470+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2025-03-22T00:53:03.473+07:00  INFO 24148 --- [auth-service] [restartedMain] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-03-22T00:53:03.476+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1742579583475 with initial instances count: 0
+2025-03-22T00:53:03.482+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application AUTH-SERVICE with eureka with status UP
+2025-03-22T00:53:03.483+07:00  INFO 24148 --- [auth-service] [restartedMain] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1742579583483, current=UP, previous=STARTING]
+2025-03-22T00:53:03.486+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:9996: registering service...
+2025-03-22T00:53:03.494+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/AUTH-SERVICE
+2025-03-22T00:53:03.498+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:03.521+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9996 (http) with context path '/'
+2025-03-22T00:53:03.522+07:00  INFO 24148 --- [auth-service] [restartedMain] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9996
+2025-03-22T00:53:03.525+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = localhost:auth-service:9996, appName = AUTH-SERVICE, hostName = localhost, status = UP, ipAddr = 192.168.129.1, port = 9996, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@46fdd30b] as "application/json"
+2025-03-22T00:53:03.565+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Response 204 NO_CONTENT
+2025-03-22T00:53:03.566+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:9996 - registration status: 204
+2025-03-22T00:53:04.534+07:00  INFO 24148 --- [auth-service] [restartedMain] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2025-03-22T00:53:04.548+07:00  INFO 24148 --- [auth-service] [restartedMain] com.backend.AuthServiceApplication       : Started AuthServiceApplication in 17.297 seconds (process running for 20.03)
+2025-03-22T00:53:04.553+07:00  INFO 24148 --- [auth-service] [restartedMain] com.backend.AuthServiceApplication       : RestApiDemoApplication Start
+2025-03-22T00:53:33.477+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
+2025-03-22T00:53:33.478+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-03-22T00:53:33.478+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : HTTP GET http://localhost:8761/eureka/apps/
+2025-03-22T00:53:33.478+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:33.478+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : HTTP PUT http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996?status=UP&lastDirtyTimestamp=1742579583482
+2025-03-22T00:53:33.483+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:33.496+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-03-22T00:53:33.496+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-HeartbeatExecutor-%d] o.s.web.client.RestTemplate              : Response 200 OK
+2025-03-22T00:53:33.496+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] o.s.web.client.RestTemplate              : Reading to [org.springframework.cloud.netflix.eureka.http.EurekaApplications]
+2025-03-22T00:53:33.512+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2025-03-22T00:53:37.550+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application AUTH-SERVICE with eureka with status DOWN
+2025-03-22T00:53:37.550+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1742579617550, current=DOWN, previous=UP]
+2025-03-22T00:53:37.550+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:9996: registering service...
+2025-03-22T00:53:37.551+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8761/eureka/apps/AUTH-SERVICE
+2025-03-22T00:53:37.553+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:37.554+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Writing [InstanceInfo [instanceId = localhost:auth-service:9996, appName = AUTH-SERVICE, hostName = localhost, status = DOWN, ipAddr = 192.168.129.1, port = 9996, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@46fdd30b] as "application/json"
+2025-03-22T00:53:37.557+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-22T00:53:37.575+07:00 DEBUG 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] o.s.web.client.RestTemplate              : Response 204 NO_CONTENT
+2025-03-22T00:53:37.575+07:00  INFO 24148 --- [auth-service] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:9996 - registration status: 204
+2025-03-22T00:53:37.577+07:00  INFO 24148 --- [auth-service] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-22T00:53:37.594+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-22T00:53:37.602+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-22T00:53:37.625+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-22T00:53:37.627+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2025-03-22T00:53:40.638+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2025-03-22T00:53:40.640+07:00 DEBUG 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : HTTP DELETE http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996
+2025-03-22T00:53:40.641+07:00 DEBUG 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:40.673+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/} exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:925)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:905)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:840)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:701)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.cancel(RestTemplateEurekaHttpClient.java:100)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:91)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:735)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:692)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1401)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:651)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1394)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1219)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1180)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$3(RestTemplateTransportClientFactory.java:141)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:899)
+	... 37 more
+
+2025-03-22T00:53:40.673+07:00  WARN 24148 --- [auth-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-03-22T00:53:40.678+07:00 DEBUG 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : HTTP DELETE http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996
+2025-03-22T00:53:40.678+07:00 DEBUG 24148 --- [auth-service] [SpringApplicationShutdownHook] o.s.web.client.RestTemplate              : Accept=[application/json, application/yaml, application/*+json]
+2025-03-22T00:53:40.715+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at org.springframework.web.client.RestTemplate.createResourceAccessException(RestTemplate.java:925)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:905)
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:840)
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:701)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateEurekaHttpClient.cancel(RestTemplateEurekaHttpClient.java:100)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:735)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:692)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1401)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:651)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1394)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1219)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1180)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.apache.hc.client5.http.impl.io.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:216)
+	at org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:490)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:164)
+	at org.apache.hc.client5.http.impl.classic.InternalExecRuntime.connectEndpoint(InternalExecRuntime.java:174)
+	at org.apache.hc.client5.http.impl.classic.ConnectExec.execute(ConnectExec.java:144)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ProtocolExec.execute(ProtocolExec.java:192)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.ContentCompressionExec.execute(ContentCompressionExec.java:150)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.HttpRequestRetryExec.execute(HttpRequestRetryExec.java:113)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.hc.client5.http.impl.classic.ExecChainElement.execute(ExecChainElement.java:51)
+	at org.apache.hc.client5.http.impl.classic.InternalHttpClient.doExecute(InternalHttpClient.java:174)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:87)
+	at org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:55)
+	at org.apache.hc.client5.http.classic.HttpClient.executeOpen(HttpClient.java:183)
+	at org.springframework.http.client.HttpComponentsClientHttpRequest.executeInternal(HttpComponentsClientHttpRequest.java:99)
+	at org.springframework.http.client.AbstractStreamingClientHttpRequest.executeInternal(AbstractStreamingClientHttpRequest.java:71)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:117)
+	at org.springframework.cloud.netflix.eureka.http.RestTemplateTransportClientFactory.lambda$restTemplate$3(RestTemplateTransportClientFactory.java:141)
+	at org.springframework.http.client.InterceptingClientHttpRequest$InterceptingRequestExecution.execute(InterceptingClientHttpRequest.java:88)
+	at org.springframework.http.client.InterceptingClientHttpRequest.executeInternal(InterceptingClientHttpRequest.java:72)
+	at org.springframework.http.client.AbstractBufferingClientHttpRequest.executeInternal(AbstractBufferingClientHttpRequest.java:48)
+	at org.springframework.http.client.AbstractClientHttpRequest.execute(AbstractClientHttpRequest.java:81)
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:899)
+	... 38 more
+
+2025-03-22T00:53:40.715+07:00  WARN 24148 --- [auth-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:9996": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
+2025-03-22T00:53:40.716+07:00 ERROR 24148 --- [auth-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:9996 - de-registration failedCannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:735)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:692)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1401)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:651)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1394)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1219)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1180)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:179)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+2025-03-22T00:53:40.718+07:00  INFO 24148 --- [auth-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
