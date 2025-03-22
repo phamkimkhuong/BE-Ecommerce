@@ -1,6 +1,6 @@
 package com.backend.productservice.services.serviceImpl;
 
-import com.backend.commonservice.model.FileValidationException;
+import com.backend.productservice.exception.FileValidationException;
 import com.backend.productservice.services.CloudinaryService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
