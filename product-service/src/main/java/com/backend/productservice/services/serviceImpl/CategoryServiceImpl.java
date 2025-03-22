@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -41,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAll() {
-        return categoryRep.findAll().stream().map(this::convertToDTO).toList();
+        return categoryRep.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

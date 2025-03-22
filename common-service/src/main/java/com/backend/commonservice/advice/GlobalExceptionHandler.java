@@ -15,6 +15,7 @@ package com.backend.commonservice.advice;
 
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import com.backend.commonservice.model.FileValidationException;
 import com.backend.commonservice.model.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FileValidationException.class)
+    public ResponseEntity<Map<String, Object>> imageUploadException(ItemNotFoundException ex) {
+        Map<String, Object> errors = new LinkedHashMap<>();
+        errors.put("status", HttpStatus.BAD_REQUEST.value());
+        errors.put("message", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -59,6 +68,7 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
     // Exception này sẽ được xử lý khi người dùng không có quyền truy cập vào một tài nguyên nào đó
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
