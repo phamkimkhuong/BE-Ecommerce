@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="common-service" />
+        <module name="chatapp" />
         <module name="api-gateway" />
         <module name="spring-boot" />
         <module name="service-registry" />
@@ -59,6 +60,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="cart-service" options="-parameters" />
+      <module name="chatapp" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="danhgia_service" options="-parameters" />

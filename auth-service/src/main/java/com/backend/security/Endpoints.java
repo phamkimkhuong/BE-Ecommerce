@@ -20,7 +20,7 @@ public class Endpoints {
             "/swagger-ui/**",      // Cho phép Swagger UI
             "/v3/api-docs/**",     // Cho phép OpenAPI
             "/swagger-resources/**",
-            "/webjars/**"
+            "/webjars/**",
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {

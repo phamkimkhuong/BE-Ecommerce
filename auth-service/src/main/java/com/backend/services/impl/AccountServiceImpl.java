@@ -90,7 +90,6 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(account);
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully!");
     }
-
     @Override
     public ResponseEntity<?> signIn(SignInRequest signInRequest, AuthenticationManager authenticationManager) {
         try {
