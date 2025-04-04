@@ -1,0 +1,43 @@
+version: '1.0.0'
+services:
+  config-server:
+    build:
+      context: contextPath
+      dockerfile: Dockerfile
+    image: configservice:1.0.0
+    ports:
+      - "8888:8888"
+    env_file:
+      - local.env
+  service-registry:
+    build:
+      context: contextPath
+      dockerfile: Dockerfile
+    image: service-registry:1.0.0
+    ports:
+      - "8761:8761"
+    restart: on-failure
+    env_file:
+      - local.env
+  # api-gateway:
+  #   build:
+  #     context: contextPath
+  #     dockerfile: Dockerfile
+  #   image: api-gateway:1.0.0
+  #   ports:
+  #     - "8080:8080"
+  #   restart: on-failure
+  #   env_file:
+  #     - local.env
+  # product-service:
+  #   build:
+  #     context: contextPath
+  #     dockerfile: Dockerfile
+  #   image: product-service:1.0.0
+  #   ports:
+  #     - "8081:8081"
+  #   volumes:
+  #     - ./product-service:/app
+  #   env_file:
+  #     - local.env
+
