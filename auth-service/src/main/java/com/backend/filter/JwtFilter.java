@@ -15,6 +15,7 @@ package com.backend.filter;
 
 import com.backend.services.AccountService;
 import com.backend.services.JWTService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,16 +44,27 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private ObjectMapper objectMapper; // Dùng để parse danh sách roles
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);
+        String token = authHeader.substring(7);
+        String username;
+
+        try {
             username = jwtService.extractUsername(token);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Invalid JWT token");
+            return;
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -61,12 +73,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (jwtService.validateToken(token, userDetails)) {
                 Claims claims = jwtService.extractAllClaims(token);
 
-                List<?> rolesRaw = claims.get("roles", List.class);
-                List<String> roles = rolesRaw.stream()
-                        .filter(obj -> obj instanceof String)
-                        .map(obj -> (String) obj)
-                        .collect(Collectors.toList());
-
+                List<String> roles = objectMapper.convertValue(claims.get("roles"), List.class);
                 List<GrantedAuthority> authorities = roles.stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
@@ -74,7 +81,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid or expired JWT token");
+                return;
             }
         }
         filterChain.doFilter(request, response);

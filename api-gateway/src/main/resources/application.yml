@@ -34,6 +34,7 @@ spring:
           predicates:
             - Path=${app.api-prefix}/products/**,${app.api-prefix}/categories/**
           filters:
+            - PreserveHostHeader
             - StripPrefix=2 # Remove prefix /api/v1 from request path
         - id: order-service
           uri: lb://order-service

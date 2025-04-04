@@ -96,8 +96,8 @@ public class AccountServiceImpl implements AccountService {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword()));
             if (authentication.isAuthenticated()) {
-                final String jwt = jwtService.generateToken(signInRequest.getUsername());
-                return ResponseEntity.ok(new JwtResponse(jwt));
+                final String token = jwtService.generateToken(signInRequest.getUsername());
+                return ResponseEntity.ok(new JwtResponse(token));
             }
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tên đăng nhập hoặc mật khẩu không chính xác.");

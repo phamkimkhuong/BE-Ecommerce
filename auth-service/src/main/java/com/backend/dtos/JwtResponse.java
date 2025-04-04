@@ -14,14 +14,14 @@ package com.backend.dtos;
  */
 
 public class JwtResponse {
-    private final String jwt;
+    private final String token;
 
-    public JwtResponse(String jwt) {
-        this.jwt = jwt;
+    public JwtResponse(String token) {
+        this.token = token;
     }
 
-    public String getJwt() {
-        return jwt;
+    public String getToken() {
+        return token;
     }
 
 }
