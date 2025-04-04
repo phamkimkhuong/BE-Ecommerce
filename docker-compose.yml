@@ -1,5 +1,12 @@
 version: '1.0.0'
 services:
+  multi-module-project:
+    build:
+      context: ./multi-module-project
+      dockerfile: Dockerfile
+    image: multi-module-repo:1.0.0
+    volumes:
+      - maven-repo:/maven-repo
   config-server:
     build:
       context: contextPath
@@ -9,6 +16,8 @@ services:
       - "8888:8888"
     env_file:
       - local.env
+    depends_on:
+      - multi-module-project
   service-registry:
     build:
       context: contextPath
@@ -40,4 +49,8 @@ services:
   #     - ./product-service:/app
   #   env_file:
   #     - local.env
+
+volumes:
+  maven-repo:
+    external: false
 
