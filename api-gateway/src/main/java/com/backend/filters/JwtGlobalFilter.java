@@ -16,6 +16,8 @@ package com.backend.filters;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +29,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class JwtGlobalFilter implements WebFilter {
@@ -49,13 +52,21 @@ public class JwtGlobalFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
         // Bỏ qua xác thực với sign-up, sign-in
-        if (path.equals("/api/account/sign-up") || path.equals("/api/account/sign-in")) {
+//        if (path.equals("/api/account/sign-up") || path.equals("/api/account/sign-in")) {
+//            return chain.filter(exchange);
+//        }
+        // Bỏ qua xác thực với sign-up, sign-in và products
+        if (path.startsWith("/api/account/sign-up") ||
+                path.startsWith("/api/account/sign-in") ||
+                path.startsWith("/api/v1/products")) {
             return chain.filter(exchange);
         }
 
         String token = extractJwtFromRequest(exchange);
         if (token == null) {
-            return Mono.error(new JwtException("Missing or invalid Authorization header"));
+//            return Mono.error(new JwtException("Missing or invalid Authorization header"));
+            return unauthorizedResponse(exchange, "Missing or invalid Authorization header");
+
         }
         System.out.println("Token: " + token);
         Claims claims = extractClaims(token);
@@ -78,5 +89,15 @@ public class JwtGlobalFilter implements WebFilter {
     private List<SimpleGrantedAuthority> extractAuthoritiesFromClaims(Claims claims) {
         List<String> roles = claims.get("roles", List.class);
         return roles.stream().map(SimpleGrantedAuthority::new).toList();
+    }
+
+    private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String message) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        String responseBody = String.format("{\"error\": \"%s\"}", message);
+        byte[] bytes = responseBody.getBytes(StandardCharsets.UTF_8);
+        return exchange.getResponse().writeWith(Mono.just(exchange.getResponse()
+                .bufferFactory()
+                .wrap(bytes)));
     }
 }
