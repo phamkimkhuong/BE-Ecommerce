@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +52,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             throw new RuntimeException("Image upload failed: " + io.getMessage());
         }
     }
-
     private void validateFile(MultipartFile file) {
         // Check if file is empty
         if (file == null || file.isEmpty()) {

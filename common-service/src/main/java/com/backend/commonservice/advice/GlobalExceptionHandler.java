@@ -13,9 +13,9 @@ package com.backend.commonservice.advice;
  * @created: 2/21/2025 3:17 PM
  */
 
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
-import com.backend.commonservice.model.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -32,31 +32,30 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> userNotFoundException(ItemNotFoundException ex) {
-        Map<String, Object> errors = new LinkedHashMap<>();
-        errors.put("status", HttpStatus.NOT_FOUND.value());
-        errors.put("message", ex.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
-    }
-
-    public ResponseEntity<Map<String, Object>> handleAppException(AppException ex) {
-        Map<String, Object> errors = new LinkedHashMap<>();
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ApiResponseDTO<String>> handleAppException(AppException ex) {
+        ApiResponseDTO<String> response = new ApiResponseDTO<>();
         ErrorMessage error = ex.getErrorCode();
-        errors.put("status", error.getHttpStatus());
-        errors.put("message", error.getMessage());
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        response.setCode(error.getCode());
+        response.setMessage(error.getMessage());
+        return new ResponseEntity<>(response, error.getHttpStatus());
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiResponseDTO<Map<String, String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
+        ApiResponseDTO<Map<String, String>> response = new ApiResponseDTO<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
+            // Chuyển đổi tên trường từ camelCase sang snake_case
+            fieldName = convertToSnakeCase(fieldName);
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        response.setCode(ErrorMessage.INVALID_DATA.getCode());
+        response.setMessage(ErrorMessage.INVALID_DATA.getMessage());
+        response.setErrors(errors);
+       return  new ResponseEntity<>(response, ErrorMessage.INVALID_DATA.getHttpStatus());
     }
 
     // Exception này sẽ được xử lý khi người dùng không có quyền truy cập vào một tài nguyên nào đó
@@ -76,6 +75,9 @@ public class GlobalExceptionHandler {
         errors.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         errors.put("message", ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    private String convertToSnakeCase(String input) {
+        return input.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
     }
 
 }

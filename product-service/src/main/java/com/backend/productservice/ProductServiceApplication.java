@@ -1,5 +1,8 @@
 package com.backend.productservice;
 
+import com.backend.productservice.dto.request.ProductCreationRequest;
+import com.backend.productservice.model.Product;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

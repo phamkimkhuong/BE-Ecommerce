@@ -8,7 +8,6 @@ package com.backend.orderservice.service.serviceImpl;
  * @created: 2/23/2025 12:55 PM
  */
 
-import com.backend.commonservice.model.ItemNotFoundException;
 import com.backend.orderservice.domain.OrderDetail;
 import com.backend.orderservice.dtos.OrderDetailDTO;
 import com.backend.orderservice.repository.OrderDetailRepository;

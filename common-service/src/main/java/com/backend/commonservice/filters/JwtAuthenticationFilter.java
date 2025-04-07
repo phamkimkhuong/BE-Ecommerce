@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.productservice.filters;
+package com.backend.commonservice.filters;
 
 /*
  * @description
