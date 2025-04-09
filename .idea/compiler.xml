@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="common-service" />
-        <module name="chatapp" />
         <module name="api-gateway" />
         <module name="spring-boot" />
         <module name="service-registry" />
@@ -50,6 +49,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="chatapp" target="17" />
       <module name="user_service" target="21" />
     </bytecodeTargetLevel>
   </component>

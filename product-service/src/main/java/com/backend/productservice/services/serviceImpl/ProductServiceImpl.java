@@ -8,7 +8,8 @@ package com.backend.productservice.services.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
-import com.backend.commonservice.model.ItemNotFoundException;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import com.backend.productservice.dto.reponse.ProductReponse;
 import com.backend.productservice.dto.request.ProductCreationRequest;
 import com.backend.productservice.model.Category;
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductReponse getProductById(Long id) {
         log.info("In method get Product by id");
-        Product p = productRep.findById(id).orElseThrow(() -> new ItemNotFoundException("Product", "id", id));
+        Product p = productRep.findById(id).orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         return toProductReponse(p);
     }
 
@@ -65,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductReponse saveProduct(ProductCreationRequest product, MultipartFile hinhAnh) {
         log.info("ProductService: method save Product");
-        Category c = categorytRep.findById(product.getCategory_id()).orElseThrow(() -> new ItemNotFoundException("Category", "id", product.getCategory_id()));
+        Category c = categorytRep.findById(product.getCategory_id()).orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         Product p = toProduct(product);
         String hinhAnhURL = cloudinaryService.uploadImage(hinhAnh);
         p.setHinhAnh(hinhAnhURL);
@@ -78,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductReponse updateProduct(Long id, ProductCreationRequest product) {
         log.info("In method update Product");
-        Product p = productRep.findById(id).orElseThrow(() -> new ItemNotFoundException("Product", "id", id));
+        Product p = productRep.findById(id).orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         return toProductReponse(productRep.save(p));
     }
 

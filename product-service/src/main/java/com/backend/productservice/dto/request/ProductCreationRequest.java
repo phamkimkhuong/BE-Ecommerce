@@ -8,6 +8,8 @@ package com.backend.productservice.dto.request;
  * @created: 3/10/2025 10:24 PM
  */
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +29,7 @@ import lombok.experimental.FieldDefaults;
 public class ProductCreationRequest {
     @Schema(description = "Mã sản phẩm", hidden = true)
     Long id;
+    @JsonProperty("ten_sp")
     @NotEmpty(message = "Tên sản phẩm không được để trống")
     @Schema(description = "Tên sản phẩm", example = "Iphone 12 Pro Max")
     @Size(min = 3, max = 50, message = "Tên sản phẩm từ 3-50 ký tự")

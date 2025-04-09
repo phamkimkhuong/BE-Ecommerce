@@ -13,7 +13,8 @@ package com.backend.services.impl;
  * @created: 13-February-2025 8:15 PM
  */
 
-import com.backend.commonservice.model.ItemNotFoundException;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import com.backend.dtos.UserDTO;
 import com.backend.entities.User;
 import com.backend.repositories.UserRepository;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(()-> new ItemNotFoundException("User", "Can not find Employee with id: ", id));
+                .orElseThrow(()-> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
 
         return this.convertToDTO(user);
     }

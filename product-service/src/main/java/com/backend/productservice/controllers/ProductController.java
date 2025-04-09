@@ -5,6 +5,8 @@ import com.backend.productservice.dto.reponse.ProductReponse;
 import com.backend.productservice.dto.request.ProductCreationRequest;
 import com.backend.productservice.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,8 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -43,7 +47,7 @@ public class ProductController {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Successful operation",
-                            content = {@io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json")}
+                            content = {@Content(mediaType = "application/json")}
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -54,16 +58,18 @@ public class ProductController {
             }
     )
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getProducts(@RequestParam(required = false) String keyword) {
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("status", HttpStatus.OK.value());
+    public ApiResponseDTO<List<ProductReponse>> getProducts(@RequestParam(required = false) String keyword) {
+        List<ProductReponse> products = List.of();
         if (keyword == null || keyword.isEmpty()) {
-            response.put("data", productService.getAllProduct());
+            products = productService.getAllProduct();
         } else {
-//            response.put("data", productService.search(keyword));
+//            products = productService.search(keyword);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        ApiResponseDTO<List<ProductReponse>> response = new ApiResponseDTO<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Get all products successfully");
+        response.setData(products);
+        return response;
     }
 
     @Operation(
@@ -84,9 +90,9 @@ public class ProductController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Product object that needs to be added to the store",
                     required = true,
-                    content = @io.swagger.v3.oas.annotations.media.Content(
+                    content = @Content(
                             mediaType = "application/json",
-                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
+                            schema = @Schema(implementation = ProductCreationRequest.class)
                     )
             ) ProductCreationRequest request,
             
@@ -94,9 +100,9 @@ public class ProductController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Image file to upload",
                     required = true,
-                    content = @io.swagger.v3.oas.annotations.media.Content(
+                    content = @Content(
                             mediaType = "multipart/form-data",
-                            schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary")
+                            schema = @Schema(type = "string", format = "binary")
                     )
             ) MultipartFile hinhAnh
     ) {
@@ -149,9 +155,9 @@ public class ProductController {
                                                         @io.swagger.v3.oas.annotations.parameters.RequestBody(
                                                                 description = "Product object that needs to be updated to the store",
                                                                 required = true,
-                                                                content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                content = @Content(
                                                                         mediaType = "application/json",
-                                                                        schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductCreationRequest.class)
+                                                                        schema = @Schema(implementation = ProductCreationRequest.class)
                                                                 )
                                                         ) ProductCreationRequest productDTO
     ) {
