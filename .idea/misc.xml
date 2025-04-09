@@ -12,15 +12,12 @@
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/common-service/pom.xml" />
         <option value="$PROJECT_DIR$/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/cart-service/pom.xml" />
+        <option value="$PROJECT_DIR$/danhgia_service/pom.xml" />
         <option value="$PROJECT_DIR$/multi-module-project/pom.xml" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
-        <option value="$PROJECT_DIR$/../../CongNgheMoi/app_zalo/chatapp/pom.xml" />
+        <option value="$PROJECT_DIR$/../Web-Ecommerce-FE/web-app/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../../CongNgheMoi/app_zalo/chatapp/pom.xml" />
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="21" project-jdk-type="JavaSDK">

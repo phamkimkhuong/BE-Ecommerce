@@ -1,6 +1,7 @@
 package com.backend.dtos;
 
 import com.backend.entities.User;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
@@ -11,9 +12,11 @@ import java.time.LocalDate;
  */
 public class UserDTO implements Serializable {
     private Long userId;
-    @NotEmpty(message = "Full name is required")
+    @NotBlank(message = "Full name is required")
     private String fullName;
+    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
+    @NotBlank(message = "Address is required")
     private String address;
     private LocalDate dateOfBirth;
     private boolean gender;
@@ -26,11 +29,11 @@ public class UserDTO implements Serializable {
         this.userId = userId;
     }
 
-    public @NotEmpty(message = "Full name is required") String getFullName() {
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(@NotEmpty(message = "Full name is required") String fullName) {
+    public void setFullName( String fullName) {
         this.fullName = fullName;
     }
 
@@ -38,15 +41,15 @@ public class UserDTO implements Serializable {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber( String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    public  String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress( String address) {
         this.address = address;
     }
 

@@ -13,6 +13,7 @@ package com.backend.controllers;
  * @created: 13-February-2025 8:26 PM
  */
 
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.dtos.UserDTO;
 import com.backend.services.UserService;
 import jakarta.validation.Valid;
@@ -35,36 +36,58 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable Long id) {
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("status", HttpStatus.OK.value());
-        response.put("data", userService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<ApiResponseDTO<Map<String, Object>>> getUserById(@PathVariable Long id) {
+        ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("user", userService.findById(id));
+
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Lấy thông tin người dùng thành công");
+        response.setData(data);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<ApiResponseDTO<Map<String, Object>>> getAllUsers() {
+        ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("users", userService.findAll());
+
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Lấy danh sách người dùng thành công");
+        response.setData(data);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/user")
-    public ResponseEntity<Map<String, Object>> saveUser(
+    public ResponseEntity<ApiResponseDTO<Map<String, Object>>> saveUser(
             @Valid @RequestBody UserDTO userDTO,
             BindingResult bindingResult) {
-        Map<String, Object> response = new LinkedHashMap<String, Object>();
+
+        ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
 
         if (bindingResult.hasErrors()) {
-            Map<String, Object> errors = new LinkedHashMap<String, Object>();
-
-            bindingResult.getFieldErrors().stream().forEach(result -> {
-                errors.put(result.getField(), result.getDefaultMessage());
+            Map<String, String> errors = new LinkedHashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errors.put(error.getField(), error.getDefaultMessage());
             });
 
-            System.out.println(bindingResult);
-            response.put("status", HttpStatus.BAD_REQUEST.value());
-            response.put("errors", errors);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-        else {
-            response.put("status", HttpStatus.OK.value());
-            response.put("data", userService.save(userDTO));
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage("Dữ liệu không hợp lệ");
+            response.setErrors(Map.of("validationErrors", errors));
+            return ResponseEntity.badRequest().body(response);
         }
 
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("user", userService.save(userDTO));
+
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Tạo người dùng thành công");
+        response.setData(data);
+
+        return ResponseEntity.ok(response);
     }
+
 }
