@@ -9,12 +9,8 @@ package com.backend.productservice.dto.request;
  */
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +29,7 @@ public class ProductCreationRequest {
     @NotEmpty(message = "Tên sản phẩm không được để trống")
     @Schema(description = "Tên sản phẩm", example = "Iphone 12 Pro Max")
     @Size(min = 3, max = 50, message = "Tên sản phẩm từ 3-50 ký tự")
-    String tensp;
+    String tenSP;
     @Schema(description = "Mô tả sản phẩm", example = "Điện thoại Iphone 12 Pro Max")
     String moTa;
     @NotNull(message = "Giá bán không được để trống")

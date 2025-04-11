@@ -86,7 +86,7 @@ public class ProductController {
     )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductReponse> saveProduct(
-            @RequestPart(name = "request") @Valid 
+            @RequestPart(name = "request") @Valid
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Product object that needs to be added to the store",
                     required = true,

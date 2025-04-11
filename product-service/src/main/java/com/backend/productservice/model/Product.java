@@ -24,7 +24,7 @@ public class Product {
     @Column(name = "product_id")
     Long id;
     @Column(name = "ten_sp", nullable = false, unique = true)
-    String tensp;
+    String tenSP;
     @Column(name = "mo_ta", columnDefinition = "TEXT")
     String moTa;
     @Column(name = "hinh_anh")

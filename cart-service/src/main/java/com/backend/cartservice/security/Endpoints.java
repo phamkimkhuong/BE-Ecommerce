@@ -15,6 +15,7 @@ package com.backend.cartservice.security;
 
 public class Endpoints {
     public static final String[] PUBLIC_GET_ENDPOINS = {
+            "/cart/**",
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {
@@ -24,5 +25,6 @@ public class Endpoints {
     };
 
     public static final String[] ADMIN_POST_ENDPOINS = {
+            "/cart",
     };
 }

@@ -1,17 +1,4 @@
-/*
- * @(#) $(NAME).java    1.0     2/13/2025
- *
- * Copyright (c) 2025 IUH. All rights reserved.
- */
-
 package com.backend.commonservice.advice;
-
-/*
- * @description
- * @author: Pham Kim Khuong
- * @version: 1.0
- * @created: 2/21/2025 3:17 PM
- */
 
 import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.model.AppException;
@@ -20,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +28,7 @@ public class GlobalExceptionHandler {
         response.setMessage(error.getMessage());
         return new ResponseEntity<>(response, error.getHttpStatus());
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ApiResponseDTO<Map<String, String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -55,7 +44,23 @@ public class GlobalExceptionHandler {
         response.setCode(ErrorMessage.INVALID_DATA.getCode());
         response.setMessage(ErrorMessage.INVALID_DATA.getMessage());
         response.setErrors(errors);
-       return  new ResponseEntity<>(response, ErrorMessage.INVALID_DATA.getHttpStatus());
+        return new ResponseEntity<>(response, ErrorMessage.INVALID_DATA.getHttpStatus());
+    }
+
+    // Add handler for HttpMediaTypeNotSupportedException
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<ApiResponseDTO<Map<String, String>>> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ApiResponseDTO<Map<String, String>> response = new ApiResponseDTO<>();
+
+        // Add validation errors for required fields
+        errors.put("request", "Thông tin sản phẩm là bắt buộc");
+
+        response.setCode(ErrorMessage.INVALID_DATA.getCode());
+        response.setMessage("Dữ liệu không hợp lệ. Vui lòng kiểm tra định dạng và các trường bắt buộc.");
+        response.setErrors(errors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     // Exception này sẽ được xử lý khi người dùng không có quyền truy cập vào một tài nguyên nào đó
@@ -63,7 +68,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
         Map<String, Object> errors = new LinkedHashMap<>();
         ErrorMessage error = ErrorMessage.UNAUTHORIZED;
-        errors.put("status", error.getHttpStatus());
+        errors.put("status", error.getHttpStatus().value());
         errors.put("message", error.getMessage());
         return new ResponseEntity<>(errors, error.getHttpStatus());
     }
@@ -76,8 +81,8 @@ public class GlobalExceptionHandler {
         errors.put("message", ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     private String convertToSnakeCase(String input) {
         return input.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
     }
-
 }

@@ -1,6 +1,7 @@
 package com.backend.cartservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Cart {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Mã khách hàng không được để trống")
     private Long customerId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)

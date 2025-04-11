@@ -27,11 +27,17 @@ spring:
     # Only run the script for first time
 #      mode: always
 #      data-locations: classpath:/sql/productDB.sql
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+      file-size-threshold: 2KB
 #  data:
 #    rest:
 #      base-path: /api/v1
 # Register with Eureka
+
 resilience4j:
   circuitbreaker:
     instances:
