@@ -18,6 +18,11 @@ public class Endpoints {
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {
+            "api/user/create"
+    };
+
+    public static final String[] PUBLIC_PUT_ENDPOINS = {
+            "api/user/{id}",
     };
 
     public static final String[] ADMIN_GET_ENDPOINS = {
@@ -28,4 +33,5 @@ public class Endpoints {
     public static final String[] ADMIN_POST_ENDPOINS = {
             "api/user",
     };
+
 }

@@ -15,6 +15,7 @@ package com.backend.services.impl;
 
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import com.backend.dtos.CreateUserRequest;
 import com.backend.dtos.UserDTO;
 import com.backend.entities.User;
 import com.backend.repositories.UserRepository;
@@ -74,5 +75,21 @@ public class UserServiceImpl implements UserService {
         this.findById(id);
         userRepository.deleteById(id);
         return true;
+    }
+
+    @Transactional
+    @Override
+    public CreateUserRequest createUserRequest(CreateUserRequest request) {
+        User user = new User();
+        user.setUserId(request.getUserId());
+
+        user.setFullName(null);
+        user.setPhoneNumber(null);
+        user.setAddress(null);
+        user.setDateOfBirth(null);
+        user.setGender(false); // mặc định
+
+        userRepository.save(user);
+        return request;
     }
 }

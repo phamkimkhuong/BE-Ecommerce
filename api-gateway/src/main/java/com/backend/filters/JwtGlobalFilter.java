@@ -58,7 +58,8 @@ public class JwtGlobalFilter implements WebFilter {
         // Bỏ qua xác thực với sign-up, sign-in và products
         if (path.startsWith("/api/account/sign-up") ||
                 path.startsWith("/api/account/sign-in") ||
-                path.startsWith("/api/v1/products")) {
+                path.startsWith("/api/v1/products") ||
+                path.startsWith("/api/user/create")) {
             return chain.filter(exchange);
         }
 
