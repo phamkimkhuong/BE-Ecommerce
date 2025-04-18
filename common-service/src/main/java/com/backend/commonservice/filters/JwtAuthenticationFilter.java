@@ -33,7 +33,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
-
+    // Kiêm tra xem token có hợp lệ hay không
     private Claims extractClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET)
@@ -48,9 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new AccessDeniedException("Missing or invalid Authorization header");
-            // filterChain.doFilter(request, response);
-            // return;
+//            throw new AccessDeniedException("Missing or invalid Authorization header");
+             filterChain.doFilter(request, response);
+             return;
         }
 
         String token = authHeader.substring(7);
@@ -61,12 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
             return;
         }
-
+// Lây thông tin từ token, cụ thể là username và roles
         List<SimpleGrantedAuthority> authorities = ((List<String>) claims.get("roles"))
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
-
+    // Tạo đối tượng Authentication từ thông tin trong token
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 claims.getSubject(), null, authorities
         );

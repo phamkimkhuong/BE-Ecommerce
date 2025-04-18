@@ -15,16 +15,19 @@ package com.backend.filters;
 
 import com.backend.model.AppException;
 import com.backend.model.ErrorMessage;
+import com.backend.model.OpenApiEndpoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -43,23 +46,43 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // Danh sách các đường dẫn không cần xác thực
-    private final List<String> openApiEndpoints = Arrays.asList(
-            "/api/account/sign-up",
-            "/api/account/sign-in",
-            "/api/v1/products"
+//    private final List<String> openApiEndpoints = Arrays.asList(
+//            "/api/account/sign-up",
+//            "/api/account/sign-in",
+//            "/api/v1/products"
+//    );
+    private final List<OpenApiEndpoint> openApiEndpoints = Arrays.asList(
+            new OpenApiEndpoint("POST", "/api/account/sign-up"),
+            new OpenApiEndpoint("POST", "/api/account/sign-in"),
+            new OpenApiEndpoint("GET", "/api/v1/products")
     );
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        logger.info("Authentication filter is called");
+        // Lấy đường dẫn của request
         String path = exchange.getRequest().getURI().getPath();
 
         // Kiểm tra nếu đường dẫn không yêu cầu xác thực
-        if (isOpenEndpoint(path)) {
+        String method = exchange.getRequest().getMethod().name();
+        logger.info("Request method: {}, path: {}", method, path);
+        if (isOpenEndpoint(method, path)) {
             return chain.filter(exchange);
         }
-
         // Trích xuất token từ header
-        String token = extractJwtFromRequest(exchange);
+        List<String> authHearde = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
+        // Nếu không có header Authorization, trả về lỗi
+        if(CollectionUtils.isEmpty(authHearde)){
+            logger.info("Authentication failed: Missing Authorization header for path {}", path);
+            return apiErrorResponse(
+                    exchange,
+                    HttpStatus.UNAUTHORIZED,
+                    ErrorMessage.MISSING_TOKEN.getCode(),
+                    ErrorMessage.MISSING_TOKEN.getMessage()
+            );
+        }
+
+        String token = authHearde.getFirst().replaceFirst("Bearer ", "");
         if (token == null) {
             logger.warn("Authentication failed: Missing token for path {}", path);
             return apiErrorResponse(
@@ -140,26 +163,20 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             );
         }
     }
-
-    private boolean isOpenEndpoint(String path) {
-        return openApiEndpoints.stream().anyMatch(path::startsWith);
+    // Kiểm tra xem đường dẫn có nằm trong danh sách các endpoint không yêu cầu xác thực hay không
+    private boolean isOpenEndpoint(String method, String path) {
+        return openApiEndpoints.stream()
+                .anyMatch(endpoint -> endpoint.getMethod().equalsIgnoreCase(method)
+                        && endpoint.getPath().equalsIgnoreCase(path));
     }
-
-    private String extractJwtFromRequest(ServerWebExchange exchange) {
-        String bearerToken = exchange.getRequest().getHeaders().getFirst("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
-
+    // Trích xuất claims từ token
     private Claims extractClaims(String token) throws JwtException {
         return Jwts.parser()
                 .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody();
     }
-
+    // Kiểm tra xem token đã hết hạn hay chưa
     private boolean isTokenExpired(Claims claims) {
         Date expiration = claims.getExpiration();
         return expiration != null && expiration.before(new Date());
@@ -177,6 +194,8 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         return true;
     }
 
+
+
     private Mono<Void> apiErrorResponse(ServerWebExchange exchange, HttpStatus status, int code, String message) {
         exchange.getResponse().setStatusCode(status);
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
@@ -184,7 +203,6 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("timestamp", new Date().toString());
         responseBody.put("code", code);
-        responseBody.put("status", status.value());
         responseBody.put("message", message);
 
         try {

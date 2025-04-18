@@ -15,7 +15,7 @@ package com.backend.productservice.security;
 
 public class Endpoints {
     public static final String[] PUBLIC_GET_ENDPOINS = {
-            "/products",
+            "/api/v1/products",
             "/products/**",
     };
 
