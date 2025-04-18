@@ -3,6 +3,7 @@ package com.backend.commonservice.advice;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -66,6 +67,25 @@ public class GlobalExceptionHandler {
     // Exception này sẽ được xử lý khi người dùng không có quyền truy cập vào một tài nguyên nào đó
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, Object> errors = new LinkedHashMap<>();
+        ErrorMessage error = ErrorMessage.UNAUTHORIZED;
+        errors.put("status", error.getHttpStatus().value());
+        errors.put("message", error.getMessage());
+        return new ResponseEntity<>(errors, error.getHttpStatus());
+    }
+
+    // Thêm handler cho AuthorizationDeniedException
+    @ExceptionHandler(org.springframework.security.authorization.AuthorizationDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthorizationDeniedException(org.springframework.security.authorization.AuthorizationDeniedException ex) {
+        Map<String, Object> errors = new LinkedHashMap<>();
+        ErrorMessage error = ErrorMessage.UNAUTHORIZED;
+        errors.put("status", error.getHttpStatus().value());
+        errors.put("message", error.getMessage());
+        return new ResponseEntity<>(errors, error.getHttpStatus());
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Map<String, Object>> handleExpiredJWtException(ExpiredJwtException ex) {
         Map<String, Object> errors = new LinkedHashMap<>();
         ErrorMessage error = ErrorMessage.UNAUTHORIZED;
         errors.put("status", error.getHttpStatus().value());

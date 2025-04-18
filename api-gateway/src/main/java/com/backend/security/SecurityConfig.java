@@ -14,9 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.server.WebFilter;
 
 import java.util.Arrays;
 
@@ -36,8 +38,8 @@ public class SecurityConfig {
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
                         .pathMatchers("/products/**", "/user/**", "/order/**").authenticated()
                         .anyExchange().permitAll()
-                )
-                .addFilterBefore(new JwtGlobalFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
+                );
+//                .addFilterBefore((WebFilter) new JwtGlobalFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();
     }
 }
