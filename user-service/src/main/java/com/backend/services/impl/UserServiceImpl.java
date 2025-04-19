@@ -23,6 +23,7 @@ import com.backend.services.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,10 +52,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(()-> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName(); // sub = username
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                .stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+
+        if (!isAdmin && (user.getUsername() == null || !user.getUsername().equals(currentUsername))) {
+            throw new AppException(ErrorMessage.UNAUTHORIZED);
+        }
 
         return this.convertToDTO(user);
     }
+
 
     @Transactional
     @Override
@@ -82,7 +93,7 @@ public class UserServiceImpl implements UserService {
     public CreateUserRequest createUserRequest(CreateUserRequest request) {
         User user = new User();
         user.setUserId(request.getUserId());
-
+        user.setUsername(request.getUsername());
         user.setFullName(null);
         user.setPhoneNumber(null);
         user.setAddress(null);

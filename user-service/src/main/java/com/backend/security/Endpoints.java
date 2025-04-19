@@ -34,4 +34,8 @@ public class Endpoints {
             "api/user",
     };
 
+    public static final String[] USER_GET_ENDPOINTS = {
+            "api/user/**"
+    };
+
 }

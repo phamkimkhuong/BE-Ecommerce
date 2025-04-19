@@ -95,6 +95,7 @@ public class AccountServiceImpl implements AccountService {
         // Gọi user-service để tạo user trống
         CreateUserRequest createUserRequest = new CreateUserRequest();
         createUserRequest.setUserId(savedAccount.getAccountId()); // dùng ID của account
+        createUserRequest.setUsername(savedAccount.getUsername());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
