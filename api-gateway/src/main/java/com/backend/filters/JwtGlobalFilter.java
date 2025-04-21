@@ -13,26 +13,32 @@ package com.backend.filters;
  * @created: 12-April-2025
  */
 
-import com.backend.model.AppException;
 import com.backend.model.ErrorMessage;
 import com.backend.model.OpenApiEndpoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtGlobalFilter implements GlobalFilter, Ordered {
@@ -72,7 +78,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         // Trích xuất token từ header
         List<String> authHearde = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
         // Nếu không có header Authorization, trả về lỗi
-        if(CollectionUtils.isEmpty(authHearde)){
+        if (CollectionUtils.isEmpty(authHearde)) {
             logger.info("Authentication failed: Missing Authorization header for path {}", path);
             return apiErrorResponse(
                     exchange,
@@ -83,7 +89,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         }
 
         String token = authHearde.getFirst().replaceFirst("Bearer ", "");
-        if (token == null) {
+        if (token.trim().isEmpty()) {
             logger.warn("Authentication failed: Missing token for path {}", path);
             return apiErrorResponse(
                     exchange,
@@ -109,7 +115,10 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             }
 
             // Lấy thông tin roles từ token
-            List<String> roles = claims.get("roles", List.class);
+            List<?> rawRoles = claims.get("roles", List.class);
+            List<String> roles = rawRoles == null
+                    ? Collections.emptyList()
+                    : rawRoles.stream().map(String::valueOf).collect(Collectors.toList());
 
             // Kiểm tra quyền truy cập cơ bản
             if (!hasAccess(path, roles)) {
@@ -163,19 +172,26 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             );
         }
     }
+
     // Kiểm tra xem đường dẫn có nằm trong danh sách các endpoint không yêu cầu xác thực hay không
     private boolean isOpenEndpoint(String method, String path) {
         return openApiEndpoints.stream()
                 .anyMatch(endpoint -> endpoint.getMethod().equalsIgnoreCase(method)
                         && endpoint.getPath().equalsIgnoreCase(path));
     }
+
     // Trích xuất claims từ token
     private Claims extractClaims(String token) throws JwtException {
-        return Jwts.parser()
-                .setSigningKey(SECRET)
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
+
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
+
     // Kiểm tra xem token đã hết hạn hay chưa
     private boolean isTokenExpired(Claims claims) {
         Date expiration = claims.getExpiration();
@@ -187,13 +203,12 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         // Lưu ý: Đây chỉ là kiểm tra cơ bản, kiểm tra quyền chi tiết nên được thực hiện ở service
 
         // Ví dụ: Chỉ admin mới có thể truy cập các API quản trị
-        if (path.startsWith("/api/admin") && !roles.contains("ROLE_ADMIN")) {
-            return false;
-        }
+//        if (path.startsWith("/api/admin") && !roles.contains("ROLE_ADMIN")) {
+//            return false;
+//        }
 
         return true;
     }
-
 
 
     private Mono<Void> apiErrorResponse(ServerWebExchange exchange, HttpStatus status, int code, String message) {

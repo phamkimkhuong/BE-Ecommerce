@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
 
     // Add handler for HttpMediaTypeNotSupportedException
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public ResponseEntity<ApiResponseDTO<Map<String, String>>> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
+    public ResponseEntity<ApiResponseDTO<Map<String, String>>> handleHttpMediaTypeNotSupportedException() {
         Map<String, String> errors = new HashMap<>();
         ApiResponseDTO<Map<String, String>> response = new ApiResponseDTO<>();
 
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
 
     // Exception này sẽ được xử lý khi người dùng không có quyền truy cập vào một tài nguyên nào đó
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
+    public ResponseEntity<Map<String, Object>> handleAccessDeniedException() {
         Map<String, Object> errors = new LinkedHashMap<>();
         ErrorMessage error = ErrorMessage.UNAUTHORIZED;
         errors.put("status", error.getHttpStatus().value());
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
 
     // Thêm handler cho AuthorizationDeniedException
     @ExceptionHandler(org.springframework.security.authorization.AuthorizationDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAuthorizationDeniedException(org.springframework.security.authorization.AuthorizationDeniedException ex) {
+    public ResponseEntity<Map<String, Object>> handleAuthorizationDeniedException() {
         Map<String, Object> errors = new LinkedHashMap<>();
         ErrorMessage error = ErrorMessage.UNAUTHORIZED;
         errors.put("status", error.getHttpStatus().value());
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Map<String, Object>> handleExpiredJWtException(ExpiredJwtException ex) {
+    public ResponseEntity<Map<String, Object>> handleExpiredJWtException() {
         Map<String, Object> errors = new LinkedHashMap<>();
         ErrorMessage error = ErrorMessage.UNAUTHORIZED;
         errors.put("status", error.getHttpStatus().value());

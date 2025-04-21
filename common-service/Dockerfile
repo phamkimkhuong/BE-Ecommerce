@@ -1,26 +1,32 @@
-# Stage 1: Build the application
-#  Start use maven image with jdk 21
-FROM  maven:3.9.8-amazoncorretto-21 AS builder
+FROM maven:3.9.8-amazoncorretto-21 AS builder
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the pom.xml file into the container
+# Copy pom.xml và cài đặt dependencies
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
 COPY src ./src
 
-# Build all the dependencies to go offline.
-#This is a separate step so the dependencies are cached and only rebuilt when the pom.xml file has changed.
-RUN mvn package -DskipTests
+# Build và install common-service vào local repository
+RUN mvn clean install -DskipTests
 
-# Stage 2: Build with amazoncorretto jdk 21
+# Tạo thư mục để chứa artifact
+RUN mkdir -p /maven-repo/com/backend/common-service/1.0.0/
+RUN cp target/common-service-1.0.0.jar /maven-repo/com/backend/common-service/1.0.0/
+RUN cp pom.xml /maven-repo/com/backend/common-service/1.0.0/common-service-1.0.0.pom
+
+# Stage 2: Final image
 FROM amazoncorretto:21.0.4
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the jar file from the builder stage
+# Copy JAR file
 COPY --from=builder /app/target/*.jar common-service.jar
+# Copy Maven repository
+COPY --from=builder /maven-repo /maven-repo
 
-
-
+# Volume để chia sẻ Maven repository
+VOLUME /maven-repo

@@ -8,8 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="common-service" />
-        <module name="api-gateway" />
         <module name="spring-boot" />
         <module name="service-registry" />
         <module name="notification-service" />
@@ -34,22 +32,46 @@
         </processorPath>
         <module name="user-service" />
       </profile>
-      <profile name="Annotation profile for multi-module-project" enabled="true">
+      <profile name="Annotation profile for danhgia_service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="product-service" />
+        <module name="api-gateway" />
         <module name="cart-service" />
-        <module name="order-service" />
         <module name="danhgia_service" />
-        <module name="promotion-service" />
+      </profile>
+      <profile name="Annotation profile for product-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+        </processorPath>
+        <module name="product-service" />
+      </profile>
+      <profile name="Annotation profile for multi-module-project" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="common-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="chatapp" target="17" />
+      <module name="order-service" target="21" />
+      <module name="promotion-service" target="21" />
       <module name="user_service" target="21" />
     </bytecodeTargetLevel>
   </component>
@@ -59,14 +81,14 @@
       <module name="auth-service" options="-parameters" />
       <module name="cart-service" options="-parameters" />
       <module name="chatapp" options="-parameters" />
-      <module name="common-service" options="-parameters" />
+      <module name="common-service" options="-parameters -parameters" />
       <module name="config-server" options="-parameters" />
       <module name="danhgia_service" options="-parameters" />
       <module name="monitora-admin" options="-parameters" />
       <module name="multi-module-project" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
-      <module name="product-service" options="-parameters" />
+      <module name="product-service" options="-parameters -parameters" />
       <module name="promotion-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="spring-boot" options="-parameters" />

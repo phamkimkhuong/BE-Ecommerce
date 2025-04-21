@@ -1,26 +1,28 @@
-version: '1.0.0'
+networks:
+  microservices-networks:
+    driver: bridge
 services:
-  multi-module-project:
+  # Build tất cả các service trong một image
+  all-services:
     build:
-      context: ./multi-module-project
+      context: .  # Sử dụng thư mục gốc
       dockerfile: Dockerfile
-    image: multi-module-repo:1.0.0
-    volumes:
-      - maven-repo:/maven-repo
+    image: all-services:latest
   config-server:
     build:
-      context: contextPath
+      context: ./config-server
       dockerfile: Dockerfile
-    image: configservice:1.0.0
+    image: config-server:1.0.0
     ports:
       - "8888:8888"
+    restart: on-failure
     env_file:
       - local.env
-    depends_on:
-      - multi-module-project
+    networks:
+      - microservices-networks
   service-registry:
     build:
-      context: contextPath
+      context: ./service-registry
       dockerfile: Dockerfile
     image: service-registry:1.0.0
     ports:
@@ -28,29 +30,32 @@ services:
     restart: on-failure
     env_file:
       - local.env
-  # api-gateway:
-  #   build:
-  #     context: contextPath
-  #     dockerfile: Dockerfile
-  #   image: api-gateway:1.0.0
-  #   ports:
-  #     - "8080:8080"
-  #   restart: on-failure
-  #   env_file:
-  #     - local.env
-  # product-service:
-  #   build:
-  #     context: contextPath
-  #     dockerfile: Dockerfile
-  #   image: product-service:1.0.0
-  #   ports:
-  #     - "8081:8081"
-  #   volumes:
-  #     - ./product-service:/app
-  #   env_file:
-  #     - local.env
-
-volumes:
-  maven-repo:
-    external: false
-
+    networks:
+      - microservices-networks
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    image: api-gateway:1.0.0
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    env_file:
+      - local.env
+    networks:
+      - microservices-networks
+  # Các service riêng lẻ
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    image: product-service:1.0.0
+    ports:
+      - "9898:9898"
+    restart: on-failure
+    env_file:
+      - local.env
+    depends_on:
+      - all-services
+    networks:
+      - microservices-networks

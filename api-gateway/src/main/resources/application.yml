@@ -14,7 +14,7 @@ spring:
       default-filters:
         - name: RequestRateLimiter
           args:
-            # Trong 1s nap 10 tokens
+            # Trong 1s sẽ có 10 token được cấp phát
             redis-rate-limiter.replenishRate: 10
             # Số lượng token tối đa trong 1s
             redis-rate-limiter.burstCapacity: 20
