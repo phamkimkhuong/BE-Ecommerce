@@ -1,61 +1,111 @@
 networks:
   microservices-networks:
     driver: bridge
+
 services:
-  # Build tất cả các service trong một image
-  all-services:
+  # Base builder image
+  base-builder:
     build:
-      context: .  # Sử dụng thư mục gốc
-      dockerfile: Dockerfile
-    image: all-services:latest
+      context: .
+      dockerfile: base-builder.Dockerfile
+    image: base-builder:latest
+    # Không cần chạy container này, chỉ build image
+
+  # Database service
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=product_service
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - microservices-networks
+
   config-server:
     build:
       context: ./config-server
       dockerfile: Dockerfile
     image: config-server:1.0.0
+    container_name: ${CONFIG_SERVER:-config-server}
     ports:
       - "8888:8888"
-    restart: on-failure
+    restart: unless-stopped
     env_file:
       - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_ENABLED=false
     networks:
       - microservices-networks
+
   service-registry:
     build:
       context: ./service-registry
       dockerfile: Dockerfile
     image: service-registry:1.0.0
+    container_name: ${SERVICE_REGISTRY:-service-registry}
     ports:
       - "8761:8761"
-    restart: on-failure
+    restart: unless-stopped
     env_file:
       - local.env
     networks:
       - microservices-networks
+
   api-gateway:
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
     image: api-gateway:1.0.0
+    container_name: ${API_GATEWAY:-api-gateway}
     ports:
       - "8080:8080"
-    restart: on-failure
+    restart: unless-stopped
     env_file:
       - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_SERVER_URL=http://service-registry:8761/eureka/
+    depends_on:
+      service-registry:
+        condition: service_started
     networks:
       - microservices-networks
-  # Các service riêng lẻ
+
+  # Service sử dụng base-builder
   product-service:
     build:
-      context: ./product-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: product-service/Dockerfile
     image: product-service:1.0.0
     ports:
       - "9898:9898"
-    restart: on-failure
+    #  không tự động khởi chạy container
+    restart: unless-stopped
     env_file:
       - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+      - DATABASE_URL=jdbc:mariadb://mariadb:3306/product_service
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
     depends_on:
-      - all-services
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
     networks:
       - microservices-networks
+
+volumes:
+  mariadb_data:

@@ -1,6 +1,6 @@
 # Stage 1: Build the application
 #  Start use maven image with jdk 21
-FROM  maven:3.9.8-amazoncorretto-21 AS builder
+FROM maven:3.9.8-amazoncorretto-21 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -22,10 +22,14 @@ WORKDIR /app
 # Copy the jar file from the builder stage
 COPY --from=builder /app/target/*.jar config-server.jar
 
+## Set environment variables
+ENV SPRING_PROFILES_ACTIVE=native
+ENV EUREKA_SERVER_URL=http://service-registry:8761/eureka/
+
 # Expose the port that the application will run on
 EXPOSE 8888
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","config-server.jar"]
+ENTRYPOINT ["java", "-jar", "config-server.jar"]
 
 

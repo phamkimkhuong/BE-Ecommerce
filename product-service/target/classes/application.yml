@@ -2,7 +2,17 @@ spring:
   application:
     name: product-service
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://config-server:8888}
   cloud:
     config:
       fail-fast: true
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://config-server:8888}
+      retry:
+        #  số lần retry
+        max-attempts: 2
+        #  thời gian chờ giữa các lần retry
+        initial-interval: 1500
+        #  tăng thời gian chờ giữa các lần retry
+        multiplier: 1.5
+        #  thời gian chờ tối đa giữa các lần retry
+        max-interval: 10000

@@ -20,7 +20,7 @@ spring:
             redis-rate-limiter.burstCapacity: 20
             # Số lượng token cần để thực hiện 1 request
             redis-rate-limiter.requestedTokens: 1
-#        - StripPrefix=1 # Remove prefix /api-gateway from request path
+      #        - StripPrefix=1 # Remove prefix /api-gateway from request path
       discovery:
         locator:
           enabled: true
@@ -54,9 +54,9 @@ spring:
             #                fallbackUri: forward:/fallback/product-service
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${HOST_IP_ADDRESS:localhost}
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
       register-with-eureka: true
       fetch-registry: true
