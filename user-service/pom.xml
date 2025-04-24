@@ -28,6 +28,10 @@
 	<properties>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.backend</groupId>
+			<artifactId>commonservice</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

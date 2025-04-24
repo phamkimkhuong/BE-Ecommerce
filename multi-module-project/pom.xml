@@ -17,7 +17,7 @@
         <module>../common-service</module>
         <module>../product-service</module>
         <!--        <module>../order-service</module>-->
-        <!--        <module>../user-service</module>-->
+                <module>../user-service</module>
         <!--        <module>../cart-service</module>-->
         <!--        <module>../promotion-service</module>-->
         <!--        <module>../danhgia_service</module>-->

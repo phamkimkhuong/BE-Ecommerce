@@ -1,4 +1,4 @@
-FROM maven:3.9.8-amazoncorretto-21 AS builder
+FROM maven:3.9.8-amazoncorretto-21 AS base-builder
 
 WORKDIR /app
 
@@ -11,15 +11,10 @@ RUN cd common-service && mvn clean install -DskipTests
 COPY ./multi-module-project/pom.xml ./multi-module-project/
 RUN cd multi-module-project && mvn install -N -DskipTests
 
-# 3. Build tất cả các service con
-COPY ./product-service ./product-service
-#COPY ./user-service ./user-service
+# Hiển thị cấu trúc thư mục Maven repository để kiểm tra
+RUN ls -la /root/.m2/repository/com/backend/
 
-# Build từng service
-RUN cd product-service && mvn clean package -DskipTests
-# Thêm các lệnh build cho service khác
-
-# Tạo thư mục để chứa tất cả các JAR files
-RUN mkdir -p /app/services
-RUN cp ./product-service/target/*.jar /app/services/product-service.jar
-# Thêm các service khác nếu cần
+# Không cần sao chép các thư mục này vì chúng đã có sẵn trong .m2 cache sau khi build
+# RUN mkdir -p /root/.m2/repository/com/backend/
+# RUN cp -r /root/.m2/repository/com/backend/commonservice /root/.m2/repository/com/backend/
+# RUN cp -r /root/.m2/repository/com/backend/multi-module-project /root/.m2/repository/com/backend/

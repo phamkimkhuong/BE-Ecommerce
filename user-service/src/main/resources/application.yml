@@ -2,7 +2,11 @@ spring:
   application:
     name: user-service
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:${SPRING_CLOUD_CONFIG_URI}
   cloud:
     config:
       fail-fast: true
+      retry:
+        max-attempts: 3
+        initial-interval: 1000
+        multiplier: 1.5

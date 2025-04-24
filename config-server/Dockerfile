@@ -11,7 +11,7 @@ COPY src ./src
 
 # Build all the dependencies to go offline.
 #This is a separate step so the dependencies are cached and only rebuilt when the pom.xml file has changed.
-RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Build with amazoncorretto jdk 21
 FROM amazoncorretto:21.0.4

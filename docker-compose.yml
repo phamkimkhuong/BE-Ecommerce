@@ -7,7 +7,7 @@ services:
   base-builder:
     build:
       context: .
-      dockerfile: base-builder.Dockerfile
+      dockerfile: Dockerfile
     image: base-builder:latest
     # Không cần chạy container này, chỉ build image
 
@@ -70,7 +70,6 @@ services:
       - local.env
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_SERVER_URL=http://service-registry:8761/eureka/
     depends_on:
       service-registry:
         condition: service_started
@@ -106,6 +105,46 @@ services:
         condition: service_started
     networks:
       - microservices-networks
-
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    image: auth-service:1.0.0
+    ports:
+      - "9996:9996"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    image: user-service:1.0.0
+    ports:
+      - "9995:9995"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
 volumes:
   mariadb_data:
+
