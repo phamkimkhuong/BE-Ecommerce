@@ -49,7 +49,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 //            throw new AccessDeniedException("Missing or invalid Authorization header");
-             filterChain.doFilter(request, response);
+            logger.info("Noting token");
+            filterChain.doFilter(request, response);
              return;
         }
 

@@ -2,11 +2,10 @@ package com.backend.notificationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.backend.notificationservice","com.backend.commonservice"})
-public class NotificationServiceApplication {
+@SpringBootApplication(scanBasePackages = {"com.backend.notificationservice", "com.backend.commonservice"})
+//@ComponentScan({"com.backend.notificationservice", "com.backend.commonservice"})
+class NotificationServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(NotificationServiceApplication.class, args);

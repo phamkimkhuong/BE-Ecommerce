@@ -25,9 +25,9 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-    @Value("${spring.kafka.bootstrap-servers:localhost:9092}")
+    @Value("${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}")
     private String bootstrapServer;
-    @Value("${spring.kafka.consumer.group-id:default-group}")
+    @Value("${spring.kafka.consumer.group-id:default-group")
     private String comsumerGroupId;
 
     @Bean

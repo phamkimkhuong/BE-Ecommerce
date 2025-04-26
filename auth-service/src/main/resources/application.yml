@@ -2,7 +2,7 @@ spring:
   application:
     name: auth-service
   config:
-    import: configserver:http://config-server:8888
+    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
   cloud:
     config:
       fail-fast: true
@@ -10,3 +10,4 @@ spring:
         max-attempts: 2
         initial-interval: 1000
         multiplier: 1.5
+
