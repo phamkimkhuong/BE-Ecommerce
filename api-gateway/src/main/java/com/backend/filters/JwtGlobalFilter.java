@@ -61,7 +61,10 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             new OpenApiEndpoint("POST", "/api/account/sign-up"),
             new OpenApiEndpoint("POST", "/api/account/sign-in"),
             new OpenApiEndpoint("GET", "/api/v1/products"),
-            new OpenApiEndpoint("POST", "/api/user")
+            new OpenApiEndpoint("POST", "/api/user"),
+            new OpenApiEndpoint("POST", "/api/user/create"),
+            new OpenApiEndpoint("POST", "/api/payment/vn-pay/create-payment"),
+            new OpenApiEndpoint("POST", "/api/payment/vn-pay/payment-info")
     );
 
     @Override

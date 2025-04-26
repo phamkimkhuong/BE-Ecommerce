@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//@ComponentScan({"com.backend","com.backend.commonservice"})
 public class AuthServiceApplication {
     private final static Logger logger = LoggerFactory.getLogger(AuthServiceApplication.class.getName());
     public static void main(String[] args) {
