@@ -59,7 +59,9 @@ public class JwtGlobalFilter implements WebFilter {
         if (path.startsWith("/api/account/sign-up") ||
                 path.startsWith("/api/account/sign-in") ||
                 path.startsWith("/api/v1/products") ||
-                path.startsWith("/api/user/create")) {
+                path.startsWith("/api/user/create") ||
+                path.startsWith("/api/payment/vn-pay/create-payment") ||
+                path.startsWith("/api/payment/vn-pay/payment-info")){
             return chain.filter(exchange);
         }
 

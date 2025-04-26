@@ -34,7 +34,7 @@ public class Order {
     @Column(name = "tong_tien",nullable = false)
     private Double tongTien;
     @Column(name = "trang_thai",nullable = false)
-  @Convert(converter = OrderStatusConverter.class)
+    @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
