@@ -15,6 +15,7 @@ package com.backend.services.impl;
 
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import com.backend.dtos.CreateUserRequest;
 import com.backend.dtos.UserDTO;
 import com.backend.entities.User;
 import com.backend.repositories.UserRepository;
@@ -22,6 +23,7 @@ import com.backend.services.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,10 +52,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(()-> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName(); // sub = username
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                .stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+
+        if (!isAdmin && (user.getUsername() == null || !user.getUsername().equals(currentUsername))) {
+            throw new AppException(ErrorMessage.UNAUTHORIZED);
+        }
 
         return this.convertToDTO(user);
     }
+
 
     @Transactional
     @Override
@@ -74,5 +86,21 @@ public class UserServiceImpl implements UserService {
         this.findById(id);
         userRepository.deleteById(id);
         return true;
+    }
+
+    @Transactional
+    @Override
+    public CreateUserRequest createUserRequest(CreateUserRequest request) {
+        User user = new User();
+        user.setUserId(request.getUserId());
+        user.setUsername(request.getUsername());
+        user.setFullName(null);
+        user.setPhoneNumber(null);
+        user.setAddress(null);
+        user.setDateOfBirth(null);
+        user.setGender(false); // mặc định
+
+        userRepository.save(user);
+        return request;
     }
 }

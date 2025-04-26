@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/multi-module-project/pom.xml" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
         <option value="$PROJECT_DIR$/../Web-Ecommerce-FE/web-app/pom.xml" />
+        <option value="$PROJECT_DIR$/payment-service/pom.xml" />
       </list>
     </option>
   </component>

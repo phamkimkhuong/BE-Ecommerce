@@ -13,6 +13,7 @@ package com.backend.services.impl;
  * @created: 26-February-2025 11:01 PM
  */
 
+import com.backend.dtos.CreateUserRequest;
 import com.backend.dtos.JwtResponse;
 import com.backend.dtos.SignInRequest;
 import com.backend.dtos.SignUpRequest;
@@ -25,8 +26,7 @@ import com.backend.services.JWTService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -39,6 +39,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -59,6 +60,8 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     @Lazy
@@ -87,7 +90,33 @@ public class AccountServiceImpl implements AccountService {
         // Gán quyền USER cho tài khoản mới
         account.setRoles(Collections.singletonList(userRole));
 
-        accountRepository.save(account);
+        Account savedAccount = accountRepository.save(account); // lưu trước để có ID
+
+        // Gọi user-service để tạo user trống
+        CreateUserRequest createUserRequest = new CreateUserRequest();
+        createUserRequest.setUserId(savedAccount.getAccountId()); // dùng ID của account
+        createUserRequest.setUsername(savedAccount.getUsername());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<CreateUserRequest> request = new HttpEntity<>(createUserRequest, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    "http://localhost:8080/api/user/create", // Gọi qua API Gateway
+                    request,
+                    String.class
+            );
+
+            if (response.getStatusCode() != HttpStatus.CREATED) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Account created, but failed to create user profile.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Account created, but error calling user-service.");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully!");
     }
     @Override

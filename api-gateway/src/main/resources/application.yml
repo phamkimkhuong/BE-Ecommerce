@@ -58,6 +58,10 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/account/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
           # Config rate limit for service product-service
           filters:
             #            - name: CircuitBreaker

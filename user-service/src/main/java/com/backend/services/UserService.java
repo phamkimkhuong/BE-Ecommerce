@@ -13,6 +13,7 @@ package com.backend.services;
  * @created: 13-February-2025 8:12 PM
  */
 
+import com.backend.dtos.CreateUserRequest;
 import com.backend.dtos.UserDTO;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface UserService {
     public UserDTO save(UserDTO nguoiDung);
 
     public boolean delete(Long id);
+
+    public CreateUserRequest createUserRequest(CreateUserRequest request);
 }
