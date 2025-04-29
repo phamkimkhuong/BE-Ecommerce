@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>cart-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>cart-service</name>
     <description>cart-service</description>
     <url/>
@@ -28,6 +28,10 @@
     <properties>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.backend</groupId>
+            <artifactId>commonservice</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

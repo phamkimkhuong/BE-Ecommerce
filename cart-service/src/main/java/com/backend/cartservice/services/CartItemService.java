@@ -4,6 +4,8 @@ import com.backend.cartservice.entity.Cart;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.repository.CartItemRepository;
 import com.backend.cartservice.repository.CartRepository;
+import com.backend.cartservice.repository.OpenFeignClient.ProductClient;
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +21,32 @@ public class CartItemService {
     @Autowired
     private CartRepository cartRepository; // Thêm CartRepository để tìm Cart
 
+    @Autowired
+    private ProductClient productClient; // Thêm ProductClient để kiểm tra số lượng sản phẩm
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CartItemService.class);
+
     // Thêm chi tiết giỏ hàng
     public CartItem addCartItem(CartItem cartItem) {
+        // Kiểm tra số lượng sản phẩm trong kho trước khi thêm vào giỏ hàng
+        try {
+            ApiResponseDTO<Boolean> response = productClient.checkProductAvailability(
+                    cartItem.getProductId(), cartItem.getQuantity());
+
+            if (response.getData() != null) {
+                boolean isAvailable = response.getData();
+
+                if (!isAvailable) {
+                    throw new RuntimeException("Số lượng sản phẩm trong kho không đủ");
+                }
+            } else {
+                log.warn("Không thể kiểm tra số lượng sản phẩm, response không hợp lệ");
+            }
+        } catch (Exception e) {
+            log.error("Lỗi khi kiểm tra số lượng sản phẩm: {}", e.getMessage());
+            throw new RuntimeException("Không thể kiểm tra số lượng sản phẩm: " + e.getMessage());
+        }
+
         // Tìm Cart mà CartItem thuộc về (giả sử cartId được cung cấp)
         Cart cart = cartRepository.findById(cartItem.getCart().getId())
                 .orElseThrow(() -> new RuntimeException("Cart not found"));

@@ -1,6 +1,5 @@
 package com.backend.productservice.services;
 
-
 /*
  * @description
  * @author: pham Kim Khuong
@@ -24,4 +23,6 @@ public interface ProductService {
     ProductReponse updateProduct(Long id, ProductCreationRequest product);
 
     boolean deleteProduct(Long id);
+
+    boolean checkProductAvailability(Long productId, int quantity);
 }

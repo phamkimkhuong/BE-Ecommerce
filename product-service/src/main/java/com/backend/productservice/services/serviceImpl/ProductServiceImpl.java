@@ -1,6 +1,5 @@
 package com.backend.productservice.services.serviceImpl;
 
-
 /*
  * @description
  * @author: Pham Kim khuong
@@ -39,12 +38,12 @@ public class ProductServiceImpl implements ProductService {
     ModelMapper modelMapper;
     CloudinaryService cloudinaryService;
 
-    //    Convert Entity to DTO
+    // Convert Entity to DTO
     public ProductReponse toProductReponse(Product product) {
         return modelMapper.map(product, ProductReponse.class);
     }
 
-    //    Convert DTO to Entity
+    // Convert DTO to Entity
     public Product toProduct(ProductCreationRequest product) {
         return modelMapper.map(product, Product.class);
     }
@@ -66,7 +65,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductReponse saveProduct(ProductCreationRequest product, MultipartFile hinhAnh) {
         log.info("ProductService: method save Product");
-        Category c = categorytRep.findById(product.getCategory_id()).orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+        Category c = categorytRep.findById(product.getCategory_id())
+                .orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         Product p = toProduct(product);
         String hinhAnhURL = cloudinaryService.uploadImage(hinhAnh);
         p.setHinhAnh(hinhAnhURL);
@@ -89,5 +89,27 @@ public class ProductServiceImpl implements ProductService {
         log.info("In method delete Product");
         productRep.deleteById(id);
         return true;
+    }
+
+    /**
+     * Kiểm tra số lượng sản phẩm trong kho
+     * 
+     * @param productId ID của sản phẩm cần kiểm tra
+     * @param quantity  Số lượng cần kiểm tra
+     * @return true nếu số lượng trong kho đủ, false nếu không đủ
+     */
+    @Override
+    public boolean checkProductAvailability(Long productId, int quantity) {
+        log.info("Kiểm tra số lượng sản phẩm trong kho: productId={}, quantity={}", productId, quantity);
+        try {
+            Product product = productRep.findById(productId)
+                    .orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+
+            // Kiểm tra nếu số lượng trong kho đủ
+            return product.getSoLuong() >= quantity;
+        } catch (Exception e) {
+            log.error("Lỗi khi kiểm tra số lượng sản phẩm: {}", e.getMessage());
+            return false;
+        }
     }
 }

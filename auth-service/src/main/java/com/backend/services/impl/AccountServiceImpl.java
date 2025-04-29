@@ -108,7 +108,6 @@ public class AccountServiceImpl implements AccountService {
                     request,
                     String.class
             );
-
             if (response.getStatusCode() != HttpStatus.CREATED) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body("Account created, but failed to create user profile.");

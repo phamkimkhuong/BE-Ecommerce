@@ -62,6 +62,10 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/carts/**,/api/cart-items/**
           # Config rate limit for service product-service
           filters:
             #            - name: CircuitBreaker
