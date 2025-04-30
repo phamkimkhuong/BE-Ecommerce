@@ -19,15 +19,7 @@
         <option value="$PROJECT_DIR$/../Web-Ecommerce-FE/web-app/pom.xml" />
         <option value="$PROJECT_DIR$/payment-service/pom.xml" />
         <option value="$PROJECT_DIR$/order-service/pom.xml" />
-        <option value="$PROJECT_DIR$/../../../../OneDrive - Industrial University of HoChiMinh City/Nam3-HK2-Khuong/JavaPhanTan/KaraokeSocket/pom.xml" />
-        <option value="$PROJECT_DIR$/../../../../OneDrive - Industrial University of HoChiMinh City/Nam3-HK2-Khuong/JavaPhanTan/KaraokeSocketClient/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../../../../OneDrive - Industrial University of HoChiMinh City/Nam3-HK2-Khuong/JavaPhanTan/KaraokeSocket/pom.xml" />
-        <option value="$PROJECT_DIR$/../../../../OneDrive - Industrial University of HoChiMinh City/Nam3-HK2-Khuong/JavaPhanTan/KaraokeSocketClient/pom.xml" />
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="21" project-jdk-type="JavaSDK">

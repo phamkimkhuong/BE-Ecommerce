@@ -22,7 +22,7 @@ spring:
       #        - StripPrefix=1 # Remove prefix /api-gateway from request path
         - name: Retry
           args:
-            retries: 3
+            retries: 2
             statuses: BAD_GATEWAY,SERVICE_UNAVAILABLE,GATEWAY_TIMEOUT
             methods: GET,POST,PUT,DELETE
             backoff:

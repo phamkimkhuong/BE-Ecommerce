@@ -47,6 +47,7 @@ public class JWTServiceImpl implements JWTService {
 
         if (account != null) {
             List<String> roles = account.getRoles().stream().map(Role::getName).toList();
+            claims.put("accountId", account.getAccountId());
             claims.put("roles", roles);
         }
 

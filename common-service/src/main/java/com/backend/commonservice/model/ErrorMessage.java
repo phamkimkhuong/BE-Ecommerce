@@ -27,7 +27,12 @@ public enum ErrorMessage {
     INTERNAL_SERVER_ERROR("Internal Server Error", 500, HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_CREDENTIAL("Invalid Credential", 400, HttpStatus.BAD_REQUEST),
     INVALID_TOKEN("Token không hợp lệ", 400, HttpStatus.BAD_REQUEST),
-
+    USER_SERVER_ERROR("Dịch vụ khách hàng lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
+    PRODUCT_SERVER_ERROR("Dịch vụ sản phẩm lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
+    CART_SERVER_ERROR("Dịch vụ giỏ hàng lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
+    ORDER_SERVER_ERROR("Dịch vụ đơn hàng lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
+    PAYMENT_SERVER_ERROR("Dịch vụ thanh toán lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
+    AUTH_SERVER_ERROR("Dịch vụ xác thực lỗi", 500, HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST("Bad Request", 400, HttpStatus.BAD_REQUEST),
     INVALID_DATA("Validation failed", 400, HttpStatus.BAD_REQUEST),
     DUPLICATE_DATA("Duplicate Data", 400, HttpStatus.BAD_REQUEST),

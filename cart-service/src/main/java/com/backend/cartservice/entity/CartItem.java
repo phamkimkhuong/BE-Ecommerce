@@ -1,7 +1,6 @@
 package com.backend.cartservice.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -22,8 +21,8 @@ public class CartItem {
 
     @NotNull(message = "Mã sản phẩm không được để trống")
     private Long productId; // ID sản phẩm
-    @NotBlank(message = "Tên sản phẩm không được để trống")
-    private String productName; // Tên sản phẩm
+    // @NotBlank(message = "Tên sản phẩm không được để trống")
+    // private String productName; // Tên sản phẩm
     @NotNull(message = "Giá sản phẩm không được để trống")
     @Positive(message = "Giá sản phẩm phải lớn hơn 0")
     private double price; // Giá của sản phẩm

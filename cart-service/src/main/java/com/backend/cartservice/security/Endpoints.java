@@ -14,17 +14,20 @@ package com.backend.cartservice.security;
  */
 
 public class Endpoints {
-    public static final String[] PUBLIC_GET_ENDPOINS = {
-            "/cart/**",
-    };
+        public static final String[] PUBLIC_GET_ENDPOINS = {
+                        // Không có endpoint GET công khai
+        };
 
-    public static final String[] PUBLIC_POST_ENDPOINS = {
-    };
+        public static final String[] PUBLIC_POST_ENDPOINS = {
+                        // Không có endpoint POST công khai
+        };
+        public static final String[] ADMIN_GET_ENDPOINS = {
+                        "/api/carts/**", // Admin có thể xem tất cả giỏ hàng
+                        "//api/cart-items/**", // Admin có thể xem tất cả các mục trong giỏ hàng
+        };
 
-    public static final String[] ADMIN_GET_ENDPOINS = {
-    };
-
-    public static final String[] ADMIN_POST_ENDPOINS = {
-            "/cart",
-    };
+        public static final String[] ADMIN_POST_ENDPOINS = {
+                        "/api/carts/**",
+                        "/api/cart-items/**",
+        };
 }

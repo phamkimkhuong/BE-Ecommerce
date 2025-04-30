@@ -2,35 +2,46 @@ package com.backend.cartservice.controllers;
 
 import com.backend.cartservice.entity.Cart;
 import com.backend.cartservice.services.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/carts")
 public class CartController {
 
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     // API để thêm giỏ hàng mới (sử dụng customerId từ CartRequest)
     @PostMapping()
-    public ResponseEntity<Cart> addCart(@RequestBody CartRequest cartRequest) {
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#cartRequest.customerId)")
+    public ResponseEntity<Cart> addCart(@RequestBody @Valid CartRequest cartRequest
+    ) {
+        log.info("Thêm giỏ hàng mới cho customerId: {}", cartRequest.getCustomerId());
         Cart cart = cartService.addCart(cartRequest.getCustomerId());
         return ResponseEntity.ok(cart);
     }
 
     // API để lấy giỏ hàng của khách hàng theo customerId
     @GetMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#customerId)")
     public ResponseEntity<Cart> getCart(@PathVariable Long customerId) {
         Optional<Cart> cart = cartService.getCart(customerId);
-        return cart.isPresent() ? ResponseEntity.ok(cart.get()) : ResponseEntity.notFound().build();
+        return cart.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // API để cập nhật giỏ hàng
     @PutMapping("/{cartId}")
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public ResponseEntity<Cart> updateCart(@PathVariable Long cartId, @RequestBody Cart cart) {
         // Cập nhật giỏ hàng theo cartId
         Cart updatedCart = cartService.updateCart(cartId, cart);
@@ -41,11 +52,16 @@ public class CartController {
         }
     }
 
-
-
     // API để xóa giỏ hàng
     @DeleteMapping("/delete/{cartId}")
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
+        // Lấy thông tin giỏ hàng để kiểm tra tồn tại
+        Optional<Cart> cart = cartService.getCart(cartId);
+        if (cart.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         cartService.deleteCart(cartId);
         return ResponseEntity.noContent().build();
     }

@@ -8,6 +8,8 @@ package com.backend.orderservice.service.serviceImpl;
  * @created: 2/23/2025 12:55 PM
  */
 
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.OrderDetail;
 import com.backend.orderservice.dtos.OrderDetailDTO;
 import com.backend.orderservice.repository.OrderDetailRepository;
@@ -46,8 +48,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public OrderDetailDTO getById(Long id) {
         return orderDetailRep.findById(id).map(this::convertToDTO).orElseThrow(
-                () -> new ItemNotFoundException("Order", "id", id)
-        );
+                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
     }
 
     @Transactional
@@ -61,8 +62,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public OrderDetailDTO update(Long id, OrderDetailDTO product) {
         orderDetailRep.findById(id).map(this::convertToDTO).orElseThrow(
-                () -> new ItemNotFoundException("Order", "id", id)
-        );
+                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         OrderDetail p = orderDetailRep.save(convertToEntity(product));
         return convertToDTO(p);
     }

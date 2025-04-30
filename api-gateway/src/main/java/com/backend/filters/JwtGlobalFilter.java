@@ -123,6 +123,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             List<String> roles = rawRoles == null
                     ? Collections.emptyList()
                     : rawRoles.stream().map(String::valueOf).collect(Collectors.toList());
+            Long userId = claims.get("accountId", Long.class);
 
             // Kiểm tra quyền truy cập cơ bản
             if (!hasAccess(path, roles)) {
@@ -141,8 +142,9 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             // Chuyển tiếp thông tin người dùng trong header đến các service phía sau
             ServerWebExchange modifiedExchange = exchange.mutate()
                     .request(builder -> builder
-                            .header("X-Auth-UserId", claims.getSubject())
+                            .header("X-Auth-UserName", claims.getSubject())
                             .header("X-Auth-Roles", String.join(",", roles))
+                            .header("X-Auth-UserId", String.valueOf(userId))
                             .header("X-Auth-Token", token) // Chuyển tiếp token gốc
                     )
                     .build();
