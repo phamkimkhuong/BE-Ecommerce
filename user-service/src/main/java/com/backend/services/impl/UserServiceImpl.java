@@ -22,7 +22,6 @@ import com.backend.repositories.UserRepository;
 import com.backend.services.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -32,22 +31,22 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    final UserRepository userRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
+    final ModelMapper modelMapper;
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+    }
 
     private UserDTO convertToDTO(User user) {
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return userDTO;
+        return modelMapper.map(user, UserDTO.class);
     }
 
     private User convertToEntity(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        return user;
+        return modelMapper.map(userDTO, User.class);
     }
-
 
     @Override
     public UserDTO findById(Long id) {
@@ -65,7 +64,6 @@ public class UserServiceImpl implements UserService {
 
         return this.convertToDTO(user);
     }
-
 
     @Transactional
     @Override
@@ -90,17 +88,15 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public CreateUserRequest createUserRequest(CreateUserRequest request) {
+    public void createUserRequest(CreateUserRequest request) {
         User user = new User();
-        user.setUserId(request.getUserId());
         user.setUsername(request.getUsername());
+        user.setAccountId(request.getAccountId());
         user.setFullName(null);
         user.setPhoneNumber(null);
         user.setAddress(null);
         user.setDateOfBirth(null);
         user.setGender(false); // mặc định
-
         userRepository.save(user);
-        return request;
     }
 }

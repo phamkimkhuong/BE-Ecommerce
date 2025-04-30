@@ -19,13 +19,13 @@ import com.backend.dtos.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    public UserDTO findById(Long id);
+    UserDTO findById(Long id);
 
-    public List<UserDTO> findAll();
+    List<UserDTO> findAll();
 
-    public UserDTO save(UserDTO nguoiDung);
+    UserDTO save(UserDTO nguoiDung);
 
-    public boolean delete(Long id);
+    boolean delete(Long id);
 
-    public CreateUserRequest createUserRequest(CreateUserRequest request);
+    void createUserRequest(CreateUserRequest request);
 }

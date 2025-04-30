@@ -6,32 +6,20 @@
 
 package com.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
 /*
  * @description
  * @author: Tran Tan Dat
  * @version: 1.0
  * @created: 12-April-2025 10:03 AM
  */
-
-import lombok.Data;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateUserRequest {
-    private Long userId;
     private String username;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @JsonProperty("account_id")
+    private Long accountId;
 }

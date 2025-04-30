@@ -23,13 +23,13 @@ import com.backend.repositories.AccountRepository;
 import com.backend.repositories.RoleRepository;
 import com.backend.services.AccountService;
 import com.backend.services.JWTService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,36 +45,33 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    ModelMapper modelMapper;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RestTemplate restTemplate;
-
+    private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final RestTemplate restTemplate;
     @Autowired
     @Lazy
     private JWTService jwtService;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(ModelMapper modelMapper, RoleRepository roleRepository,
+            BCryptPasswordEncoder passwordEncoder, AccountRepository accountRepository, RestTemplate restTemplate) {
+        this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
+        this.restTemplate = restTemplate;
+        this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
     public ResponseEntity<?> signUp(SignUpRequest signUpRequest) {
         if (accountRepository.existsAccountByUsername(signUpRequest.getUsername())) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken!");
         }
         if (accountRepository.existsAccountByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken!");
@@ -89,32 +86,26 @@ public class AccountServiceImpl implements AccountService {
 
         // Gán quyền USER cho tài khoản mới
         account.setRoles(Collections.singletonList(userRole));
-
         Account savedAccount = accountRepository.save(account); // lưu trước để có ID
-
         // Gọi user-service để tạo user trống
         CreateUserRequest createUserRequest = new CreateUserRequest();
-        createUserRequest.setUserId(savedAccount.getAccountId()); // dùng ID của account
+        createUserRequest.setAccountId(savedAccount.getAccountId()); // dùng ID của account
         createUserRequest.setUsername(savedAccount.getUsername());
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(createUserRequest, headers);
-
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(
                     "http://localhost:8080/api/user/create", // Gọi qua API Gateway
                     request,
-                    String.class
-            );
+                    String.class);
             if (response.getStatusCode() != HttpStatus.CREATED) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body("Account created, but failed to create user profile.");
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Account created, but error calling user-service.");
+                    .body("Account created, but error calling user-service: " + e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully!");
     }
@@ -141,12 +132,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findAccountByUsername(username);
-        if (username==null){
+        if (username == null) {
             throw new UsernameNotFoundException("Account not found");
         }
         return new User(account.getUsername(), account.getPassword(), rolesToAuthorities(account.getRoles()));
     }
-    private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<Role> roles){
+
+    private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

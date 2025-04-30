@@ -18,7 +18,7 @@ import com.backend.dtos.CreateUserRequest;
 import com.backend.dtos.UserDTO;
 import com.backend.services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +27,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+@Slf4j
 @RepositoryRestController
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<ApiResponseDTO<Map<String, Object>>> getUserById(@PathVariable Long id) {
@@ -68,9 +71,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new LinkedHashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errors.put(error.getField(), error.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
             response.setCode(HttpStatus.BAD_REQUEST.value());
             response.setMessage("Dữ liệu không hợp lệ");
@@ -90,8 +91,15 @@ public class UserController {
 
     @PostMapping("/user/create")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequest request) {
+        log.info("Full request details: {}", request.toString());
+        // Kiểm tra nếu accountId là null
+        if (request.getAccountId() == null) {
+            log.error("AccountId is null in the request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("AccountId is required");
+        }
+        
         userService.createUserRequest(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User created");
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully with accountId: " + request.getAccountId());
     }
 
     @PutMapping("/user/{id}")
@@ -104,9 +112,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new LinkedHashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errors.put(error.getField(), error.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
 
             response.setCode(HttpStatus.BAD_REQUEST.value());
             response.setMessage("Dữ liệu không hợp lệ");
