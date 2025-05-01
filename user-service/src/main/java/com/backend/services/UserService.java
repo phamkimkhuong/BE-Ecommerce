@@ -27,5 +27,7 @@ public interface UserService {
 
     boolean delete(Long id);
 
+    boolean existsByAccountId(Long accountId);
+
     void createUserRequest(CreateUserRequest request);
 }

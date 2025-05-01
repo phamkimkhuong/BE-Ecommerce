@@ -14,6 +14,6 @@ public interface CustomerClient {
      * @param customerId ID của khách hàng cần kiểm tra
      * @return ApiResponseDTO chứa thông tin về tồn tại khach hàng
      */
-    @GetMapping("/users/{userId}")
-    ApiResponseDTO<Boolean> checkUserExit(@PathVariable("userId") Long customerId);
+    @GetMapping("/user/check-user/{id}")
+    ApiResponseDTO<Boolean> checkUserExit(@PathVariable("id") Long customerId);
 }

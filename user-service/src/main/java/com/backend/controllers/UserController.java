@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 @Slf4j
 @RepositoryRestController
 public class UserController {
@@ -34,6 +35,16 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/user/check-user/{id}")
+    public ApiResponseDTO<Boolean> checkUserExit(@PathVariable Long id) {
+        ApiResponseDTO<Boolean> response = new ApiResponseDTO<>();
+        Boolean check = userService.existsByAccountId(id);
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Kiểm tra người dùng thành công");
+        response.setData(check);
+        return response;
     }
 
     @GetMapping("/user/{id}")
@@ -97,7 +108,7 @@ public class UserController {
             log.error("AccountId is null in the request");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("AccountId is required");
         }
-        
+
         userService.createUserRequest(request);
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully with accountId: " + request.getAccountId());
     }

@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean existsByAccountId(Long accountId) {
+        return userRepository.existsByAccountId(accountId);
+    }
+
     @Transactional
     @Override
     public void createUserRequest(CreateUserRequest request) {

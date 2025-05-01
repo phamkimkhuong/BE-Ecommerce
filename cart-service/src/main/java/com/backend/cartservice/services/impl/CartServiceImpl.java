@@ -4,11 +4,7 @@ import com.backend.cartservice.entity.Cart;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.repository.CartItemRepository;
 import com.backend.cartservice.repository.CartRepository;
-import com.backend.cartservice.repository.OpenFeignClient.CustomerClient;
 import com.backend.cartservice.services.CartService;
-import com.backend.commonservice.dto.request.ApiResponseDTO;
-import com.backend.commonservice.model.AppException;
-import com.backend.commonservice.model.ErrorMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,27 +15,20 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final CustomerClient customerClient;
 
-    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository, CustomerClient customerClient) {
+    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository) {
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
-        this.customerClient = customerClient;
     }
 
     // Thêm giỏ hàng
     public Cart addCart(Long customerId) {
-        // Kiểm tra khách hàng có tồn tại không
-        Cart cart = new Cart();
-        try {
-            ApiResponseDTO<Boolean> check = customerClient.checkUserExit(customerId);
-            if (!check.getData()) {
-                throw new RuntimeException("Khách hàng không tồn tại");
-            }
-            cart.setCustomerId(customerId);
-        } catch (Exception e) {
-            throw new AppException(ErrorMessage.USER_SERVER_ERROR);
+        // Kiểm tra xem khách hàng có tồn tại không
+        if (cartRepository.findByCustomerId(customerId).isPresent()) {
+            throw new RuntimeException("Giỏ hàng đã tồn tại cho khách hàng này");
         }
+        Cart cart = new Cart();
+        cart.setCustomerId(customerId);
         return cartRepository.save(cart);
     }
 
