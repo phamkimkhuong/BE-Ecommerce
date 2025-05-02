@@ -1,6 +1,7 @@
 package com.backend.cartservice.controllers;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
+import com.backend.cartservice.dto.request.UpdateCartItem;
 import com.backend.cartservice.dto.response.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.services.CartItemService;
@@ -45,25 +46,26 @@ public class CartItemController {
 
     // API để cập nhật chi tiết giỏ hàng
     @PutMapping("/update")
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartItem.cart.id)")
-    public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
-        CartItem updatedCartItem = cartItemService.updateCartItem(cartItem);
-        return updatedCartItem != null
-                ? ResponseEntity.ok(updatedCartItem) // Trả về chi tiết giỏ hàng đã cập nhật
-                : ResponseEntity.notFound().build(); // Trả về lỗi nếu không tìm thấy
+    public ResponseEntity<ApiResponseDTO<CartItemReponse>> updateCartItem(@RequestBody @Valid UpdateCartItem cartItem) {
+        CartItemReponse updatedCartItem = cartItemService.updateCartItem(cartItem);
+//        return updatedCartItem != null
+//                ? ResponseEntity.ok(updatedCartItem) // Trả về chi tiết giỏ hàng đã cập nhật
+//                : ResponseEntity.notFound().build(); // Trả về lỗi nếu không tìm thấy
+        ApiResponseDTO<CartItemReponse> response = new ApiResponseDTO<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Cập nhật chi tiết giỏ hàng thành công");
+        response.setData(updatedCartItem);
+        return ResponseEntity.ok(response); // Trả về chi tiết giỏ hàng đã cập nhật
     }
 
     // API để xóa chi tiết giỏ hàng
     @DeleteMapping("/delete/{cartItemId}")
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartItemOwnerOrAdmin(#cartItemId)")
-    public ResponseEntity<Void> deleteCartItem(@PathVariable Long cartItemId) {
-        // Lấy thông tin cartItem để kiểm tra tồn tại
-        CartItem cartItem = (CartItem) cartItemService.getCartItems(cartItemId);
-        if (cartItem == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        cartItemService.deleteCartItem(cartItemId);
-        return ResponseEntity.noContent().build(); // Trả về thành công khi xóa
+    public ResponseEntity<ApiResponseDTO<String>> deleteCartItem(@PathVariable Long cartItemId) {
+        boolean check = cartItemService.deleteCartItem(cartItemId);
+        ApiResponseDTO<String> response = new ApiResponseDTO<>();
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Xóa sản phẩm trong giỏ hàng thành công");
+        response.setData(check + "");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

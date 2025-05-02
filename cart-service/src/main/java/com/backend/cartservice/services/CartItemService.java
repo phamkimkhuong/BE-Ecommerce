@@ -1,6 +1,7 @@
 package com.backend.cartservice.services;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
+import com.backend.cartservice.dto.request.UpdateCartItem;
 import com.backend.cartservice.dto.response.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 
@@ -14,10 +15,10 @@ public interface CartItemService {
     // Lấy tất cả chi tiết giỏ hàng của giỏ hàng cụ thể
     List<CartItem> getCartItems(Long cartId);
 
-    CartItem updateCartItem(CartItem cartItem);
+    CartItemReponse updateCartItem(UpdateCartItem cartItem);
 
     // Xóa chi tiết giỏ hàng
-    void deleteCartItem(Long cartItemId);
+    boolean deleteCartItem(Long cartItemId);
 
     // Lấy chi tiết giỏ hàng theo ID
     CartItem getCartItemById(Long cartItemId);

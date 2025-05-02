@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum ErrorMessage {
+    // Lỗi không xác định
+
     USER_NOT_FOUND("Không tìm thấy người dùng", 404, HttpStatus.NOT_FOUND),
     RESOURCE_NOT_FOUND("Không tìm thấy tài nguyên", 404, HttpStatus.NOT_FOUND),
     UNAUTHORIZED("Bạn không có quyền truy cập tài nguyên này", 403, HttpStatus.BAD_REQUEST),
@@ -37,11 +39,11 @@ public enum ErrorMessage {
     DUPLICATE_DATA("Duplicate Data", 400, HttpStatus.BAD_REQUEST),
     INVALID_PARAMETER("Invalid Parameter", 400, HttpStatus.BAD_REQUEST),
     // Không tìm thấy sản phẩm
-    PRODUCT_NOT_FOUND("Không tìm thấy sản phẩm", 404, HttpStatus.NOT_FOUND),
+    PRODUCT_NOT_FOUND("Không tìm thấy thông tin sản phẩm", 404, HttpStatus.NOT_FOUND),
     // Số lượng sản phẩm không đủ
     PRODUCT_QUANTITY_NOT_ENOUGH("Số lượng sản phẩm không đủ", 421, HttpStatus.BAD_REQUEST),
     // Không tìm thấy sản phẩm trong giỏ hàng
-    CART_ITEM_NOT_FOUND("Không tìm thấy sản phẩm trong giỏ hàng", 404, HttpStatus.NOT_FOUND),
+    CART_ITEM_NOT_FOUND("Không tìm thấy mục sản phẩm trong giỏ hàng", 404, HttpStatus.NOT_FOUND),
     // Không tìm thấy giỏ hàng
     CART_NOT_FOUND("Không tìm thấy giỏ hàng", 404, HttpStatus.NOT_FOUND),
     // Giỏ hàng đã tồn tại cho khách hàng này
