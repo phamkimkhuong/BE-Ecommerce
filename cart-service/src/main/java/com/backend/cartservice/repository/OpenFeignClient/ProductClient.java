@@ -1,6 +1,7 @@
 package com.backend.cartservice.repository.OpenFeignClient;
 
 import com.backend.commonservice.configuration.FeignClientConfig;
+import com.backend.commonservice.dto.reponse.ProductReponse;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public interface ProductClient {
      * @return ApiResponseDTO chứa thông tin về tình trạng sản phẩm
      */
     @GetMapping("/products/check-availability/{productId}")
-    ApiResponseDTO<Boolean> checkProductAvailability(
+    ApiResponseDTO<ProductReponse>  checkProductAvailability(
             @PathVariable("productId") Long productId,
             @RequestParam("quantity") int quantity);
 }

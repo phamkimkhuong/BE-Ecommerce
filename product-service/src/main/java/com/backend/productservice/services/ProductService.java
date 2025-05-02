@@ -24,5 +24,5 @@ public interface ProductService {
 
     boolean deleteProduct(Long id);
 
-    boolean checkProductAvailability(Long productId, int quantity);
+    ProductReponse checkProductAvailability(Long productId, int quantity);
 }

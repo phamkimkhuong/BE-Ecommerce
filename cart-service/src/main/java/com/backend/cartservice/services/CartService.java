@@ -9,6 +9,8 @@ public interface CartService {
 
     Optional<Cart> getCart(Long customerId);
 
+    Optional<Cart> getCartById(Long cartId);
+
     Cart updateCart(Long cartId, Cart cart);
 
     void deleteCart(Long cartId);

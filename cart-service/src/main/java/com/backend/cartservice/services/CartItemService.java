@@ -1,5 +1,7 @@
 package com.backend.cartservice.services;
 
+import com.backend.cartservice.dto.request.CreateCartItem;
+import com.backend.cartservice.dto.response.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 public interface CartItemService {
 
     // Thêm chi tiết giỏ hàng
-    CartItem addCartItem(CartItem cartItem);
+    CartItemReponse addCartItem(CreateCartItem cartItem);
 
     // Lấy tất cả chi tiết giỏ hàng của giỏ hàng cụ thể
     List<CartItem> getCartItems(Long cartId);

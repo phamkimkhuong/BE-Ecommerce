@@ -11,7 +11,6 @@ package com.backend.commonservice.model;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
@@ -36,7 +35,17 @@ public enum ErrorMessage {
     BAD_REQUEST("Bad Request", 400, HttpStatus.BAD_REQUEST),
     INVALID_DATA("Validation failed", 400, HttpStatus.BAD_REQUEST),
     DUPLICATE_DATA("Duplicate Data", 400, HttpStatus.BAD_REQUEST),
-    INVALID_PARAMETER("Invalid Parameter", 400, HttpStatus.BAD_REQUEST)
+    INVALID_PARAMETER("Invalid Parameter", 400, HttpStatus.BAD_REQUEST),
+    // Không tìm thấy sản phẩm
+    PRODUCT_NOT_FOUND("Không tìm thấy sản phẩm", 404, HttpStatus.NOT_FOUND),
+    // Số lượng sản phẩm không đủ
+    PRODUCT_QUANTITY_NOT_ENOUGH("Số lượng sản phẩm không đủ", 421, HttpStatus.BAD_REQUEST),
+    // Không tìm thấy sản phẩm trong giỏ hàng
+    CART_ITEM_NOT_FOUND("Không tìm thấy sản phẩm trong giỏ hàng", 404, HttpStatus.NOT_FOUND),
+    // Không tìm thấy giỏ hàng
+    CART_NOT_FOUND("Không tìm thấy giỏ hàng", 404, HttpStatus.NOT_FOUND),
+    // Giỏ hàng đã tồn tại cho khách hàng này
+    CART_ALREADY_EXISTS("Giỏ hàng đã tồn tại cho khách hàng này", 400, HttpStatus.BAD_REQUEST),
     ;
     String message;
     int code;

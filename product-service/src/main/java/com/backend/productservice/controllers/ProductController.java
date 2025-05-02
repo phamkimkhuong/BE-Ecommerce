@@ -131,14 +131,15 @@ public class ProductController {
                         @ApiResponse(responseCode = "500", description = "Internal server error"),
         })
         @GetMapping("/check-availability/{productId}")
-        public ApiResponseDTO<Boolean> checkProductAvailability(
+        public ApiResponseDTO<ProductReponse> checkProductAvailability(
                         @PathVariable Long productId,
                         @RequestParam int quantity) {
-                boolean isAvailable = productService.checkProductAvailability(productId, quantity);
-                ApiResponseDTO<Boolean> response = new ApiResponseDTO<>();
+               ProductReponse productReponse = productService.checkProductAvailability(productId, quantity);
+                ApiResponseDTO<ProductReponse> response = new ApiResponseDTO<>();
                 response.setCode(HttpStatus.OK.value());
                 response.setMessage("Kiểm tra số lượng sản phẩm thành công");
-                response.setData(isAvailable);
+                response.setData(productReponse);
+                log.info("Check product availability: {}", response);
                 return response;
         }
 }

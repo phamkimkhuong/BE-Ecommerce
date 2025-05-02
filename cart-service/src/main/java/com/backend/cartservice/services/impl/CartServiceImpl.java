@@ -5,6 +5,9 @@ import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.repository.CartItemRepository;
 import com.backend.cartservice.repository.CartRepository;
 import com.backend.cartservice.services.CartService;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +25,11 @@ public class CartServiceImpl implements CartService {
     }
 
     // Thêm giỏ hàng
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#customerId)")
     public Cart addCart(Long customerId) {
         // Kiểm tra xem khách hàng có tồn tại không
         if (cartRepository.findByCustomerId(customerId).isPresent()) {
-            throw new RuntimeException("Giỏ hàng đã tồn tại cho khách hàng này");
+            throw new AppException(ErrorMessage.CART_ALREADY_EXISTS);
         }
         Cart cart = new Cart();
         cart.setCustomerId(customerId);
@@ -33,12 +37,20 @@ public class CartServiceImpl implements CartService {
     }
 
     // Lấy giỏ hàng của khách hàng
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#customerId)")
     public Optional<Cart> getCart(Long customerId) {
         return cartRepository.findByCustomerId(customerId);
     }
 
+    // Lấy giỏ hàng theo cartId
+    public Optional<Cart> getCartById(Long cartId) {
+        return Optional.ofNullable(cartRepository.findById(cartId).orElseThrow(() ->
+                new AppException(ErrorMessage.CART_NOT_FOUND)));
+    }
+
     // Cập nhật giỏ hàng
     @Transactional
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public Cart updateCart(Long cartId, Cart cart) {
         // Tìm giỏ hàng dựa trên cartId
         Optional<Cart> existingCartOpt = cartRepository.findById(cartId);
@@ -72,6 +84,7 @@ public class CartServiceImpl implements CartService {
 
 
     // Xóa giỏ hàng
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public void deleteCart(Long cartId) {
         cartRepository.deleteById(cartId);
     }

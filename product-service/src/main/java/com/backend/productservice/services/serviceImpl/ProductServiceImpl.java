@@ -93,23 +93,20 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * Kiểm tra số lượng sản phẩm trong kho
-     * 
+     *
      * @param productId ID của sản phẩm cần kiểm tra
      * @param quantity  Số lượng cần kiểm tra
      * @return true nếu số lượng trong kho đủ, false nếu không đủ
      */
     @Override
-    public boolean checkProductAvailability(Long productId, int quantity) {
+    public ProductReponse checkProductAvailability(Long productId, int quantity) {
         log.info("Kiểm tra số lượng sản phẩm trong kho: productId={}, quantity={}", productId, quantity);
-        try {
-            Product product = productRep.findById(productId)
-                    .orElseThrow(() -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
-
-            // Kiểm tra nếu số lượng trong kho đủ
-            return product.getSoLuong() >= quantity;
-        } catch (Exception e) {
-            log.error("Lỗi khi kiểm tra số lượng sản phẩm: {}", e.getMessage());
-            return false;
-        }
+        Product product = productRep.findById(productId)
+                .orElseThrow(() -> new AppException(ErrorMessage.PRODUCT_NOT_FOUND));
+        // Kiểm tra nếu số lượng trong kho đủ
+        if (product.getSoLuong() >= quantity)
+            return toProductReponse(product);
+        else
+            throw new AppException(ErrorMessage.PRODUCT_QUANTITY_NOT_ENOUGH);
     }
 }

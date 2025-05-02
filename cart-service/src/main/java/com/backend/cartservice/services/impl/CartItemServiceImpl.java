@@ -1,12 +1,19 @@
 package com.backend.cartservice.services.impl;
 
-import com.backend.cartservice.entity.Cart;
+import com.backend.cartservice.dto.request.CreateCartItem;
+import com.backend.cartservice.dto.response.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.repository.CartItemRepository;
 import com.backend.cartservice.repository.CartRepository;
 import com.backend.cartservice.repository.OpenFeignClient.ProductClient;
 import com.backend.cartservice.services.CartItemService;
+import com.backend.commonservice.configuration.openFeign.FeignResponseException;
+import com.backend.commonservice.dto.reponse.ProductReponse;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,48 +24,59 @@ public class CartItemServiceImpl implements CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
+    private final ModelMapper modelMapper;
+
     private final CartRepository cartRepository; // Thêm CartRepository để tìm Cart
 
     private final ProductClient productClient; // Thêm ProductClient để kiểm tra số lượng sản phẩm
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CartItemServiceImpl.class);
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, CartRepository cartRepository, ProductClient productClient) {
+    public CartItemServiceImpl(ModelMapper modelMapper, CartItemRepository cartItemRepository, CartRepository cartRepository, ProductClient productClient) {
         this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;
         this.productClient = productClient;
+        this.modelMapper = modelMapper;
     }
 
+    // Convert Entity to DTO
+    public CartItemReponse toCartItemRes(CartItem cartItem) {
+        return modelMapper.map(cartItem, CartItemReponse.class);
+    }
+
+    // Convert DTO to Entity
+    public CartItem toCartItem(CreateCartItem cartItem) {
+        return modelMapper.map(cartItem, CartItem.class);
+    }
+
+
     // Thêm chi tiết giỏ hàng
-    public CartItem addCartItem(CartItem cartItem) {
+    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartItem.cartId)")
+    public CartItemReponse addCartItem(CreateCartItem cartItem) {
         // Kiểm tra số lượng sản phẩm trong kho trước khi thêm vào giỏ hàng
         try {
-            ApiResponseDTO<Boolean> response = productClient.checkProductAvailability(
+            ApiResponseDTO<ProductReponse> response = productClient.checkProductAvailability(
                     cartItem.getProductId(), cartItem.getQuantity());
-
-            if (response.getData() != null) {
-                boolean isAvailable = response.getData();
-
-                if (!isAvailable) {
-                    throw new RuntimeException("Số lượng sản phẩm trong kho không đủ");
-                }
+            log.info("Check product availability: {}", response);
+        } catch (FeignResponseException e) {
+            log.error("Lỗi khi kiểm tra số lượng sản phẩm: status={}, body={}", e.getStatus(), e.getResponseBody());
+            // Xử lý dựa trên mã lỗi HTTP
+            if (e.getStatus() == 404) {
+                throw new AppException(ErrorMessage.PRODUCT_NOT_FOUND);
+            } else if (e.getResponseBody().contains("\"code\":421")) {
+                throw new AppException(ErrorMessage.PRODUCT_QUANTITY_NOT_ENOUGH);
             } else {
-                log.warn("Không thể kiểm tra số lượng sản phẩm, response không hợp lệ");
+                throw new RuntimeException("Dịch vụ sản phẩm lỗi: " + e.getMessage());
             }
         } catch (Exception e) {
-            log.error("Lỗi khi kiểm tra số lượng sản phẩm: {}", e.getMessage());
-            throw new RuntimeException("Không thể kiểm tra số lượng sản phẩm: " + e.getMessage());
+            log.error("Lỗi không xác định: {}", e.getMessage());
+            throw new RuntimeException("Lỗi hệ thống: " + e.getMessage());
         }
-
-        // Tìm Cart mà CartItem thuộc về (giả sử cartId được cung cấp)
-        Cart cart = cartRepository.findById(cartItem.getCart().getId())
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
-
-        // Gán Cart vào CartItem
-        cartItem.setCart(cart);
-
+        CartItem cartItemEntity = toCartItem(cartItem); // Chuyển đổi từ DTO sang Entity
         // Lưu CartItem vào database
-        return cartItemRepository.save(cartItem);
+        CartItem c = cartItemRepository.save(cartItemEntity); // Lưu CartItem vào database
+        // Chuyển đổi từ Entity sang DTO
+        return toCartItemRes(c);
     }
 
     // Lấy tất cả chi tiết giỏ hàng của giỏ hàng cụ thể
@@ -71,7 +89,7 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItem updateCartItem(CartItem cartItem) {
         // Kiểm tra nếu CartItem đã tồn tại
         CartItem existingCartItem = cartItemRepository.findById(cartItem.getId())
-                .orElseThrow(() -> new RuntimeException("CartItem not found"));
+                .orElseThrow(() -> new AppException(ErrorMessage.CART_ITEM_NOT_FOUND));
 
         // Cập nhật giá trị của CartItem
         existingCartItem.setPrice(cartItem.getPrice());
@@ -87,7 +105,7 @@ public class CartItemServiceImpl implements CartItemService {
         if (cartItemRepository.existsById(cartItemId)) {
             cartItemRepository.deleteById(cartItemId); // Xóa chi tiết giỏ hàng nếu tồn tại
         } else {
-            throw new RuntimeException("Cart item not found for id: " + cartItemId); // Thông báo lỗi nếu không tìm thấy
+            throw new AppException(ErrorMessage.CART_ITEM_NOT_FOUND); // Thông báo lỗi nếu không tìm thấy
         }
     }
 

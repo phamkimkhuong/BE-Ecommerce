@@ -5,7 +5,6 @@ import com.backend.cartservice.services.CartService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,7 +22,6 @@ public class CartController {
 
     // API để thêm giỏ hàng mới (sử dụng customerId từ CartRequest)
     @PostMapping()
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#cartRequest.customerId)")
     public ResponseEntity<Cart> addCart(@RequestBody @Valid CartRequest cartRequest
     ) {
         log.info("Thêm giỏ hàng mới cho customerId: {}", cartRequest.getCustomerId());
@@ -33,7 +31,6 @@ public class CartController {
 
     // API để lấy giỏ hàng của khách hàng theo customerId
     @GetMapping("/{customerId}")
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCustomer(#customerId)")
     public ResponseEntity<Cart> getCart(@PathVariable Long customerId) {
         Optional<Cart> cart = cartService.getCart(customerId);
         return cart.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -41,7 +38,6 @@ public class CartController {
 
     // API để cập nhật giỏ hàng
     @PutMapping("/{cartId}")
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public ResponseEntity<Cart> updateCart(@PathVariable Long cartId, @RequestBody Cart cart) {
         // Cập nhật giỏ hàng theo cartId
         Cart updatedCart = cartService.updateCart(cartId, cart);
@@ -54,7 +50,6 @@ public class CartController {
 
     // API để xóa giỏ hàng
     @DeleteMapping("/delete/{cartId}")
-    @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
         // Lấy thông tin giỏ hàng để kiểm tra tồn tại
         Optional<Cart> cart = cartService.getCart(cartId);
