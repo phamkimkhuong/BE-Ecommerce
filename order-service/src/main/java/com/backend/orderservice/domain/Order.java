@@ -40,5 +40,4 @@ public class Order {
     private Long customerId;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
-
 }

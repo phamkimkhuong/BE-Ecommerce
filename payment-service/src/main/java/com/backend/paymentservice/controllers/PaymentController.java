@@ -12,20 +12,13 @@ package com.backend.paymentservice.controllers;
  * @version: 1.0
  * @created: 25-April-2025 11:30 PM
  */
-
-import com.backend.paymentservice.configs.VNPayConfig;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @RestController
 public class PaymentController {
@@ -34,7 +27,8 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/api/payment/vn-pay/create-payment")
-    public ResponseEntity<?> createPayment(HttpServletRequest request, @RequestParam("amount") long amount) throws UnsupportedEncodingException {
+    public ResponseEntity<?> createPayment(HttpServletRequest request, @RequestParam("amount") long amount)
+            throws UnsupportedEncodingException {
         String paymentUrl = paymentService.createVNPPayment(request, amount);
         return ResponseEntity.ok(paymentUrl);
     }

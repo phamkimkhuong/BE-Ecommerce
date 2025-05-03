@@ -17,7 +17,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -28,8 +27,8 @@ import java.time.LocalDate;
 public class OrderDTO {
     @Schema(description = "Mã đơn hàng", hidden = true)
     private Long id;
-    @NotNull(message = "Ngày đặt hàng không được để trống")
-    @Schema(description = "Ngày đặt hàng", example = "2022-02-22")
+//    @NotNull(message = "Ngày đặt hàng không được để trống")
+    @Schema(description = "Ngày đặt hàng", example = "2022-02-22",hidden = true)
     private LocalDate ngayDatHang;
     @NotNull
     @Schema(description = "Tổng tiền đơn hàng", example = "1000000")

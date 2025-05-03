@@ -10,6 +10,7 @@ package com.backend.orderservice.controllers;
 
 import com.backend.commonservice.service.KafkaService;
 import com.backend.orderservice.dtos.OrderDTO;
+import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -198,7 +199,7 @@ public class OrderController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> getById(@PathVariable
+    public ResponseEntity<OrderResponse> getById(@PathVariable
                                             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                                                     description = "ID of order to return",
                                                     required = true,

@@ -1,13 +1,17 @@
 package com.backend.notificationservice.event;
 
-
 /*
  * @description
  * @author: Pham Kim Khuong
  * @version: 1.0
  * @created: 3/8/2025 9:17 PM
+ * @updated: 4/27/2025
  */
 
+import com.backend.commonservice.service.EmailService;
+import com.backend.notificationservice.model.OrderEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.RetriableException;
 import org.springframework.kafka.annotation.DltHandler;
@@ -18,34 +22,179 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 @Component
 @Slf4j
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class EventConsumer {
-    /*
-     * @description: This method consumes messages from the Kafka topic "test" and processes them.
-     * If an exception occurs during processing, it will retry up to 3 times with exponential backoff.
-     * If all retries fail, the message will be sent to the Dead Letter Topic (DLT).
-     * @param message: The message consumed from the Kafka topic.
-     */
+    ObjectMapper objectMapper;
+
     @RetryableTopic(
-            // 2 retry attempts + 1 DLQ attempt
-            // Default is 3 attempts retries
+            // 2 lần thử lại + 1 lần DLQ
+            // Mặc định là 3 lần thử lại
+            attempts = "3",
             backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
-            dltStrategy = DltStrategy.FAIL_ON_ERROR, // Send to DLT on failure and if DLT error will fail
-            // Retry when the exception is a RuntimeException or RetriableException
-            include = {RuntimeException.class, RetriableException.class}
-    )
-    @KafkaListener(topics = "test",groupId = "default-group",containerFactory = "kafkaListenerContainerFactory")
-    public void consume(String message) {
-        log.info("Consumed message -> {}", message);
-        // Processing logic
-        throw new RuntimeException("Simulated error");
+            dltStrategy = DltStrategy.FAIL_ON_ERROR,
+            // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
+            include = {RuntimeException.class, RetriableException.class})
+    @KafkaListener(topics = "order-events", groupId = "notification-group", containerFactory = "kafkaListenerContainerFactory")
+    public void consumeOrderEvent(String message) {
+        try {
+            log.info("Nhận được sự kiện đơn hàng -> {}", message);
+
+            // Chuyển đổi JSON thành đối tượng OrderEvent
+            OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
+
+            // Xử lý sự kiện đơn hàng dựa trên loại sự kiện
+            processOrderEvent(orderEvent);
+
+        } catch (Exception e) {
+            log.error("Lỗi khi xử lý sự kiện đơn hàng: {}", e.getMessage(), e);
+            throw new RuntimeException("Lỗi xử lý sự kiện đơn hàng", e);
+        }
     }
-    // This method handles messages that are sent to the Dead Letter Topic (DLT).
-    // It will be called when the message cannot be processed after all retry attempts.
-    // The message will be sent to the DLT with the same topic name as the original topic.
+
+    EmailService emailService;
+
+    public EventConsumer(ObjectMapper objectMapper, EmailService emailService) {
+        this.objectMapper = objectMapper;
+        this.emailService = emailService;
+    }
+    /*
+     * @description: Phương thức này lắng nghe sự kiện đơn hàng từ topic
+     * "order-events" và xử lý chúng.
+     * Nếu xảy ra lỗi trong quá trình xử lý, nó sẽ thử lại tối đa 3 lần với thời
+     * gian chờ tăng dần.
+     * Nếu tất cả các lần thử lại đều thất bại, tin nhắn sẽ được gửi đến Dead Letter
+     * Topic (DLT).
+     *
+     * @param message: Tin nhắn JSON được tiêu thụ từ Kafka topic.
+     */
+
+    @KafkaListener(topics = "email-events", containerFactory = "kafkaListenerContainerFactory")
+    public void consumeEmailEvent(String message) {
+        try {
+            log.info("Nhận được sự kiện email -> {}", message);
+            // Chuyển đổi JSON thành đối tượng OrderEvent
+            OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
+            // Tạo Map chứa các placeholder cho template
+            Map<String, Object> placeholder = createOrderEmailPlaceholders(orderEvent);
+            // Gửi email sử dụng template và placeholder
+            emailService.sendEmail("phamkhuong345436@gmail.com", "Đặt hàng thành công", "email-template.ftl", placeholder, null);
+            log.info("Đã gửi email thông báo đơn hàng thành công cho đơn hàng: {}", orderEvent.getOrderId());
+        } catch (Exception e) {
+            log.error("Lỗi khi xử lý sự kiện email: {}", e.getMessage(), e);
+            throw new RuntimeException("Lỗi xử lý sự kiện email", e);
+        }
+    }
+
+    /*
+     * @description: Xử lý sự kiện đơn hàng dựa trên loại sự kiện
+     *
+     * @param orderEvent: Sự kiện đơn hàng cần xử lý
+     */
+    private void processOrderEvent(OrderEvent orderEvent) {
+        // Giả định địa chỉ email người nhận - trong thực tế cần lấy từ thông tin khách hàng
+        String recipientEmail = "customer@example.com";
+        String emailSubject = "";
+        String templateName = "email-template.ftl";
+
+        switch (orderEvent.getEventType()) {
+            case "CREATE":
+                log.info("Xử lý sự kiện tạo đơn hàng mới: {}", orderEvent.getOrderId());
+                emailSubject = "Đặt hàng thành công";
+                break;
+            case "UPDATE":
+                log.info("Xử lý sự kiện cập nhật đơn hàng: {}, trạng thái: {}",
+                        orderEvent.getOrderId(), orderEvent.getStatus());
+                emailSubject = "Cập nhật trạng thái đơn hàng";
+                break;
+            case "CANCEL":
+                log.info("Xử lý sự kiện hủy đơn hàng: {}", orderEvent.getOrderId());
+                emailSubject = "Đơn hàng đã bị hủy";
+                break;
+            default:
+                log.warn("Loại sự kiện không được hỗ trợ: {}", orderEvent.getEventType());
+                return; // Không gửi email cho loại sự kiện không hỗ trợ
+        }
+
+        // Tạo Map chứa các placeholder cho template
+        Map<String, Object> placeholder = createOrderEmailPlaceholders(orderEvent);
+
+        // Gửi email thông báo
+        try {
+            emailService.sendEmail(recipientEmail, emailSubject, templateName, placeholder, null);
+            log.info("Đã gửi email thông báo cho đơn hàng: {}, loại sự kiện: {}",
+                    orderEvent.getOrderId(), orderEvent.getEventType());
+        } catch (Exception e) {
+            log.error("Lỗi khi gửi email thông báo: {}", e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Tạo Map chứa các placeholder cho template email đơn hàng
+     *
+     * @param orderEvent Thông tin sự kiện đơn hàng
+     * @return Map chứa các placeholder cho template
+     */
+    private Map<String, Object> createOrderEmailPlaceholders(OrderEvent orderEvent) {
+        Map<String, Object> placeholder = new HashMap<>();
+
+        // Format tiền tệ theo định dạng Việt Nam
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String totalAmount = currencyFormatter.format(orderEvent.getTotalAmount());
+
+        // Format ngày tháng
+        String orderDate;
+        if (orderEvent.getCreatedAt() != null) {
+            orderDate = orderEvent.getCreatedAt().toString().replace('T', ' ');
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            orderDate = dateFormat.format(new Date());
+        }
+
+        // Giả lập dữ liệu mẫu cho các sản phẩm trong đơn hàng
+        String orderItems = "<tr>" +
+                "<td>Sản phẩm mẫu</td>" +
+                "<td>1</td>" +
+                "<td>" + currencyFormatter.format(orderEvent.getTotalAmount()) + "</td>" +
+                "<td>" + currencyFormatter.format(orderEvent.getTotalAmount()) + "</td>" +
+                "</tr>";
+
+        // Thêm các placeholder vào Map
+        placeholder.put("customerName", orderEvent.getUserId() != null ? orderEvent.getUserId() : "Khách hàng");
+        placeholder.put("orderId", orderEvent.getOrderId());
+        placeholder.put("orderDate", orderDate);
+        placeholder.put("paymentMethod", "Thanh toán khi nhận hàng");
+        placeholder.put("orderStatus", orderEvent.getStatus());
+        placeholder.put("orderItems", orderItems);
+        placeholder.put("subtotal", totalAmount);
+        placeholder.put("shippingFee", currencyFormatter.format(0));
+        placeholder.put("totalAmount", totalAmount);
+        placeholder.put("recipientName", orderEvent.getUserId() != null ? orderEvent.getUserId() : "Khách hàng");
+        placeholder.put("shippingAddress", "Địa chỉ mẫu, Quận 1, TP.HCM");
+        placeholder.put("phoneNumber", "0123456789");
+        placeholder.put("estimatedDelivery", "3-5 ngày làm việc");
+        placeholder.put("trackingUrl", "http://example.com/tracking");
+        placeholder.put("websiteUrl", "http://example.com");
+        placeholder.put("privacyPolicyUrl", "http://example.com/privacy");
+        placeholder.put("termsOfServiceUrl", "http://example.com/terms");
+
+        return placeholder;
+    }
+
+    // Phương thức này xử lý các tin nhắn được gửi đến Dead Letter Topic (DLT).
+    // Nó sẽ được gọi khi tin nhắn không thể xử lý sau tất cả các lần thử lại.
+    // Tin nhắn sẽ được gửi đến DLT với cùng tên topic như topic gốc.
     @DltHandler
     public void handle(@Payload String message) {
-        log.info("Handling message from DLT -> {}", message);
+        log.error("Xử lý tin nhắn từ DLT -> {}", message);
+        // Lưu lỗi vào cơ sở dữ liệu hoặc gửi thông báo cho admin
     }
 }

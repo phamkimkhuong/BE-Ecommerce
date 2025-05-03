@@ -1,20 +1,20 @@
 package com.backend.orderservice.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
-    CHO("Đang chờ"),
     DANG_XU_LY("Đang xử lý"),
+    CHUA_THANH_TOAN("Chưa thanh toán"),
+    DA_THANH_TOAN("Đã thanh toán"),
     DA_GIAO("Đã giao"),
-    DELIVERED("Đã nhận"),
+    DA_NHAN("Đã nhận"),
     HUY("Đã hủy");
 
     private final String vietnameseLabel;
 
     OrderStatus(String vietnameseLabel) {
         this.vietnameseLabel = vietnameseLabel;
-    }
-
-    public String getVietnameseLabel() {
-        return vietnameseLabel;
     }
 
     // Phương thức tìm kiếm từ nhãn tiếng Việt
