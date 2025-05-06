@@ -1,4 +1,4 @@
-package com.backend.orderservice.enums;
+package com.backend.commonservice.enums;
 
 import lombok.Getter;
 
@@ -9,7 +9,8 @@ public enum OrderStatus {
     DA_THANH_TOAN("Đã thanh toán"),
     DA_GIAO("Đã giao"),
     DA_NHAN("Đã nhận"),
-    HUY("Đã hủy");
+    HUY("Đã hủy"),
+    LOI_THANH_TOAN("Lỗi thanh toán");
 
     private final String vietnameseLabel;
 

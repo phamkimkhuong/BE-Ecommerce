@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.controllers;
+package com.backend.userservice.controllers;
 
 /*
  * @description
@@ -14,9 +14,9 @@ package com.backend.controllers;
  */
 
 import com.backend.commonservice.dto.request.ApiResponseDTO;
-import com.backend.dtos.CreateUserRequest;
-import com.backend.dtos.UserDTO;
-import com.backend.services.UserService;
+import com.backend.userservice.dtos.CreateUserRequest;
+import com.backend.userservice.dtos.UserDTO;
+import com.backend.userservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.webmvc.RepositoryRestController;

@@ -10,6 +10,7 @@ package com.backend.orderservice.controllers;
 
 import com.backend.commonservice.service.KafkaService;
 import com.backend.orderservice.dtos.OrderDTO;
+import com.backend.orderservice.dtos.request.CartOrderRequest;
 import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,22 +88,18 @@ public class OrderController {
             }
     )
     @PostMapping
-    public ResponseEntity<OrderDTO> save(@Valid @RequestBody
-                                         @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                 description = "Order object that needs to be added to the store",
-                                                 required = true,
-                                                 content = @io.swagger.v3.oas.annotations.media.Content(
-                                                         mediaType = "application/json",
-                                                         schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDTO.class)
-                                                 )
-                                         )
-
-                                         OrderDTO orderDTO
-
-
+    public ResponseEntity<OrderResponse> save(@Valid @RequestBody
+                                              @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                      description = "Order object that needs to be added to the store",
+                                                      required = true,
+                                                      content = @io.swagger.v3.oas.annotations.media.Content(
+                                                              mediaType = "application/json",
+                                                              schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CartOrderRequest.class)
+                                                      )
+                                              ) CartOrderRequest cartOrderRequest
     ) {
-        orderService.save(orderDTO);
-        return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
+        OrderResponse response = orderService.save(cartOrderRequest);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @Operation(
@@ -200,15 +197,15 @@ public class OrderController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getById(@PathVariable
-                                            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                    description = "ID of order to return",
-                                                    required = true,
-                                                    content = @io.swagger.v3.oas.annotations.media.Content(
-                                                            mediaType = "application/json",
-                                                            schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Long.class)
-                                                    )
-                                            )
-                                            Long id
+                                                 @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                                         description = "ID of order to return",
+                                                         required = true,
+                                                         content = @io.swagger.v3.oas.annotations.media.Content(
+                                                                 mediaType = "application/json",
+                                                                 schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Long.class)
+                                                         )
+                                                 )
+                                                 Long id
     ) {
         return new ResponseEntity<>(orderService.getById(id), HttpStatus.OK);
     }

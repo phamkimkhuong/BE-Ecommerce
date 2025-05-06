@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.services;
+package com.backend.userservice.services;
 
 /*
  * @description
@@ -13,8 +13,8 @@ package com.backend.services;
  * @created: 13-February-2025 8:12 PM
  */
 
-import com.backend.dtos.CreateUserRequest;
-import com.backend.dtos.UserDTO;
+import com.backend.userservice.dtos.CreateUserRequest;
+import com.backend.userservice.dtos.UserDTO;
 
 import java.util.List;
 

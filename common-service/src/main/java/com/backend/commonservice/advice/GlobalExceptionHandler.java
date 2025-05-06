@@ -26,7 +26,11 @@ public class GlobalExceptionHandler {
         ApiResponseDTO<String> response = new ApiResponseDTO<>();
         ErrorMessage error = ex.getErrorCode();
         response.setCode(error.getCode());
-        response.setMessage(error.getMessage());
+        if(ex.getAddContent() != null) {
+            response.setMessage(ex.getAddContent());
+        } else {
+            response.setMessage(error.getMessage());
+        }
         return new ResponseEntity<>(response, error.getHttpStatus());
     }
 

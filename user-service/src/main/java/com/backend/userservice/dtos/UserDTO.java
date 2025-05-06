@@ -1,8 +1,7 @@
-package com.backend.dtos;
+package com.backend.userservice.dtos;
 
-import com.backend.entities.User;
+import com.backend.userservice.entities.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.time.LocalDate;

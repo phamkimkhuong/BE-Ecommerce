@@ -2,6 +2,7 @@ package com.backend.cartservice.controllers;
 
 import com.backend.cartservice.entity.Cart;
 import com.backend.cartservice.services.CartService;
+import com.backend.commonservice.dto.reponse.CartResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +31,18 @@ public class CartController {
     }
 
     // API để lấy giỏ hàng của khách hàng theo customerId
-    @GetMapping("/{customerId}")
-    public ResponseEntity<Cart> getCart(@PathVariable Long customerId) {
-        Optional<Cart> cart = cartService.getCart(customerId);
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<CartResponse> getCart(@PathVariable Long customerId) {
+        Optional<CartResponse> cart = cartService.getCart(customerId);
         return cart.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/id/{cartId}")
+    public ResponseEntity<CartResponse> getCartById(@PathVariable Long cartId) {
+        CartResponse cart = cartService.getCartById(cartId);
+        return ResponseEntity.ok(cart);
+    }
+
 
     // API để cập nhật giỏ hàng
     @PutMapping("/{cartId}")
@@ -52,7 +60,7 @@ public class CartController {
     @DeleteMapping("/delete/{cartId}")
     public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
         // Lấy thông tin giỏ hàng để kiểm tra tồn tại
-        Optional<Cart> cart = cartService.getCart(cartId);
+        Optional<CartResponse> cart = cartService.getCart(cartId);
         if (cart.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

@@ -1,4 +1,4 @@
-package com.backend;
+package com.backend.userservice;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({"com.backend","com.backend.commonservice"})
+@ComponentScan({"com.backend.userservice","com.backend.commonservice"})
 public class UserServiceApplication {
 
 	private final static Logger logger = LoggerFactory.getLogger(UserServiceApplication.class.getName());
