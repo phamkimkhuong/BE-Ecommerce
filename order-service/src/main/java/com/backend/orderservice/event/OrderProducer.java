@@ -1,0 +1,58 @@
+package com.backend.orderservice.event;
+
+/*
+ * @description: Producer để gửi sự kiện đơn hàng đến Kafka
+ * @author: Pham Kim Khuong
+ * @version: 1.0
+ * @created: 2023-05-15
+ */
+
+import com.backend.commonservice.event.OrderEvent;
+import com.backend.commonservice.service.KafkaService;
+import com.backend.commonservice.enums.OrderStatus;
+import com.backend.orderservice.domain.Order;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class OrderProducer {
+    private static final String ORDER_TOPIC = "order-events";
+
+    private final KafkaService kafkaService;
+    private final ObjectMapper objectMapper;
+
+    public OrderProducer(KafkaService kafkaService, ObjectMapper objectMapper) {
+        this.kafkaService = kafkaService;
+        this.objectMapper = objectMapper;
+    }
+
+    /**
+     * Gửi sự kiện đơn hàng đến Kafka
+     *
+     * @param order Đơn hàng cần gửi sự kiện
+     * @throws JsonProcessingException Nếu có lỗi khi chuyển đổi đơn hàng thành JSON
+     * @throws Exception               Nếu có lỗi khi gửi sự kiện đến Kafka
+     */
+    public void sendOrderEvent(Order order) throws Exception {
+        try {
+            OrderEvent event = OrderEvent.fromOrder(order.getId(),
+                    order.getCustomerId(),
+                    order.getTrangThai(),
+                    order.getTongTien(),
+                    order.getThanhToanType(),
+                    order.getEventType());
+            String message = objectMapper.writeValueAsString(event);
+            kafkaService.sendMessage(ORDER_TOPIC, message);
+            log.info("Đã gửi sự kiện đơn hàng: {} đến topic: {}", message, ORDER_TOPIC);
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi sự kiện đơn hàng thành JSON: {}", e.getMessage());
+            throw e; // Truyền lỗi lên cho người gọi xử lý
+        } catch (Exception e) {
+            log.error("Lỗi khi gửi sự kiện đơn hàng: {}", e.getMessage());
+            throw e; // Truyền lỗi lên cho người gọi xử lý
+        }
+    }
+}

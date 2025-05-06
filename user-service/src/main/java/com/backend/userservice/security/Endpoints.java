@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.security;
+package com.backend.userservice.security;
 
 /*
  * @description

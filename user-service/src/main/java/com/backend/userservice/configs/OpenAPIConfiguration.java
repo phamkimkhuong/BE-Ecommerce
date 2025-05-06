@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.configs;
+package com.backend.userservice.configs;
 
 /*
  * @description

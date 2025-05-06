@@ -4,7 +4,7 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.services.impl;
+package com.backend.userservice.services.impl;
 
 /*
  * @description
@@ -15,11 +15,11 @@ package com.backend.services.impl;
 
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
-import com.backend.dtos.CreateUserRequest;
-import com.backend.dtos.UserDTO;
-import com.backend.entities.User;
-import com.backend.repositories.UserRepository;
-import com.backend.services.UserService;
+import com.backend.userservice.dtos.CreateUserRequest;
+import com.backend.userservice.dtos.UserDTO;
+import com.backend.userservice.entities.User;
+import com.backend.userservice.repositories.UserRepository;
+import com.backend.userservice.services.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;

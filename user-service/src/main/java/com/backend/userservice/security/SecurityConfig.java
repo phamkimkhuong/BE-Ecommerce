@@ -1,4 +1,4 @@
-package com.backend.security;
+package com.backend.userservice.security;
 
 import com.backend.commonservice.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;

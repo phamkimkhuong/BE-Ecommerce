@@ -11,7 +11,7 @@ package com.backend.orderservice.service.serviceImpl;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.OrderDetail;
-import com.backend.orderservice.dtos.OrderDetailDTO;
+import com.backend.orderservice.dtos.response.OrderDetailResponse;
 import com.backend.orderservice.repository.OrderDetailRepository;
 import com.backend.orderservice.service.OrderDetailService;
 import org.modelmapper.ModelMapper;
@@ -31,36 +31,36 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     //    Convert Entity to DTO
-    public OrderDetail convertToEntity(OrderDetailDTO product) {
+    public OrderDetail convertToEntity(OrderDetailResponse product) {
         return modelMapper.map(product, OrderDetail.class);
     }
 
     //    Convert DTO to Entity
-    public OrderDetailDTO convertToDTO(OrderDetail product) {
-        return modelMapper.map(product, OrderDetailDTO.class);
+    public OrderDetailResponse convertToDTO(OrderDetail product) {
+        return modelMapper.map(product, OrderDetailResponse.class);
     }
 
     @Override
-    public List<OrderDetailDTO> getAll() {
+    public List<OrderDetailResponse> getAll() {
         return orderDetailRep.findAll().stream().map(this::convertToDTO).toList();
     }
 
     @Override
-    public OrderDetailDTO getById(Long id) {
+    public OrderDetailResponse getById(Long id) {
         return orderDetailRep.findById(id).map(this::convertToDTO).orElseThrow(
                 () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
     }
 
     @Transactional
     @Override
-    public OrderDetailDTO save(OrderDetailDTO product) {
+    public OrderDetailResponse save(OrderDetailResponse product) {
         OrderDetail p = orderDetailRep.save(convertToEntity(product));
         return convertToDTO(p);
     }
 
     @Transactional
     @Override
-    public OrderDetailDTO update(Long id, OrderDetailDTO product) {
+    public OrderDetailResponse update(Long id, OrderDetailResponse product) {
         orderDetailRep.findById(id).map(this::convertToDTO).orElseThrow(
                 () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         OrderDetail p = orderDetailRep.save(convertToEntity(product));

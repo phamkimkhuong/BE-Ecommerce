@@ -8,8 +8,8 @@ package com.backend.notificationservice.event;
  * @updated: 4/27/2025
  */
 
+import com.backend.commonservice.event.OrderEvent;
 import com.backend.commonservice.service.EmailService;
-import com.backend.notificationservice.model.OrderEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +34,12 @@ import java.util.Map;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class EventConsumer {
     ObjectMapper objectMapper;
+    EmailService emailService;
+
+    public EventConsumer(ObjectMapper objectMapper, EmailService emailService) {
+        this.objectMapper = objectMapper;
+        this.emailService = emailService;
+    }
 
     @RetryableTopic(
             // 2 lần thử lại + 1 lần DLQ
@@ -43,29 +49,21 @@ public class EventConsumer {
             dltStrategy = DltStrategy.FAIL_ON_ERROR,
             // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
             include = {RuntimeException.class, RetriableException.class})
-    @KafkaListener(topics = "order-events", groupId = "notification-group", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "order-events", containerFactory = "kafkaListenerContainerFactory")
     public void consumeOrderEvent(String message) {
         try {
             log.info("Nhận được sự kiện đơn hàng -> {}", message);
-
             // Chuyển đổi JSON thành đối tượng OrderEvent
             OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
-
             // Xử lý sự kiện đơn hàng dựa trên loại sự kiện
             processOrderEvent(orderEvent);
-
         } catch (Exception e) {
             log.error("Lỗi khi xử lý sự kiện đơn hàng: {}", e.getMessage(), e);
             throw new RuntimeException("Lỗi xử lý sự kiện đơn hàng", e);
         }
     }
 
-    EmailService emailService;
 
-    public EventConsumer(ObjectMapper objectMapper, EmailService emailService) {
-        this.objectMapper = objectMapper;
-        this.emailService = emailService;
-    }
     /*
      * @description: Phương thức này lắng nghe sự kiện đơn hàng từ topic
      * "order-events" và xử lý chúng.
@@ -93,7 +91,6 @@ public class EventConsumer {
             throw new RuntimeException("Lỗi xử lý sự kiện email", e);
         }
     }
-
     /*
      * @description: Xử lý sự kiện đơn hàng dựa trên loại sự kiện
      *
@@ -101,7 +98,7 @@ public class EventConsumer {
      */
     private void processOrderEvent(OrderEvent orderEvent) {
         // Giả định địa chỉ email người nhận - trong thực tế cần lấy từ thông tin khách hàng
-        String recipientEmail = "customer@example.com";
+        String recipientEmail = "phamkhuong345436@gmail.com";
         String emailSubject = "";
         String templateName = "email-template.ftl";
 
@@ -112,7 +109,7 @@ public class EventConsumer {
                 break;
             case "UPDATE":
                 log.info("Xử lý sự kiện cập nhật đơn hàng: {}, trạng thái: {}",
-                        orderEvent.getOrderId(), orderEvent.getStatus());
+                        orderEvent.getOrderId(), orderEvent.getTrangThai());
                 emailSubject = "Cập nhật trạng thái đơn hàng";
                 break;
             case "CANCEL":
@@ -148,12 +145,12 @@ public class EventConsumer {
 
         // Format tiền tệ theo định dạng Việt Nam
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        String totalAmount = currencyFormatter.format(orderEvent.getTotalAmount());
+        String totalAmount = currencyFormatter.format(orderEvent.getTongTien());
 
         // Format ngày tháng
         String orderDate;
-        if (orderEvent.getCreatedAt() != null) {
-            orderDate = orderEvent.getCreatedAt().toString().replace('T', ' ');
+        if (orderEvent.getNgayDatHang() != null) {
+            orderDate = orderEvent.getNgayDatHang().toString().replace('T', ' ');
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             orderDate = dateFormat.format(new Date());
@@ -163,21 +160,21 @@ public class EventConsumer {
         String orderItems = "<tr>" +
                 "<td>Sản phẩm mẫu</td>" +
                 "<td>1</td>" +
-                "<td>" + currencyFormatter.format(orderEvent.getTotalAmount()) + "</td>" +
-                "<td>" + currencyFormatter.format(orderEvent.getTotalAmount()) + "</td>" +
+                "<td>" + currencyFormatter.format(orderEvent.getTongTien()) + "</td>" +
+                "<td>" + currencyFormatter.format(orderEvent.getTongTien()) + "</td>" +
                 "</tr>";
 
         // Thêm các placeholder vào Map
-        placeholder.put("customerName", orderEvent.getUserId() != null ? orderEvent.getUserId() : "Khách hàng");
+        placeholder.put("customerName", orderEvent.getCustomerId() != null ? orderEvent.getCustomerId() : "Khách hàng");
         placeholder.put("orderId", orderEvent.getOrderId());
         placeholder.put("orderDate", orderDate);
         placeholder.put("paymentMethod", "Thanh toán khi nhận hàng");
-        placeholder.put("orderStatus", orderEvent.getStatus());
+        placeholder.put("orderStatus", orderEvent.getTrangThai());
         placeholder.put("orderItems", orderItems);
         placeholder.put("subtotal", totalAmount);
         placeholder.put("shippingFee", currencyFormatter.format(0));
         placeholder.put("totalAmount", totalAmount);
-        placeholder.put("recipientName", orderEvent.getUserId() != null ? orderEvent.getUserId() : "Khách hàng");
+        placeholder.put("recipientName", orderEvent.getCustomerId() != null ? orderEvent.getCustomerId() : "Khách hàng");
         placeholder.put("shippingAddress", "Địa chỉ mẫu, Quận 1, TP.HCM");
         placeholder.put("phoneNumber", "0123456789");
         placeholder.put("estimatedDelivery", "3-5 ngày làm việc");

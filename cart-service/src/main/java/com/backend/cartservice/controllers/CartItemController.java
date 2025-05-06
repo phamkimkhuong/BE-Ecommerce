@@ -2,7 +2,7 @@ package com.backend.cartservice.controllers;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
 import com.backend.cartservice.dto.request.UpdateCartItem;
-import com.backend.cartservice.dto.response.CartItemReponse;
+import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.services.CartItemService;
 import com.backend.commonservice.dto.request.ApiResponseDTO;

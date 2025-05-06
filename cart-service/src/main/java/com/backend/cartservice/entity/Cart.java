@@ -31,9 +31,4 @@ public class Cart {
                 .mapToDouble(CartItem::getTotalPrice)
                 .sum();
     }
-
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-        updateTotalPrice();
-    }
 }

@@ -4,10 +4,10 @@
  * Copyright (c) 2025 IUH. All rights reserved.
  */
 
-package com.backend.repositories;
+package com.backend.userservice.repositories;
 
 
-import com.backend.entities.User;
+import com.backend.userservice.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

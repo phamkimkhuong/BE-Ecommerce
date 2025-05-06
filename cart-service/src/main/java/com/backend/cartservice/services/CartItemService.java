@@ -2,7 +2,7 @@ package com.backend.cartservice.services;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
 import com.backend.cartservice.dto.request.UpdateCartItem;
-import com.backend.cartservice.dto.response.CartItemReponse;
+import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 
 import java.util.List;

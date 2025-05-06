@@ -1,4 +1,4 @@
-package com.backend.cartservice.dto.response;
+package com.backend.commonservice.dto.reponse;
 
 
 import lombok.*;
