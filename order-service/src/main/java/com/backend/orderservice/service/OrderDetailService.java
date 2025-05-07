@@ -1,6 +1,5 @@
 package com.backend.orderservice.service;
 
-import com.backend.orderservice.dtos.OrderDetailDTO;
 import com.backend.orderservice.dtos.response.OrderDetailResponse;
 
 import java.util.List;

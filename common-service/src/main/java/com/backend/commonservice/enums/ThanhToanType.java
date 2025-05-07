@@ -1,5 +1,7 @@
 package com.backend.commonservice.enums;
 
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +23,6 @@ public enum ThanhToanType {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Không tìm thấy trạng thái: " + label);
+        throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Không tìm thấy hình thức thanh toán: {} " + label);
     }
 }

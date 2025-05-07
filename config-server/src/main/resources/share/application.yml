@@ -24,3 +24,16 @@ spring:
     property-naming-strategy: SNAKE_CASE
   mvc:
     throw-exception-if-no-handler-found: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        transport:
+          protocol: smtp

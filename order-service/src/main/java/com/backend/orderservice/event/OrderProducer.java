@@ -37,6 +37,7 @@ public class OrderProducer {
      * @throws Exception               Nếu có lỗi khi gửi sự kiện đến Kafka
      */
     public void sendOrderEvent(Order order) throws Exception {
+        log.info("OrderProducer Nhận sự kiện đơn hàng {}", order);
         try {
             OrderEvent event = OrderEvent.fromOrder(order.getId(),
                     order.getCustomerId(),
