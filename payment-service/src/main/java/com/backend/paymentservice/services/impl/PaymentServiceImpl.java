@@ -14,8 +14,10 @@ package com.backend.paymentservice.services.impl;
  */
 
 import com.backend.paymentservice.configs.VNPayConfig;
+import com.backend.paymentservice.entity.PaymentInfo;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -23,9 +25,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Slf4j
 public class PaymentServiceImpl implements PaymentService {
+    private final Map<Long, PaymentInfo> paymentsMap = new ConcurrentHashMap<>();
 
     @Override
     public String createVNPPayment(HttpServletRequest request, long amountRequest) throws UnsupportedEncodingException {
@@ -79,5 +84,91 @@ public class PaymentServiceImpl implements PaymentService {
         String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
         query.append("&vnp_SecureHash=").append(vnp_SecureHash);
         return VNPayConfig.vnp_PayUrl + "?" + query;
+    }
+
+    /**
+     * Xử lý thanh toán cho đơn hàng
+     * Trong môi trường microservice, phương thức này giả lập quá trình thanh toán
+     * không cần HttpServletRequest
+     *
+     * @param orderId       ID của đơn hàng
+     * @param customerId    ID của khách hàng
+     * @param amount        Số tiền thanh toán
+     * @param paymentMethod Phương thức thanh toán
+     * @return true nếu thanh toán thành công, false nếu thất bại
+     */
+    @Override
+    public boolean processPayment(Long orderId, Long customerId, Double amount, String paymentMethod) {
+        try {
+            log.info("Xử lý thanh toán cho đơn hàng: {}, khách hàng: {}, số tiền: {}, phương thức: {}",
+                    orderId, customerId, amount, paymentMethod);
+
+            // Giả lập quá trình thanh toán với tỷ lệ thành công 90%
+            boolean paymentSuccess = Math.random() < 0.9;
+
+            // Tạo ID thanh toán và ID giao dịch
+            Long paymentId = System.currentTimeMillis();
+            String transactionId = paymentSuccess ? UUID.randomUUID().toString() : null;
+
+            // Lưu thông tin thanh toán
+            paymentsMap.put(orderId, new PaymentInfo(
+                    paymentId, orderId, amount, transactionId, paymentMethod, paymentSuccess));
+
+            log.info("Kết quả thanh toán cho đơn hàng {}: {}", orderId,
+                    paymentSuccess ? "Thành công" : "Thất bại");
+
+            return paymentSuccess;
+        } catch (Exception e) {
+            log.error("Lỗi khi xử lý thanh toán cho đơn hàng {}: {}", orderId, e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Xử lý hoàn tiền cho đơn hàng
+     *
+     * @param orderId ID đơn hàng cần hoàn tiền
+     */
+    @Override
+    public boolean processRefund(Long orderId) {
+        try {
+            PaymentInfo paymentInfo = paymentsMap.get(orderId);
+            if (paymentInfo == null) {
+                log.warn("Không tìm thấy thông tin thanh toán cho đơn hàng: {}", orderId);
+                return false;
+            }
+
+            log.info("Xử lý hoàn tiền cho đơn hàng: {}, số tiền: {}", orderId, paymentInfo.getAmount());
+            // Giả lập quá trình hoàn tiền thành công
+            log.info("Đã hoàn tiền cho đơn hàng: {}", orderId);
+            return true;
+        } catch (Exception e) {
+            log.error("Lỗi khi hoàn tiền cho đơn hàng {}: {}", orderId, e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Lấy ID của thanh toán từ ID đơn hàng
+     *
+     * @param orderId ID của đơn hàng
+     * @return ID của thanh toán
+     */
+    @Override
+    public Long getPaymentIdByOrderId(Long orderId) {
+        PaymentInfo paymentInfo = paymentsMap.get(orderId);
+        return paymentInfo != null ? paymentInfo.getPaymentId() : null;
+    }
+
+    /**
+     * Lấy ID giao dịch từ ID đơn hàng
+     *
+     * @param orderId ID của đơn hàng
+     * @return ID giao dịch
+     */
+    @Override
+    public String getTransactionIdByOrderId(Long orderId) {
+        PaymentInfo paymentInfo = paymentsMap.get(orderId);
+        return paymentInfo != null ? paymentInfo.getTransactionId() : null;
     }
 }

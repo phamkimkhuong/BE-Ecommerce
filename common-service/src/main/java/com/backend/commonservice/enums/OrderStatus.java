@@ -11,7 +11,8 @@ public enum OrderStatus {
     DA_NHAN("Đã nhận"),
     HUY("Đã hủy"),
     LOI_THANH_TOAN("Lỗi thanh toán"),
-    LOI_XU_LY("Lỗi xử lý");
+    LOI_XU_LY("Lỗi xử lý"),
+    HUY_DON("Hủy đơn");
 
     private final String vietnameseLabel;
 
