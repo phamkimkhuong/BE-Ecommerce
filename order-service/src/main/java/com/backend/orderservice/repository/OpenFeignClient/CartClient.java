@@ -2,6 +2,7 @@ package com.backend.orderservice.repository.OpenFeignClient;
 
 import com.backend.commonservice.configuration.FeignClientConfig;
 import com.backend.commonservice.dto.reponse.CartResponse;
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +14,8 @@ public interface CartClient {
      * @param cartId ID của giỏ hàng
      * @return Giỏ hàng tương ứng với ID
      */
-    @GetMapping("/api/carts/customer/{cartId}")
-    CartResponse getCartByID(@PathVariable Long cartId);
+    @GetMapping("/api/carts/id/{cartId}")
+    ApiResponseDTO<CartResponse> getCartById(@PathVariable Long cartId);
 
 
 //    /**

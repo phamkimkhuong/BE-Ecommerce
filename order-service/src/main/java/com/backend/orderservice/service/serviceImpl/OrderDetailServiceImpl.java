@@ -11,6 +11,7 @@ package com.backend.orderservice.service.serviceImpl;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.OrderDetail;
+import com.backend.orderservice.dtos.request.CreateOrderDetail;
 import com.backend.orderservice.dtos.response.OrderDetailResponse;
 import com.backend.orderservice.repository.OrderDetailRepository;
 import com.backend.orderservice.service.OrderDetailService;
@@ -31,7 +32,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     //    Convert Entity to DTO
-    public OrderDetail convertToEntity(OrderDetailResponse product) {
+    public OrderDetail convertToEntity(CreateOrderDetail product) {
         return modelMapper.map(product, OrderDetail.class);
     }
 
@@ -53,14 +54,14 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Transactional
     @Override
-    public OrderDetailResponse save(OrderDetailResponse product) {
+    public OrderDetailResponse save(CreateOrderDetail product) {
         OrderDetail p = orderDetailRep.save(convertToEntity(product));
         return convertToDTO(p);
     }
 
     @Transactional
     @Override
-    public OrderDetailResponse update(Long id, OrderDetailResponse product) {
+    public OrderDetailResponse update(Long id, CreateOrderDetail product) {
         orderDetailRep.findById(id).map(this::convertToDTO).orElseThrow(
                 () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
         OrderDetail p = orderDetailRep.save(convertToEntity(product));

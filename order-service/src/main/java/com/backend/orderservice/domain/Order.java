@@ -1,9 +1,9 @@
 package com.backend.orderservice.domain;
 
-
 import com.backend.commonservice.enums.OrderStatus;
 import com.backend.commonservice.enums.ThanhToanType;
 import com.backend.orderservice.enums.OrderStatusConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,6 +42,9 @@ public class Order {
     private String eventType;
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
+    @Column(name = "vnp_txn_ref")
+    private String vnpTxnRef;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<OrderDetail> orderDetails;
 }

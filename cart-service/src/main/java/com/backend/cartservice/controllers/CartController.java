@@ -3,8 +3,10 @@ package com.backend.cartservice.controllers;
 import com.backend.cartservice.entity.Cart;
 import com.backend.cartservice.services.CartService;
 import com.backend.commonservice.dto.reponse.CartResponse;
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +40,13 @@ public class CartController {
     }
 
     @GetMapping("/id/{cartId}")
-    public ResponseEntity<CartResponse> getCartById(@PathVariable Long cartId) {
+    public ApiResponseDTO<CartResponse> getCartById(@PathVariable Long cartId) {
+        ApiResponseDTO<CartResponse> response = new ApiResponseDTO<>();
         CartResponse cart = cartService.getCartById(cartId);
-        return ResponseEntity.ok(cart);
+        response.setData(cart);
+        response.setMessage("Lấy giỏ hàng thành công");
+        response.setCode(HttpStatus.OK.value());
+        return response;
     }
 
 

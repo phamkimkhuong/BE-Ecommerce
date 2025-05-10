@@ -11,18 +11,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Objects;
 
 @Configuration
 @Slf4j
 public class FeignClientConfig {
 
+    /**
+     * Truyền thông tin xác thực vào các yêu cầu Feign
+     * Trả về một RequestInterceptor để thêm thông tin xác thực vào các yêu cầu Feign.
+     */
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getCredentials() instanceof String) {
-                String token = (String) authentication.getCredentials();
-                requestTemplate.header("Authorization", "Bearer " + token);
+            String token = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+                    .getRequest()
+                    .getHeader("Authorization");
+            if (token != null && token.startsWith("Bearer ")) {
+                requestTemplate.header("Authorization", token);
             }
         };
     }

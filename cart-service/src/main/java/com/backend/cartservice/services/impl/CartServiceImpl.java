@@ -54,6 +54,7 @@ public class CartServiceImpl implements CartService {
 
     // Lấy giỏ hàng theo cartId
     public CartResponse getCartById(Long cartId) {
+        log.info("CartServiceImpl Lấy giỏ hàng theo cartId: {}", cartId);
         Cart c =cartRepository.findById(cartId).orElseThrow(() ->
                 new AppException(ErrorMessage.CART_NOT_FOUND));
         return toCartReponse(c);

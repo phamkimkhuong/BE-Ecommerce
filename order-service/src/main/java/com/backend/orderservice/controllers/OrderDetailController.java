@@ -9,6 +9,7 @@ package com.backend.orderservice.controllers;
  */
 
 import com.backend.orderservice.dtos.OrderDetailDTO;
+import com.backend.orderservice.dtos.request.CreateOrderDetail;
 import com.backend.orderservice.dtos.response.OrderDetailResponse;
 import com.backend.orderservice.service.OrderDetailService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -92,12 +93,12 @@ public class OrderDetailController {
                                                             )
                                                     )
 
-                                                    OrderDetailResponse orderDTO
+                                                        CreateOrderDetail orderDTO
 
 
     ) {
-        orderService.save(orderDTO);
-        return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
+        OrderDetailResponse c=  orderService.save(orderDTO);
+        return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
     @Operation(
@@ -163,10 +164,10 @@ public class OrderDetailController {
                                                                       mediaType = "application/json",
                                                                       schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = OrderDetailDTO.class)
                                                               )
-                                                      ) OrderDetailResponse orderDTO
+                                                      ) CreateOrderDetail orderDTO
     ) {
-        orderService.update(id, orderDTO);
-        return new ResponseEntity<>(orderDTO, HttpStatus.OK);
+        OrderDetailResponse c= orderService.update(id, orderDTO);
+        return new ResponseEntity<>(c, HttpStatus.OK);
 
     }
 

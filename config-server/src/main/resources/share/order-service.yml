@@ -10,10 +10,16 @@ spring:
   # JPA configuration
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     defer-datasource-initialization: true
   # SQL script to initialize the database
+  logging:
+    level:
+      org.hibernate.SQL: INFO
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      root: INFO
+      com.backend.orderservice: INFO
   sql:
     init:
     # Only run the script for first time

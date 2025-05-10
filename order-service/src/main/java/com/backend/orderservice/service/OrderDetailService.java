@@ -1,5 +1,6 @@
 package com.backend.orderservice.service;
 
+import com.backend.orderservice.dtos.request.CreateOrderDetail;
 import com.backend.orderservice.dtos.response.OrderDetailResponse;
 
 import java.util.List;
@@ -9,9 +10,9 @@ public interface OrderDetailService {
 
     OrderDetailResponse getById(Long id);
 
-    OrderDetailResponse save(OrderDetailResponse order);
+    OrderDetailResponse save(CreateOrderDetail order);
 
-    OrderDetailResponse update(Long id, OrderDetailResponse order);
+    OrderDetailResponse update(Long id, CreateOrderDetail order);
 
     boolean delete(Long id);
 }

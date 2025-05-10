@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan({"com.backend.orderservice", "com.backend.commonservice"})
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan(basePackages = {"com.backend.orderservice", "com.backend.commonservice"})
 public class OrderServiceApplication {
 
     public static void main(String[] args) {

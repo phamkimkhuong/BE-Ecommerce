@@ -48,8 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            throw new AccessDeniedException("Missing or invalid Authorization header");
-            logger.info("Noting token");
+            logger.info("Không có token");
             filterChain.doFilter(request, response);
              return;
         }

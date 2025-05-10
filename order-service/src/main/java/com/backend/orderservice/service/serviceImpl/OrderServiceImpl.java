@@ -9,21 +9,22 @@ package com.backend.orderservice.service.serviceImpl;
 
 import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.commonservice.dto.reponse.CartResponse;
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.enums.OrderStatus;
 import com.backend.commonservice.enums.ThanhToanType;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.Order;
+import com.backend.orderservice.domain.OrderDetail;
 import com.backend.orderservice.dtos.OrderDTO;
 import com.backend.orderservice.dtos.request.CartOrderRequest;
-import com.backend.orderservice.dtos.response.OrderDetailResponse;
+import com.backend.orderservice.dtos.request.CreateOrderDetail;
 import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.event.OrderProducer;
 import com.backend.orderservice.exception.PaymentException;
 import com.backend.orderservice.repository.OpenFeignClient.CartClient;
 import com.backend.orderservice.repository.OrderDetailRepository;
 import com.backend.orderservice.repository.OrderRepository;
-import com.backend.orderservice.service.OrderDetailService;
 import com.backend.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -35,8 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.backend.orderservice.domain.OrderDetail;
 
 @Slf4j
 @Service
@@ -46,13 +45,17 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRep;
     ModelMapper modelMapper;
     OrderProducer orderProducer;
-    OrderDetailService orderDetailService;
     CartClient cartClient;
     OrderDetailRepository orderDetailRepository;
 
     // Convert Entity to DTO
     public Order convertToEntity(OrderDTO product) {
         return modelMapper.map(product, Order.class);
+    }
+
+    //    Convert Entity to DTO
+    public OrderDetail convertOrderDetailToEntity(CreateOrderDetail product) {
+        return modelMapper.map(product, OrderDetail.class);
     }
 
     // Convert DTO to Entity
@@ -82,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
             return 0.0;
         }
         return cartItemReponses.stream()
-                .mapToDouble(detail -> detail.getPrice() * detail.getPrice())
+                .mapToDouble(detail -> detail.getPrice() * detail.getQuantity())
                 .sum();
     }
 
@@ -93,17 +96,14 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse save(CartOrderRequest request) {
         log.info("Bắt đầu lưu đơn hàng : {}", request);
         Long createdOrderId = null;
-
         try {
-            CartResponse cart = cartClient.getCartByID(request.getCartId());
-            if (cart == null) {
-                throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
-                        "Không tìm thấy giỏ hàng với ID: " + request.getCartId());
+            ApiResponseDTO<CartResponse> response = cartClient.getCartById(request.getCartId());
+            if (response == null || response.getData() == null) {
+                throw new AppException(ErrorMessage.CART_SERVER_ERROR);
             }
+            CartResponse cart = response.getData();
             // Tính tổng tiền từ chi tiết đơn hàng
             Double totalAmount = calculateTotalAmount(cart.getCartItems());
-            log.info("Tổng tiền đơn hàng: {}", totalAmount);
-
             // Tạo đơn hàng mới
             Order order = new Order();
             order.setTongTien(totalAmount);
@@ -112,26 +112,27 @@ public class OrderServiceImpl implements OrderService {
             // chuyen doi thanh toan type
             order.setThanhToanType(ThanhToanType.fromVietnameseLabel(request.getHinhThucTT()));
             order.setNgayDatHang(LocalDate.now());
+            order.setCustomerId(request.getCustomerId());
             Order result = orderRep.save(order);
             createdOrderId = result.getId(); // Lưu ID của đơn hàng đã tạo
-            log.info("Đơn hàng đã được lưu thành công vào database:");
             // Lưu chi tiết đơn hàng
             List<CartItemReponse> dsCartItem = cart.getCartItems();
+            if (dsCartItem.isEmpty()) {
+                throw new AppException(ErrorMessage.CART_NOT_FOUND, "Đơn hàng không có sản phẩm nào");
+            }
             for (CartItemReponse cartItem : dsCartItem) {
-                OrderDetailResponse detailDTO = new OrderDetailResponse();
+                OrderDetail detailDTO = new OrderDetail();
                 detailDTO.setProductId(cartItem.getProductId());
                 detailDTO.setSoLuong(cartItem.getQuantity());
                 detailDTO.setGiaBan(cartItem.getPrice());
-                detailDTO.setOrderId(result.getId());
-                // Thiết lập giá gốc bằng giá bán (có thể cập nhật sau nếu có thông tin giá gốc
-                // từ product-service)
                 detailDTO.setGiaGoc(cartItem.getPrice());
-                orderDetailService.save(detailDTO);
+                order.setId(createdOrderId);
+                detailDTO.setOrder(order);
+                orderDetailRepository.save(detailDTO);
             }
             // Nếu không phải thanh toán khi nhận hàng, gửi sự kiện đến Kafka
             if (!order.getThanhToanType().equals(ThanhToanType.TT_KHI_NHAN_HANG)) {
                 try {
-                    // Gửi sự kiện đơn hàng mới đến Kafka
                     orderProducer.sendOrderEvent(result);
                     log.info("Đã gửi sự kiện đơn hàng đến payment-service: {}", result.getId());
                 } catch (Exception e) {
@@ -220,10 +221,9 @@ public class OrderServiceImpl implements OrderService {
      * @param orderId        ID của đơn hàng cần cập nhật
      * @param paymentSuccess true nếu thanh toán thành công, false nếu thất bại
      * @param transactionId  ID giao dịch từ payment-service (có thể null)
-     * @return Đơn hàng đã được cập nhật
      */
     @Transactional
-    public OrderResponse handlePaymentResult(Long orderId, boolean paymentSuccess, String transactionId) {
+    public void handlePaymentResult(Long orderId, boolean paymentSuccess, String transactionId) {
         log.info("Xử lý kết quả thanh toán cho đơn hàng: {}, kết quả: {}, transactionId: {}",
                 orderId, paymentSuccess ? "Thành công" : "Thất bại", transactionId);
 
@@ -258,7 +258,7 @@ public class OrderServiceImpl implements OrderService {
         // Lưu đơn hàng với trạng thái mới
         Order updatedOrder = orderRep.save(order);
 
-        return convertToDTO(updatedOrder);
+        convertToDTO(updatedOrder);
     }
 
     /**
@@ -285,5 +285,27 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             log.error("Không thể gửi thông báo lỗi: {}", e.getMessage(), e);
         }
+    }
+
+    /**
+     * Cập nhật URL thanh toán VNPay cho đơn hàng
+     *
+     * @param orderId    ID đơn hàng
+     * @param paymentUrl URL thanh toán VNPay
+     * @param vnpTxnRef  Mã giao dịch VNPay
+     * @return Đơn hàng đã được cập nhật
+     */
+    @Transactional
+    public OrderResponse updatePaymentUrl(Long orderId, String paymentUrl, String vnpTxnRef) {
+        log.info("Cập nhật URL thanh toán VNPay cho đơn hàng: {}", orderId);
+
+        Order order = orderRep.findById(orderId).orElseThrow(
+                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Không tìm thấy đơn hàng với ID: " + orderId));
+        // Lưu URL thanh toán và mã giao dịch VNPay vào đơn hàng
+        order.setVnpTxnRef(vnpTxnRef);
+        // Cập nhật đơn hàng
+        Order updatedOrder = orderRep.save(order);
+        log.info("Đã cập nhật URL thanh toán VNPay cho đơn hàng: {}", orderId);
+        return convertToDTO(updatedOrder);
     }
 }

@@ -23,7 +23,7 @@ public class CartOrderRequest {
 
     @NotNull(message = "Mã Khách Hàng không được để trống")
     @Schema(description = "Ma giỏ hàng của khách hàng", example = "1")
-    @JsonProperty("cart_id")
+    @JsonProperty("customer_id")
     private Long customerId;
 
     @NotBlank(message = "Hình thức thanh toán không được để trống")
