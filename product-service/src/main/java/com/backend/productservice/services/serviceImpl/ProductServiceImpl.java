@@ -38,6 +38,38 @@ public class ProductServiceImpl implements ProductService {
     ModelMapper modelMapper;
     CloudinaryService cloudinaryService;
 
+    private static final int MAX_RETRIES = 3;
+    @Transactional
+    public boolean reduceStock(Long productId, int quantity) {
+        int attempts = 0;
+        while (attempts < MAX_RETRIES) {
+            try {
+                Product product = productRep.findById(productId)
+                        .orElseThrow(() -> new AppException(ErrorMessage.PRODUCT_NOT_FOUND));
+                // Kiểm tra số lượng tồn kho
+                if (product.getSoLuong() < quantity) {
+                    return false; // Không đủ hàng
+                }
+                // Cập nhật số lượng
+                product.setSoLuong(product.getSoLuong() - quantity);
+                productRep.save(product);
+                return true; // Thành công
+            } catch (Exception e) {
+                // Xảy ra xung đột, có thể một transaction khác đã cập nhật sản phẩm
+                attempts++;
+                if (attempts >= MAX_RETRIES) {
+                    throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,"Failed to update inventory after " + MAX_RETRIES + " attempts");
+                }
+                // Chờ một chút trước khi thử lại
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+        return false;
+    }
     // Convert Entity to DTO
     public ProductReponse toProductReponse(Product product) {
         return modelMapper.map(product, ProductReponse.class);

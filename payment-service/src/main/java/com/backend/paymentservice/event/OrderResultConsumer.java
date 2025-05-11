@@ -1,7 +1,9 @@
 package com.backend.paymentservice.event;
 
 import com.backend.commonservice.enums.OrderStatus;
+import com.backend.commonservice.enums.PaymentEventType;
 import com.backend.commonservice.event.OrderEvent;
+import com.backend.paymentservice.entity.PaymentInfo;
 import com.backend.paymentservice.services.PaymentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class OrderResultConsumer {
 
     /**
      * Lắng nghe sự kiện đơn hàng từ order-service
+     *
      * @param orderResult Kết quả đơn hàng từ order-service
      */
     @KafkaListener(topics = "order-events")
@@ -40,27 +43,22 @@ public class OrderResultConsumer {
                     // Xử lý đơn hàng mới - bắt đầu quá trình thanh toán
                     processNewOrder(orderEvent);
                     break;
-
                 case "UPDATE":
                     // Cập nhật đơn hàng - có thể cần cập nhật thanh toán tương ứng
                     processOrderUpdate(orderEvent);
                     break;
-
                 case "CANCEL":
                     // Hủy đơn hàng - có thể cần hoàn tiền
                     processOrderCancellation(orderEvent);
                     break;
-
                 case "PAYMENT_FAILED":
                     // Ghi log cho việc thanh toán thất bại
                     log.info("Ghi nhận đơn hàng {} thanh toán thất bại", orderEvent.getOrderId());
                     break;
-
                 default:
                     log.warn("Không xử lý được loại sự kiện đơn hàng: {}", orderEvent.getEventType());
                     break;
             }
-
         } catch (Exception e) {
             log.error("Lỗi khi xử lý sự kiện đơn hàng: {}", e.getMessage(), e);
             // Gửi thông báo lỗi về order-service để xử lý (nếu cần)
@@ -68,25 +66,19 @@ public class OrderResultConsumer {
     }
 
     /**
-     * Xử lý đơn hàng mới - Bắt đầu quy trình thanh toán
+     * Luu thong tin thanh toán cho đơn hàng mới
+     *
      * @param orderEvent Sự kiện đơn hàng mới
      */
     private void processNewOrder(OrderEvent orderEvent) {
-            try {
-                log.info("Bắt đầu xử lý thanh toán cho đơn hàng: {}", orderEvent.getOrderId());
-                // Gọi service để xử lý thanh toán
-                boolean paymentSuccess = paymentService.processPayment(
-                        orderEvent.getOrderId(),
-                        orderEvent.getCustomerId(),
-                        orderEvent.getTongTien(),
-                        orderEvent.getHinhThucTT().name());
-                // Gửi kết quả thanh toán về order-service
-                sendPaymentResult(orderEvent, paymentSuccess);
-            } catch (Exception e) {
-                log.error("Lỗi khi xử lý thanh toán cho đơn hàng {}: {}", orderEvent.getOrderId(), e.getMessage(), e);
-                // Gửi thông báo lỗi thanh toán
-                sendPaymentFailureNotification(orderEvent, e.getMessage());
-            }
+        log.info("Bắt đầu xử lý thanh toán cho đơn hàng: {}", orderEvent.getOrderId());
+        PaymentInfo paymentInfo = new PaymentInfo();
+        paymentInfo.setOrderId(orderEvent.getOrderId());
+        paymentInfo.setAmount(orderEvent.getTongTien());
+        paymentInfo.setPaymentMethod(orderEvent.getHinhThucTT().name());
+        paymentInfo.setPaymentEventType(PaymentEventType.PAYMENT_INITIATE);
+        paymentInfo.setSuccess(false); // Chưa thanh toán thành công
+        paymentService.save(paymentInfo);
     }
 
     /**
@@ -104,7 +96,7 @@ public class OrderResultConsumer {
 
     /**
      * Xử lý hủy đơn hàng
-     * 
+     *
      * @param orderEvent Sự kiện hủy đơn hàng
      */
     private void processOrderCancellation(OrderEvent orderEvent) {
@@ -118,61 +110,14 @@ public class OrderResultConsumer {
     }
 
     /**
-     * Gửi kết quả thanh toán về order-service
-     *
-     * @param orderEvent Thông tin đơn hàng
-     * @param success    Kết quả thanh toán
-     */
-    private void sendPaymentResult(OrderEvent orderEvent, boolean success) {
-        try {
-            if (success) {
-                // Lấy thông tin chi tiết thanh toán
-                Long paymentId = paymentService.getPaymentIdByOrderId(orderEvent.getOrderId());
-                String transactionId = paymentService.getTransactionIdByOrderId(orderEvent.getOrderId());
-
-                // Gửi thông báo thành công
-                paymentProducer.sendPaymentResult(
-                        orderEvent.getOrderId(),
-                        paymentId,
-                        orderEvent.getTongTien(),
-                        true,
-                        transactionId,
-                        orderEvent.getHinhThucTT().name(),
-                        null);
-                log.info("Đã gửi kết quả thanh toán thành công cho đơn hàng: {}", orderEvent.getOrderId());
-            } else {
-                // Gửi thông báo thất bại
-                paymentProducer.sendPaymentResult(
-                        orderEvent.getOrderId(),
-                        null,
-                        orderEvent.getTongTien(),
-                        false,
-                        null,
-                        orderEvent.getHinhThucTT().name(),
-                        "Không thể xử lý thanh toán");
-                log.error("Thanh toán thất bại cho đơn hàng: {}", orderEvent.getOrderId());
-            }
-        } catch (Exception e) {
-            log.error("Lỗi khi gửi kết quả thanh toán: {}", e.getMessage(), e);
-        }
-    }
-
-    /**
      * Gửi thông báo lỗi thanh toán
      *
      * @param orderEvent   Thông tin đơn hàng
      * @param errorMessage Thông báo lỗi
      */
-    private void sendPaymentFailureNotification(OrderEvent orderEvent, String errorMessage) {
+    private void sendPaymentFailureNotification(PaymentInfo orderEvent, String errorMessage) {
         try {
-            paymentProducer.sendPaymentResult(
-                    orderEvent.getOrderId(),
-                    null,
-                    orderEvent.getTongTien(),
-                    false,
-                    null,
-                    orderEvent.getHinhThucTT().name(),
-                    "Lỗi xử lý: " + errorMessage);
+            paymentProducer.sendPaymentResult(orderEvent);
         } catch (Exception ex) {
             log.error("Không thể gửi thông báo lỗi thanh toán: {}", ex.getMessage());
         }

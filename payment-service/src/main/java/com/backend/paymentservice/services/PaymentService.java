@@ -6,7 +6,9 @@
 
 package com.backend.paymentservice.services;
 
+import com.backend.paymentservice.entity.PaymentInfo;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.UnsupportedEncodingException;
 
 /*
@@ -16,34 +18,11 @@ import java.io.UnsupportedEncodingException;
  * @created: 25-April-2025 11:00 PM
  */
 public interface PaymentService {
-     String createVNPPayment(HttpServletRequest request, long amountRequest) throws UnsupportedEncodingException;
+    String createVNPPayment(HttpServletRequest request, long amountRequest) throws UnsupportedEncodingException;
 
-     boolean processRefund(Long orderId);
+    boolean processRefund(Long orderId);
 
-     /**
-      * Xử lý thanh toán cho đơn hàng
-      * 
-      * @param orderId       ID của đơn hàng
-      * @param customerId    ID của khách hàng
-      * @param amount        Số tiền thanh toán
-      * @param paymentMethod Phương thức thanh toán
-      * @return true nếu thanh toán thành công, false nếu thất bại
-      */
-     boolean processPayment(Long orderId, Long customerId, Double amount, String paymentMethod);
+    void save(PaymentInfo paymentInfo);
 
-     /**
-      * Lấy ID của thanh toán từ ID đơn hàng
-      * 
-      * @param orderId ID của đơn hàng
-      * @return ID của thanh toán
-      */
-     Long getPaymentIdByOrderId(Long orderId);
-
-     /**
-      * Lấy ID giao dịch từ ID đơn hàng
-      * 
-      * @param orderId ID của đơn hàng
-      * @return ID giao dịch
-      */
-     String getTransactionIdByOrderId(Long orderId);
+    void update(HttpServletRequest request);
 }

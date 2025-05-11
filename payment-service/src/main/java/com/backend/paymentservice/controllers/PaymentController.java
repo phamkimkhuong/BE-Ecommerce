@@ -12,33 +12,60 @@ package com.backend.paymentservice.controllers;
  * @version: 1.0
  * @created: 25-April-2025 11:30 PM
  */
+
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
+@RequestMapping("/api/payment")
+@Slf4j
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class PaymentController {
+    PaymentService paymentService;
 
-    @Autowired
-    private PaymentService paymentService;
-
-    @PostMapping("/api/payment/vn-pay/create-payment")
-    public ResponseEntity<?> createPayment(HttpServletRequest request, @RequestParam("amount") long amount)
+    @PostMapping("/vn-pay/create-payment")
+    public ApiResponseDTO<?> createPayment(HttpServletRequest request, @RequestParam("orderId") long orderId)
             throws UnsupportedEncodingException {
-        String paymentUrl = paymentService.createVNPPayment(request, amount);
-        return ResponseEntity.ok(paymentUrl);
+        String paymentUrl = paymentService.createVNPPayment(request, orderId);
+        ApiResponseDTO<String> response = new ApiResponseDTO<>();
+        if (paymentUrl == null) {
+            response.setCode(400);
+            response.setMessage("Lỗi tạo đường dẫn thanh toán");
+            response.setData(null);
+            return response;
+        }
+        response.setCode(201);
+        response.setMessage("Tạo đường dẫn thanh toán thành công");
+        response.setData(paymentUrl);
+        return response;
     }
 
-    @GetMapping("/api/payment/vn-pay/payment-info")
-    public ResponseEntity<?> paymentSuccess(@RequestParam("vnp_ResponseCode") String status) {
+    @GetMapping("/vn-pay/payment-info")
+    public ApiResponseDTO<?> paymentSuccess(HttpServletRequest request,@RequestParam("vnp_ResponseCode") String status) {
+        log.info("Xem trạng thái thanh toán: {}", status);
+        ApiResponseDTO<Boolean> response = new ApiResponseDTO<>();
         if ("00".equals(status)) {
-            return ResponseEntity.ok("Payment successful");
+            response.setCode(200);
+            response.setMessage("Thanh toán thành công");
+            response.setData(true);
+            // Cập nhật trạng thái thanh toán trong cơ sở dữ liệu
+            paymentService.update(request);
         } else {
-            return ResponseEntity.badRequest().body("Payment failed");
+            response.setCode(400);
+            response.setMessage("Thanh toán thất bại");
+            response.setData(false);
         }
+        return response;
     }
+
 }

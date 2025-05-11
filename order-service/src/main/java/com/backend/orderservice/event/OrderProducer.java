@@ -8,8 +8,8 @@ package com.backend.orderservice.event;
  */
 
 import com.backend.commonservice.event.OrderEvent;
+import com.backend.commonservice.event.ProductEvent;
 import com.backend.commonservice.service.KafkaService;
-import com.backend.commonservice.enums.OrderStatus;
 import com.backend.orderservice.domain.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class OrderProducer {
     private static final String ORDER_TOPIC = "order-events";
+    private static final String PRODUCT_TOPIC = "product-events";
 
     private final KafkaService kafkaService;
     private final ObjectMapper objectMapper;
@@ -47,7 +48,7 @@ public class OrderProducer {
                     order.getEventType());
             String message = objectMapper.writeValueAsString(event);
             kafkaService.sendMessage(ORDER_TOPIC, message);
-            log.info("Đã gửi sự kiện đơn hàng: {} đến topic: {}", message, ORDER_TOPIC);
+            log.info("Đã gửi sự kiện đơn hàng đến topic: {}", ORDER_TOPIC);
         } catch (JsonProcessingException e) {
             log.error("Lỗi khi chuyển đổi sự kiện đơn hàng thành JSON: {}", e.getMessage());
             throw e; // Truyền lỗi lên cho người gọi xử lý
@@ -55,5 +56,22 @@ public class OrderProducer {
             log.error("Lỗi khi gửi sự kiện đơn hàng: {}", e.getMessage());
             throw e; // Truyền lỗi lên cho người gọi xử lý
         }
+    }
+
+    public void sendProductEvent(Long customerId,Long productId, int quantity) throws Exception {
+        log.info("ProductProducer Nhận sự kiện trừ tồn kho {} với ssosoluong {}", productId, quantity);
+        try {
+            ProductEvent event = ProductEvent.fromOrder(customerId,productId, quantity);
+            String message = objectMapper.writeValueAsString(event);
+            kafkaService.sendMessage(PRODUCT_TOPIC, message);
+            log.info("Đã gửi sự kiện trừ tồn kho đến topic: {}", PRODUCT_TOPIC);
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi sự kiện trừ tồn kho thành JSON: {}", e.getMessage());
+            throw e; // Truyền lỗi lên cho người gọi xử lý
+        } catch (Exception e) {
+            log.error("Lỗi khi gửi sự kiện trừ tồn kho: {}", e.getMessage());
+            throw e; // Truyền lỗi lên cho người gọi xử lý
+        }
+
     }
 }

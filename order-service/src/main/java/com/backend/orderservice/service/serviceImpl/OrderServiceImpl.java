@@ -11,7 +11,9 @@ import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.commonservice.dto.reponse.CartResponse;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.enums.OrderStatus;
+import com.backend.commonservice.enums.PaymentEventType;
 import com.backend.commonservice.enums.ThanhToanType;
+import com.backend.commonservice.event.PaymentEvent;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.Order;
@@ -33,7 +35,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +99,14 @@ public class OrderServiceImpl implements OrderService {
         log.info("Bắt đầu lưu đơn hàng : {}", request);
         Long createdOrderId = null;
         try {
-            ApiResponseDTO<CartResponse> response = cartClient.getCartById(request.getCartId());
+            ApiResponseDTO<CartResponse> response;
+            try {
+                response = cartClient.getCartById(request.getCartId());
+            } catch (feign.RetryableException e) {
+                log.error("Lỗi kết nối đến cart-service: {}", e.getMessage());
+                throw new AppException(ErrorMessage.CART_SERVER_ERROR,
+                        "Dịch vụ giỏ hàng không khả dụng, vui lòng thử lại sau");
+            }
             if (response == null || response.getData() == null) {
                 throw new AppException(ErrorMessage.CART_SERVER_ERROR);
             }
@@ -111,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
             order.setEventType("CREATE");
             // chuyen doi thanh toan type
             order.setThanhToanType(ThanhToanType.fromVietnameseLabel(request.getHinhThucTT()));
-            order.setNgayDatHang(LocalDate.now());
+            order.setNgayDatHang(LocalDateTime.now());
             order.setCustomerId(request.getCustomerId());
             Order result = orderRep.save(order);
             createdOrderId = result.getId(); // Lưu ID của đơn hàng đã tạo
@@ -129,6 +138,18 @@ public class OrderServiceImpl implements OrderService {
                 order.setId(createdOrderId);
                 detailDTO.setOrder(order);
                 orderDetailRepository.save(detailDTO);
+            }
+            // Gửi sự kiện đến Kafka trừ số lượng hàng trong kho
+            try {
+                for(CartItemReponse cartItem : dsCartItem) {
+                    orderProducer.sendProductEvent(cart.getCustomerId(),cartItem.getProductId(),cartItem.getQuantity());
+                }
+                log.info("Đã gửi sự kiện đơn hàng đến prodcut-service: {}", result.getId());
+            } catch (Exception e) {
+                log.error("Lỗi khi gửi sự kiện đơn hàng đến Kafka: {}", e.getMessage());
+                result.setTrangThai(OrderStatus.LOI_XU_LY);
+                orderRep.save(result);
+                throw new PaymentException("Lỗi khi xử lý thanh toán: " + e.getMessage());
             }
             // Nếu không phải thanh toán khi nhận hàng, gửi sự kiện đến Kafka
             if (!order.getThanhToanType().equals(ThanhToanType.TT_KHI_NHAN_HANG)) {
@@ -179,19 +200,15 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse update(Long id, OrderDTO product) {
         Order existingOrder = orderRep.findById(id).orElseThrow(
                 () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
-
         // Lưu trạng thái cũ để kiểm tra xem có thay đổi không
         OrderStatus oldStatus = existingOrder.getTrangThai();
-
         Order orderToUpdate = convertToEntity(product);
         orderToUpdate.setId(id);
         String eventType = "UPDATE";
         orderToUpdate.setEventType(eventType);
-
         // Luôn lưu đơn hàng vào database trước
         Order updatedOrder = orderRep.save(orderToUpdate);
         log.info("Đơn hàng đã được cập nhật thành công trong database: {}", updatedOrder.getId());
-
         // Nếu trạng thái đơn hàng thay đổi, gửi sự kiện đến Kafka
         if (orderToUpdate.getTrangThai() != oldStatus) {
             try {
@@ -203,7 +220,6 @@ public class OrderServiceImpl implements OrderService {
                 // Không rollback transaction vì đơn hàng đã được cập nhật trong database
             }
         }
-
         return convertToDTO(updatedOrder);
     }
 
@@ -217,47 +233,33 @@ public class OrderServiceImpl implements OrderService {
     /**
      * Xử lý kết quả thanh toán từ payment-service
      * Saga Pattern: Phương thức này hoàn tất giai đoạn thanh toán trong Saga flow
-     *
-     * @param orderId        ID của đơn hàng cần cập nhật
-     * @param paymentSuccess true nếu thanh toán thành công, false nếu thất bại
-     * @param transactionId  ID giao dịch từ payment-service (có thể null)
      */
     @Transactional
-    public void handlePaymentResult(Long orderId, boolean paymentSuccess, String transactionId) {
-        log.info("Xử lý kết quả thanh toán cho đơn hàng: {}, kết quả: {}, transactionId: {}",
-                orderId, paymentSuccess ? "Thành công" : "Thất bại", transactionId);
-
-        Order order = orderRep.findById(orderId).orElseThrow(
-                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Không tìm thấy đơn hàng với ID: " + orderId));
-
-        if (paymentSuccess) {
-            // Nếu thanh toán thành công, cập nhật trạng thái đơn hàng thành ĐÃ THANH TOÁN
+    public void handlePaymentResult(PaymentEvent p) {
+        log.info("Xử lý kết quả thanh toán cho đơn hàng");
+        Order order = orderRep.findById(p.getOrderId()).orElseThrow(
+                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Không tìm thấy đơn hàng cần thanh toán:"));
+        if (p.getPaymentEventType().equals(PaymentEventType.PAYMENT_SUCCESS)) {
             order.setTrangThai(OrderStatus.DA_THANH_TOAN);
-            order.setEventType("PAYMENT_COMPLETED");
-            log.info("Đơn hàng {} đã được thanh toán thành công", orderId);
-
+            orderRep.save(order);
+            log.info("Đơn hàng đã được thanh toán thành công");
             // Tiếp tục Saga flow - gửi sự kiện tới inventory-service để cập nhật tồn kho
             try {
-                orderProducer.sendOrderEvent(order);
-                log.info("Đã gửi sự kiện đơn hàng đã thanh toán đến inventory-service: {}", orderId);
+//                orderProducer.sendOrderEvent(order);
+                log.info("Đã gửi sự kiện đơn hàng đã thanh toán đến inventory-service:");
             } catch (Exception e) {
                 log.error("Lỗi khi gửi sự kiện đơn hàng đã thanh toán đến inventory-service: {}", e.getMessage());
-                // Không rollback transaction vì thanh toán đã thành công
             }
         } else {
-            // Nếu thanh toán thất bại, cập nhật trạng thái đơn hàng thành LỖI THANH TOÁN
+            log.info("Lỗi thanh toán, cập nhật trạng thái đơn hàng thành LỖI THANH TOÁN");
             order.setTrangThai(OrderStatus.LOI_THANH_TOAN);
-            order.setEventType("PAYMENT_FAILED");
-            log.error("Thanh toán thất bại cho đơn hàng {}", orderId);
-
+            orderRep.save(order);
             // Trong Saga Pattern: Thực hiện bù trừ (compensating transaction)
             // Không cần thực hiện bù trừ với inventory service vì tại bước này inventory
             // chưa bị giảm
         }
-
         // Lưu đơn hàng với trạng thái mới
         Order updatedOrder = orderRep.save(order);
-
         convertToDTO(updatedOrder);
     }
 
@@ -285,27 +287,5 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             log.error("Không thể gửi thông báo lỗi: {}", e.getMessage(), e);
         }
-    }
-
-    /**
-     * Cập nhật URL thanh toán VNPay cho đơn hàng
-     *
-     * @param orderId    ID đơn hàng
-     * @param paymentUrl URL thanh toán VNPay
-     * @param vnpTxnRef  Mã giao dịch VNPay
-     * @return Đơn hàng đã được cập nhật
-     */
-    @Transactional
-    public OrderResponse updatePaymentUrl(Long orderId, String paymentUrl, String vnpTxnRef) {
-        log.info("Cập nhật URL thanh toán VNPay cho đơn hàng: {}", orderId);
-
-        Order order = orderRep.findById(orderId).orElseThrow(
-                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Không tìm thấy đơn hàng với ID: " + orderId));
-        // Lưu URL thanh toán và mã giao dịch VNPay vào đơn hàng
-        order.setVnpTxnRef(vnpTxnRef);
-        // Cập nhật đơn hàng
-        Order updatedOrder = orderRep.save(order);
-        log.info("Đã cập nhật URL thanh toán VNPay cho đơn hàng: {}", orderId);
-        return convertToDTO(updatedOrder);
     }
 }

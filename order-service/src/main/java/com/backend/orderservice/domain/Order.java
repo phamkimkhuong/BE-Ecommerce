@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /*
@@ -30,7 +31,7 @@ public class Order {
     private Long id;
     @Column(name = "ngay_dat_hang", nullable = false)
     @CreatedDate
-    private LocalDate ngayDatHang;
+    private LocalDateTime ngayDatHang;
     @Column(name = "tong_tien", nullable = false)
     private Double tongTien;
     @Column(name = "trang_thai", nullable = false)
@@ -42,8 +43,6 @@ public class Order {
     private String eventType;
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
-    @Column(name = "vnp_txn_ref")
-    private String vnpTxnRef;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<OrderDetail> orderDetails;

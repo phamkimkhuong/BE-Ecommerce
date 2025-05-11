@@ -50,6 +50,8 @@ public enum ErrorMessage {
     CART_ALREADY_EXISTS("Giỏ hàng đã tồn tại cho khách hàng này", 400, HttpStatus.BAD_REQUEST),
     // Thanh toán thất bại
     PAYMENT_FAILED("Thanh toán thất bại", 400, HttpStatus.BAD_REQUEST),
+    // Kafka Lỗi
+    KAFKA_ERROR("Lỗi dịch v Kafka", 500, HttpStatus.INTERNAL_SERVER_ERROR),
     ;
     String message;
     int code;

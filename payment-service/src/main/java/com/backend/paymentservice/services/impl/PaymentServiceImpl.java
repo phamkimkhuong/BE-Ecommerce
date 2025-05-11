@@ -8,37 +8,63 @@ package com.backend.paymentservice.services.impl;
 
 /*
  * @description
- * @author: Tran Tan Dat
- * @version: 1.0
+ * @author: Tran Tan Dat, updated by Pham Kim Khuong
+ * @version: 1.1
  * @created: 26-April-2025 1:43 AM
  */
 
+import com.backend.commonservice.enums.PaymentEventType;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import com.backend.paymentservice.configs.VNPayConfig;
 import com.backend.paymentservice.entity.PaymentInfo;
+import com.backend.paymentservice.event.PaymentProducer;
+import com.backend.paymentservice.repository.PaymentInfoRepository;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
-    private final Map<Long, PaymentInfo> paymentsMap = new ConcurrentHashMap<>();
+    PaymentInfoRepository paymentInfoRep;
+    PaymentProducer paymentProducer;
 
+    /**
+     * Tạo đường dẫn thanh toán VNPay cho đơn hàng
+     *
+     * @param request Tham số từ request
+     * @param orderId ID đơn hàng cần thanh toán
+     * @return Đường dẫn thanh toán VNPay
+     */
     @Override
-    public String createVNPPayment(HttpServletRequest request, long amountRequest) throws UnsupportedEncodingException {
+    public String createVNPPayment(HttpServletRequest request, long orderId) {
+        PaymentInfo paymentInfo = paymentInfoRep.findByOrderId(orderId);
+        if (paymentInfo == null) {
+            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
+                    "Không tìm thấy thông tin thanh toán cho đơn hàng: " + orderId);
+        }
+//        if (paymentInfo.getPaymentUrl() != null) {
+//            log.info("Đường dẫn thanh toán đã tồn tại: {}", paymentInfo.getPaymentUrl());
+//            return paymentInfo.getPaymentUrl();
+//        }
+        log.info("Tạo VNPay payment cho đơn hàng: {}", paymentInfo);
         String orderType = "other";
-        long amount = amountRequest * 100;
+        long amount = (long) (paymentInfo.getAmount() * 100L);
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = VNPayConfig.getIpAddress(request);
-
         String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
 
         Map<String, String> vnp_Params = new HashMap<>();
@@ -80,50 +106,14 @@ public class PaymentServiceImpl implements PaymentService {
                 }
             }
         }
-
         String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
         query.append("&vnp_SecureHash=").append(vnp_SecureHash);
+        String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + query;
+        paymentInfo.setPaymentUrl(paymentUrl);
+        paymentInfo.setVnpTxnRef(vnp_TxnRef);
+        paymentInfoRep.save(paymentInfo);
         return VNPayConfig.vnp_PayUrl + "?" + query;
     }
-
-    /**
-     * Xử lý thanh toán cho đơn hàng
-     * Trong môi trường microservice, phương thức này giả lập quá trình thanh toán
-     * không cần HttpServletRequest
-     *
-     * @param orderId       ID của đơn hàng
-     * @param customerId    ID của khách hàng
-     * @param amount        Số tiền thanh toán
-     * @param paymentMethod Phương thức thanh toán
-     * @return true nếu thanh toán thành công, false nếu thất bại
-     */
-    @Override
-    public boolean processPayment(Long orderId, Long customerId, Double amount, String paymentMethod) {
-        try {
-            log.info("Xử lý thanh toán cho đơn hàng: {}, khách hàng: {}, số tiền: {}, phương thức: {}",
-                    orderId, customerId, amount, paymentMethod);
-
-            // Giả lập quá trình thanh toán với tỷ lệ thành công 90%
-            boolean paymentSuccess = Math.random() < 0.9;
-
-            // Tạo ID thanh toán và ID giao dịch
-            Long paymentId = System.currentTimeMillis();
-            String transactionId = paymentSuccess ? UUID.randomUUID().toString() : null;
-
-            // Lưu thông tin thanh toán
-            paymentsMap.put(orderId, new PaymentInfo(
-                    paymentId, orderId, amount, transactionId, paymentMethod, paymentSuccess));
-
-            log.info("Kết quả thanh toán cho đơn hàng {}: {}", orderId,
-                    paymentSuccess ? "Thành công" : "Thất bại");
-
-            return paymentSuccess;
-        } catch (Exception e) {
-            log.error("Lỗi khi xử lý thanh toán cho đơn hàng {}: {}", orderId, e.getMessage(), e);
-            return false;
-        }
-    }
-
     /**
      * Xử lý hoàn tiền cho đơn hàng
      *
@@ -132,12 +122,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public boolean processRefund(Long orderId) {
         try {
-            PaymentInfo paymentInfo = paymentsMap.get(orderId);
+            PaymentInfo paymentInfo = paymentInfoRep.findByOrderId((orderId));
             if (paymentInfo == null) {
                 log.warn("Không tìm thấy thông tin thanh toán cho đơn hàng: {}", orderId);
                 return false;
             }
-
             log.info("Xử lý hoàn tiền cho đơn hàng: {}, số tiền: {}", orderId, paymentInfo.getAmount());
             // Giả lập quá trình hoàn tiền thành công
             log.info("Đã hoàn tiền cho đơn hàng: {}", orderId);
@@ -149,26 +138,108 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     /**
-     * Lấy ID của thanh toán từ ID đơn hàng
-     *
-     * @param orderId ID của đơn hàng
-     * @return ID của thanh toán
+     * Lưu thông tin thanh toán
+     * @param paymentInfo Thông tin thanh toán cần lưu
      */
     @Override
-    public Long getPaymentIdByOrderId(Long orderId) {
-        PaymentInfo paymentInfo = paymentsMap.get(orderId);
-        return paymentInfo != null ? paymentInfo.getPaymentId() : null;
+    public void save(PaymentInfo paymentInfo) {
+        log.info("Lưu thông tin thanh toán: {}", paymentInfo);
+        paymentInfoRep.save(paymentInfo);
     }
 
     /**
-     * Lấy ID giao dịch từ ID đơn hàng
-     *
-     * @param orderId ID của đơn hàng
-     * @return ID giao dịch
+     * Cập nhật thông tin thanh toán từ VNPay callback
+     * @param request Tham số từ VNPay
      */
     @Override
-    public String getTransactionIdByOrderId(Long orderId) {
-        PaymentInfo paymentInfo = paymentsMap.get(orderId);
-        return paymentInfo != null ? paymentInfo.getTransactionId() : null;
+    public void update(HttpServletRequest request) {
+        log.info("Cập nhật thông tin thanh toán từ VNPay callback");
+        String transactionId = request.getParameter("vnp_TransactionNo");
+        String date = request.getParameter("vnp_PayDate");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        LocalDateTime paymentDate = LocalDateTime.parse(date, formatter);
+        String cardType = request.getParameter("vnp_CardType");
+        String bankCode = request.getParameter("vnp_BankCode");
+        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+        PaymentInfo paymentInfo = paymentInfoRep.findByVnpTxnRef((vnp_TxnRef));
+        if (paymentInfo == null) {
+            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
+                    "Không tìm thấy thông tin thanh toán cho giao dịch: " + transactionId);
+        }
+        paymentInfo.setPaymentDate(paymentDate);
+        paymentInfo.setTransactionId(transactionId);
+        paymentInfo.setCardType(cardType);
+        paymentInfo.setBankCode(bankCode);
+        paymentInfo.setSuccess(true);
+        paymentInfo.setPaymentEventType(PaymentEventType.PAYMENT_SUCCESS);
+        paymentInfoRep.save(paymentInfo);
+        try {
+            paymentProducer.sendPaymentEvent(paymentInfo);
+        } catch (Exception e) {
+            throw  new AppException(ErrorMessage.KAFKA_ERROR);
+        }
+    }
+    /**
+     * Xử lý callback từ VNPay
+     *
+     * @param request Tham số từ VNPay
+     * @return true nếu xác thực thành công, false nếu thất bại
+     */
+    public boolean processVNPayCallback(HttpServletRequest request) {
+        try {
+            // Lấy các tham số từ VNPay callback
+            String transactionId = request.getParameter("vnp_TransactionNo");
+            LocalDateTime paymentDate = LocalDateTime.parse(request.getParameter("vnp_PayDate"));
+            String cardType = request.getParameter("vnp_CardType");
+            String bankCode = request.getParameter("vnp_BankCode");
+            String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+            String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+            String vnp_TransactionStatus = request.getParameter("vnp_TransactionStatus");
+            String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+            // Xác thực chữ ký
+            StringBuilder hashData = new StringBuilder();
+            List<String> fieldNames = new ArrayList<>(request.getParameterMap().keySet());
+            Collections.sort(fieldNames);
+            for (String fieldName : fieldNames) {
+                String fieldValue = request.getParameter(fieldName);
+                if (fieldValue != null && !fieldName.equals("vnp_SecureHash") && !fieldValue.isEmpty()) {
+                    hashData.append(fieldName).append('=')
+                            .append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+                    hashData.append('&');
+                }
+            }
+            String calculatedHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
+            // Kiểm tra chữ ký và mã trạng thái
+            if (calculatedHash.equals(vnp_SecureHash) &&
+                    "00".equals(vnp_ResponseCode) &&
+                    "00".equals(vnp_TransactionStatus)) {
+
+                // Trích xuất ID đơn hàng từ mã giao dịch VNPay (format: orderId_timestamp)
+                String[] txnRefParts = vnp_TxnRef.split("_");
+                if (txnRefParts.length > 0) {
+                    Long orderId = Long.parseLong(txnRefParts[0]);
+
+                    // Cập nhật trạng thái thanh toán
+                    PaymentInfo paymentInfo = paymentInfoRep.findByTransactionId(transactionId);
+                    if (paymentInfo != null) {
+                        paymentInfo.setSuccess(true);
+                        paymentInfo.setTransactionId(vnp_TxnRef);
+//                        paymentsMap.put(orderId, paymentInfo);
+
+                        log.info("Thanh toán VNPay thành công cho đơn hàng: {}", orderId);
+                        return true;
+                    } else {
+                        log.error("Không tìm thấy thông tin thanh toán cho đơn hàng: {}", orderId);
+                    }
+                }
+            } else {
+                log.error("Xác thực callback VNPay thất bại: Mã phản hồi={}, Trạng thái={}",
+                        vnp_ResponseCode, vnp_TransactionStatus);
+            }
+            return false;
+        } catch (Exception e) {
+            log.error("Lỗi khi xử lý callback từ VNPay: {}", e.getMessage(), e);
+            return false;
+        }
     }
 }

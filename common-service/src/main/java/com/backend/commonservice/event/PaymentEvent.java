@@ -7,6 +7,7 @@ package com.backend.commonservice.event;
  * @created: 2024-05-15
  */
 
+import com.backend.commonservice.enums.PaymentEventType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,15 +26,19 @@ public class PaymentEvent {
     Long orderId;
     Double amount;
     Boolean success;
+    String paymentUrl; // VNPay payment URL
     String transactionId;
     String paymentMethod;
-    LocalDateTime timestamp;
-    String eventType; // PAYMENT_INITIATED, PAYMENT_COMPLETED, PAYMENT_FAILED, PAYMENT_REVERSED
+    PaymentEventType paymentEventType; // Loại sự kiện thanh toán
+    String vnpTxnRef; // VNPay transaction reference
+    LocalDateTime paymentDate;
+    String bankCode;
+    String cardType;
     String errorMessage;
 
     // Phương thức tiện ích để tạo sự kiện thanh toán thành công
     public static PaymentEvent paymentSuccess(Long paymentId, Long orderId, Double amount,
-            String transactionId, String paymentMethod) {
+                                              String transactionId, String paymentMethod) {
         return PaymentEvent.builder()
                 .paymentId(paymentId)
                 .orderId(orderId)
@@ -41,23 +46,18 @@ public class PaymentEvent {
                 .success(true)
                 .transactionId(transactionId)
                 .paymentMethod(paymentMethod)
-                .timestamp(LocalDateTime.now())
-                .eventType("PAYMENT_COMPLETED")
                 .build();
     }
 
     // Phương thức tiện ích để tạo sự kiện thanh toán thất bại
     public static PaymentEvent paymentFailed(Long paymentId, Long orderId, Double amount,
-            String paymentMethod, String errorMessage) {
+                                             String paymentMethod, String errorMessage) {
         return PaymentEvent.builder()
                 .paymentId(paymentId)
                 .orderId(orderId)
                 .amount(amount)
                 .success(false)
                 .paymentMethod(paymentMethod)
-                .timestamp(LocalDateTime.now())
-                .eventType("PAYMENT_FAILED")
-                .errorMessage(errorMessage)
                 .build();
     }
 }

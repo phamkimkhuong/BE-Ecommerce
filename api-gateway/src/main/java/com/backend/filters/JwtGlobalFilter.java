@@ -52,11 +52,6 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // Danh sách các đường dẫn không cần xác thực
-//    private final List<String> openApiEndpoints = Arrays.asList(
-//            "/api/account/sign-up",
-//            "/api/account/sign-in",
-//            "/api/v1/products"
-//    );
     private final List<OpenApiEndpoint> openApiEndpoints = Arrays.asList(
             new OpenApiEndpoint("POST", "/api/account/sign-up"),
             new OpenApiEndpoint("POST", "/api/account/sign-in"),
@@ -64,7 +59,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
             new OpenApiEndpoint("POST", "/api/user"),
             new OpenApiEndpoint("POST", "/api/user/create"),
             new OpenApiEndpoint("POST", "/api/payment/vn-pay/create-payment"),
-            new OpenApiEndpoint("POST", "/api/payment/vn-pay/payment-info")
+            new OpenApiEndpoint("GET", "/api/payment/vn-pay/payment-info")
     );
 
     @Override
@@ -77,6 +72,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
         String method = exchange.getRequest().getMethod().name();
         logger.info("Request method: {}, path: {}", method, path);
         if (isOpenEndpoint(method, path)) {
+            logger.info("No authentication required for path {}", path);
             return chain.filter(exchange);
         }
         // Trích xuất token từ header
