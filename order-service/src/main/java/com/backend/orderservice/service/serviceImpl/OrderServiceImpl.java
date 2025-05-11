@@ -7,6 +7,7 @@ package com.backend.orderservice.service.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
+import com.backend.commonservice.configuration.openFeign.FeignResponseException;
 import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.commonservice.dto.reponse.CartResponse;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
@@ -14,6 +15,7 @@ import com.backend.commonservice.enums.OrderStatus;
 import com.backend.commonservice.enums.PaymentEventType;
 import com.backend.commonservice.enums.ThanhToanType;
 import com.backend.commonservice.event.PaymentEvent;
+import com.backend.commonservice.event.ProductEvent;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.orderservice.domain.Order;
@@ -25,6 +27,7 @@ import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.event.OrderProducer;
 import com.backend.orderservice.exception.PaymentException;
 import com.backend.orderservice.repository.OpenFeignClient.CartClient;
+import com.backend.orderservice.repository.OpenFeignClient.ProductClient;
 import com.backend.orderservice.repository.OrderDetailRepository;
 import com.backend.orderservice.repository.OrderRepository;
 import com.backend.orderservice.service.OrderService;
@@ -36,6 +39,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,13 +53,14 @@ public class OrderServiceImpl implements OrderService {
     OrderProducer orderProducer;
     CartClient cartClient;
     OrderDetailRepository orderDetailRepository;
+    ProductClient productClient;
 
     // Convert Entity to DTO
     public Order convertToEntity(OrderDTO product) {
         return modelMapper.map(product, Order.class);
     }
 
-    //    Convert Entity to DTO
+    // Convert Entity to DTO
     public OrderDetail convertOrderDetailToEntity(CreateOrderDetail product) {
         return modelMapper.map(product, OrderDetail.class);
     }
@@ -100,6 +105,7 @@ public class OrderServiceImpl implements OrderService {
         Long createdOrderId = null;
         try {
             ApiResponseDTO<CartResponse> response;
+            // Gọi dịch vụ giỏ hàng để lấy danh sách sản phẩm trong giỏ hàng
             try {
                 response = cartClient.getCartById(request.getCartId());
             } catch (feign.RetryableException e) {
@@ -110,7 +116,16 @@ public class OrderServiceImpl implements OrderService {
             if (response == null || response.getData() == null) {
                 throw new AppException(ErrorMessage.CART_SERVER_ERROR);
             }
+            // Kiểm tra xem giỏ hàng có sản phẩm nào không
             CartResponse cart = response.getData();
+            List<CartItemReponse> dsCartItem = cart.getCartItems();
+            if (dsCartItem.isEmpty()) {
+                throw new AppException(ErrorMessage.CART_NOT_FOUND, "Đơn hàng không có sản phẩm nào");
+            }
+            // Kiểm tra số lượng sản phẩm trong kho trước khi tạo đơn hàng
+            for (CartItemReponse cartItem : dsCartItem) {
+                checkProductAvailability(cartItem.getProductId(), cartItem.getQuantity());
+            }
             // Tính tổng tiền từ chi tiết đơn hàng
             Double totalAmount = calculateTotalAmount(cart.getCartItems());
             // Tạo đơn hàng mới
@@ -125,10 +140,6 @@ public class OrderServiceImpl implements OrderService {
             Order result = orderRep.save(order);
             createdOrderId = result.getId(); // Lưu ID của đơn hàng đã tạo
             // Lưu chi tiết đơn hàng
-            List<CartItemReponse> dsCartItem = cart.getCartItems();
-            if (dsCartItem.isEmpty()) {
-                throw new AppException(ErrorMessage.CART_NOT_FOUND, "Đơn hàng không có sản phẩm nào");
-            }
             for (CartItemReponse cartItem : dsCartItem) {
                 OrderDetail detailDTO = new OrderDetail();
                 detailDTO.setProductId(cartItem.getProductId());
@@ -139,20 +150,22 @@ public class OrderServiceImpl implements OrderService {
                 detailDTO.setOrder(order);
                 orderDetailRepository.save(detailDTO);
             }
-            // Gửi sự kiện đến Kafka trừ số lượng hàng trong kho
+            // Gửi sự kiện đến Kafka trừ tồn kho
+            boolean inventoryUpdateSuccess = true;
             try {
-                for(CartItemReponse cartItem : dsCartItem) {
-                    orderProducer.sendProductEvent(cart.getCustomerId(),cartItem.getProductId(),cartItem.getQuantity());
-                }
-                log.info("Đã gửi sự kiện đơn hàng đến prodcut-service: {}", result.getId());
+                List<ProductEvent> productEvents = createProductEvents(cart, dsCartItem, createdOrderId);
+                orderProducer.sendProductEvent(productEvents);
+                log.info("Đã gửi sự kiện trừ tồn kho đến Kafka");
             } catch (Exception e) {
-                log.error("Lỗi khi gửi sự kiện đơn hàng đến Kafka: {}", e.getMessage());
+                log.error("Lỗi khi gửi sự kiện trừ tồn kho đến Kafka: {}", e.getMessage());
+                inventoryUpdateSuccess = false;
                 result.setTrangThai(OrderStatus.LOI_XU_LY);
                 orderRep.save(result);
-                throw new PaymentException("Lỗi khi xử lý thanh toán: " + e.getMessage());
+                throw new AppException(ErrorMessage.INVENTORY_UPDATE_FAILED,
+                        "Lỗi khi cập nhật tồn kho: " + e.getMessage());
             }
-            // Nếu không phải thanh toán khi nhận hàng, gửi sự kiện đến Kafka
-            if (!order.getThanhToanType().equals(ThanhToanType.TT_KHI_NHAN_HANG)) {
+            // Chỉ tiếp tục xử lý thanh toán nếu cập nhật tồn kho thành công
+            if (inventoryUpdateSuccess && !order.getThanhToanType().equals(ThanhToanType.TT_KHI_NHAN_HANG)) {
                 try {
                     orderProducer.sendOrderEvent(result);
                     log.info("Đã gửi sự kiện đơn hàng đến payment-service: {}", result.getId());
@@ -165,7 +178,9 @@ public class OrderServiceImpl implements OrderService {
                     // Có thể thêm logic để thử lại hoặc thông báo cho admin
                 }
             }
-
+            if (inventoryUpdateSuccess && order.getThanhToanType().equals(ThanhToanType.TT_KHI_NHAN_HANG)) {
+                orderProducer.sendEmailEvent(result);
+            }
             return convertToDTO(result);
         } catch (PaymentException e) {
             log.error("Lỗi thanh toán, tiến hành rollback đơn hàng: {}", e.getMessage());
@@ -243,10 +258,10 @@ public class OrderServiceImpl implements OrderService {
             order.setTrangThai(OrderStatus.DA_THANH_TOAN);
             orderRep.save(order);
             log.info("Đơn hàng đã được thanh toán thành công");
-            // Tiếp tục Saga flow - gửi sự kiện tới inventory-service để cập nhật tồn kho
             try {
-//                orderProducer.sendOrderEvent(order);
-                log.info("Đã gửi sự kiện đơn hàng đã thanh toán đến inventory-service:");
+//                EmailOrderEvent emailOrderEvent = new EmailOrderEvent();
+                orderProducer.sendEmailEvent(order);
+                log.info("Đã gửi sự kiện đơn hàng đã thanh toán đến notifycation-service:");
             } catch (Exception e) {
                 log.error("Lỗi khi gửi sự kiện đơn hàng đã thanh toán đến inventory-service: {}", e.getMessage());
             }
@@ -273,19 +288,78 @@ public class OrderServiceImpl implements OrderService {
     public void notifyProcessingError(Map<String, Object> errorData) {
         try {
             log.info("Gửi thông báo lỗi xử lý: {}", errorData);
-            // Sử dụng OrderProducer để gửi sự kiện lỗi
 
-            // Tạo sự kiện đơn hàng với trạng thái lỗi
-            Long orderId = Long.valueOf(errorData.get("orderId").toString());
-            Order order = orderRep.findById(orderId).orElse(new Order());
-            order.setTrangThai(OrderStatus.LOI_XU_LY);
-            order.setEventType("ERROR_PROCESSING");
+            // Xác định loại lỗi
+            String errorType = (String) errorData.getOrDefault("errorType", "UNKNOWN_ERROR");
+            String errorMessage = (String) errorData.getOrDefault("errorMessage", "Lỗi không xác định");
+            Long orderId = null;
 
-            // Gửi sự kiện lỗi đến Kafka
-            orderProducer.sendOrderEvent(order);
-            log.info("Đã gửi thông báo lỗi cho orderId: {}", orderId);
+            if (errorData.containsKey("orderId")) {
+                orderId = Long.valueOf(errorData.get("orderId").toString());
+            }
+
+            // Xử lý theo loại lỗi
+            if ("INVENTORY_UPDATE_ERROR".equals(errorType)) {
+                log.error("Lỗi cập nhật tồn kho: {}", errorMessage);
+                // Nếu có orderId, cập nhật trạng thái đơn hàng
+                if (orderId != null) {
+                    Order order = orderRep.findById(orderId).orElse(null);
+                    if (order != null) {
+                        order.setTrangThai(OrderStatus.LOI_XU_LY);
+                        order.setEventType("INVENTORY_ERROR");
+                        orderRep.save(order);
+
+                        // Gửi sự kiện lỗi đến Kafka
+                        try {
+                            orderProducer.sendOrderEvent(order);
+                            log.info("Đã gửi thông báo lỗi cập nhật tồn kho cho orderId: {}", orderId);
+                        } catch (Exception e) {
+                            log.error("Không thể gửi thông báo lỗi cập nhật tồn kho: {}", e.getMessage(), e);
+                        }
+                    }
+                }
+            } else {
+                // Xử lý các loại lỗi khác
+                if (orderId != null) {
+                    Order order = orderRep.findById(orderId).orElse(new Order());
+                    order.setTrangThai(OrderStatus.LOI_XU_LY);
+                    order.setEventType("ERROR_PROCESSING");
+
+                    // Gửi sự kiện lỗi đến Kafka
+                    orderProducer.sendOrderEvent(order);
+                    log.info("Đã gửi thông báo lỗi cho orderId: {}", orderId);
+                }
+            }
         } catch (Exception e) {
             log.error("Không thể gửi thông báo lỗi: {}", e.getMessage(), e);
         }
+    }
+
+    private void checkProductAvailability(Long productId, int quantity) {
+        try {
+            productClient.checkProductAvailability(productId, quantity);
+        } catch (FeignResponseException e) {
+            log.error("Lỗi khi kiểm tra số lượng sản phẩm: status={}, body={}", e.getStatus(), e.getResponseBody());
+            // Xử lý dựa trên mã lỗi HTTP
+            if (e.getResponseBody().contains("\"code\":421")) {
+                throw new AppException(ErrorMessage.PRODUCT_QUANTITY_NOT_ENOUGH);
+            }
+        } catch (Exception e) {
+            log.error("Lỗi không xác định: {}", e.getMessage());
+            throw new RuntimeException("Dịch vụ sản phẩm lỗi");
+        }
+    }
+
+    private List<ProductEvent> createProductEvents(CartResponse cart, List<CartItemReponse> cartItems, Long orderId) {
+        List<ProductEvent> productEvents = new ArrayList<>();
+        for (CartItemReponse cartItem : cartItems) {
+            ProductEvent productEvent = new ProductEvent();
+            productEvent.setCustomerId(cart.getCustomerId());
+            productEvent.setProductId(cartItem.getProductId());
+            productEvent.setQuantity(cartItem.getQuantity());
+            productEvent.setOrderId(orderId);
+            productEvents.add(productEvent);
+        }
+        return productEvents;
     }
 }

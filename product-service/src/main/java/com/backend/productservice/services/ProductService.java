@@ -7,6 +7,7 @@ package com.backend.productservice.services;
  * @created: 2/21/2025 12:53 PM
  */
 
+import com.backend.commonservice.event.ProductEvent;
 import com.backend.productservice.dto.reponse.ProductReponse;
 import com.backend.productservice.dto.request.ProductCreationRequest;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,4 +26,6 @@ public interface ProductService {
     boolean deleteProduct(Long id);
 
     ProductReponse checkProductAvailability(Long productId, int quantity);
+
+    void updateQuantityProduct(List<ProductEvent> ds);
 }

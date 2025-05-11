@@ -53,7 +53,7 @@ public class OrderResultConsumer {
                     break;
                 case "PAYMENT_FAILED":
                     // Ghi log cho việc thanh toán thất bại
-                    log.info("Ghi nhận đơn hàng {} thanh toán thất bại", orderEvent.getOrderId());
+                    log.info("Ghi nhận đơn hàng {} thanh toán thất bại", orderEvent.getId());
                     break;
                 default:
                     log.warn("Không xử lý được loại sự kiện đơn hàng: {}", orderEvent.getEventType());
@@ -71,11 +71,11 @@ public class OrderResultConsumer {
      * @param orderEvent Sự kiện đơn hàng mới
      */
     private void processNewOrder(OrderEvent orderEvent) {
-        log.info("Bắt đầu xử lý thanh toán cho đơn hàng: {}", orderEvent.getOrderId());
+        log.info("Bắt đầu xử lý thanh toán cho đơn hàng: {}", orderEvent.getId());
         PaymentInfo paymentInfo = new PaymentInfo();
-        paymentInfo.setOrderId(orderEvent.getOrderId());
+        paymentInfo.setOrderId(orderEvent.getId());
         paymentInfo.setAmount(orderEvent.getTongTien());
-        paymentInfo.setPaymentMethod(orderEvent.getHinhThucTT().name());
+        paymentInfo.setPaymentMethod(orderEvent.getThanhToanType().name());
         paymentInfo.setPaymentEventType(PaymentEventType.PAYMENT_INITIATE);
         paymentInfo.setSuccess(false); // Chưa thanh toán thành công
         paymentService.save(paymentInfo);
@@ -101,11 +101,11 @@ public class OrderResultConsumer {
      */
     private void processOrderCancellation(OrderEvent orderEvent) {
         try {
-            boolean refundSuccess = paymentService.processRefund(orderEvent.getOrderId());
+            boolean refundSuccess = paymentService.processRefund(orderEvent.getId());
             log.info("Đã xử lý hoàn tiền cho đơn hàng bị hủy {}: {}",
-                    orderEvent.getOrderId(), refundSuccess ? "Thành công" : "Thất bại");
+                    orderEvent.getId(), refundSuccess ? "Thành công" : "Thất bại");
         } catch (Exception e) {
-            log.error("Lỗi khi xử lý hoàn tiền cho đơn hàng bị hủy {}: {}", orderEvent.getOrderId(), e.getMessage(), e);
+            log.error("Lỗi khi xử lý hoàn tiền cho đơn hàng bị hủy {}: {}", orderEvent.getId(), e.getMessage(), e);
         }
     }
 

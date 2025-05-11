@@ -9,11 +9,17 @@ package com.backend.notificationservice.event;
  */
 
 import com.backend.commonservice.event.OrderEvent;
+import com.backend.commonservice.model.AppException;
+import com.backend.commonservice.model.ErrorMessage;
 import com.backend.commonservice.service.EmailService;
+import com.backend.notificationservice.repository.AuthClient;
+import com.backend.notificationservice.repository.UserClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.RetriableException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -21,10 +27,9 @@ import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -32,15 +37,12 @@ import java.util.Map;
 @Component
 @Slf4j
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class EventConsumer {
     ObjectMapper objectMapper;
     EmailService emailService;
-
-    public EventConsumer(ObjectMapper objectMapper, EmailService emailService) {
-        this.objectMapper = objectMapper;
-        this.emailService = emailService;
-    }
-
+    UserClient userClient;
+    AuthClient authClient;
     @RetryableTopic(
             // 2 lần thử lại + 1 lần DLQ
             // Mặc định là 3 lần thử lại
@@ -49,7 +51,7 @@ public class EventConsumer {
             dltStrategy = DltStrategy.FAIL_ON_ERROR,
             // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
             include = {RuntimeException.class, RetriableException.class})
-    @KafkaListener(topics = "order-events", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "order-events-suspects", containerFactory = "kafkaListenerContainerFactory")
     public void consumeOrderEvent(String message) {
         try {
             log.info("Nhận được sự kiện đơn hàng -> {}", message);
@@ -81,11 +83,19 @@ public class EventConsumer {
             log.info("Nhận được sự kiện email -> {}", message);
             // Chuyển đổi JSON thành đối tượng OrderEvent
             OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
+            // Xử lý sự kiện email
+            String email = null;
+            try {
+                ResponseEntity<?> response = authClient.getEmailUser(orderEvent.getCustomerId());
+                email = (String) response.getBody();
+            } catch (Exception e) {
+                throw new AppException(ErrorMessage.AUTH_SERVER_ERROR);
+            }
             // Tạo Map chứa các placeholder cho template
             Map<String, Object> placeholder = createOrderEmailPlaceholders(orderEvent);
             // Gửi email sử dụng template và placeholder
-            emailService.sendEmail("phamkhuong345436@gmail.com", "Đặt hàng thành công", "email-template.ftl", placeholder, null);
-            log.info("Đã gửi email thông báo đơn hàng thành công cho đơn hàng: {}", orderEvent.getOrderId());
+            emailService.sendEmail(email, "Đặt hàng thành công", "email-template.ftl", placeholder, null);
+            log.info("Đã gửi email thông báo đơn hàng thành công cho đơn hàng: {}", orderEvent.getId());
         } catch (Exception e) {
             log.error("Lỗi khi xử lý sự kiện email: {}", e.getMessage(), e);
             throw new RuntimeException("Lỗi xử lý sự kiện email", e);
@@ -104,16 +114,16 @@ public class EventConsumer {
 
         switch (orderEvent.getEventType()) {
             case "CREATE":
-                log.info("Xử lý sự kiện tạo đơn hàng mới: {}", orderEvent.getOrderId());
+                log.info("Xử lý sự kiện tạo đơn hàng mới: {}", orderEvent.getId());
                 emailSubject = "Đặt hàng thành công";
                 break;
             case "UPDATE":
                 log.info("Xử lý sự kiện cập nhật đơn hàng: {}, trạng thái: {}",
-                        orderEvent.getOrderId(), orderEvent.getTrangThai());
+                        orderEvent.getId(), orderEvent.getTrangThai());
                 emailSubject = "Cập nhật trạng thái đơn hàng";
                 break;
             case "CANCEL":
-                log.info("Xử lý sự kiện hủy đơn hàng: {}", orderEvent.getOrderId());
+                log.info("Xử lý sự kiện hủy đơn hàng: {}", orderEvent.getId());
                 emailSubject = "Đơn hàng đã bị hủy";
                 break;
             default:
@@ -128,7 +138,7 @@ public class EventConsumer {
         try {
             emailService.sendEmail(recipientEmail, emailSubject, templateName, placeholder, null);
             log.info("Đã gửi email thông báo cho đơn hàng: {}, loại sự kiện: {}",
-                    orderEvent.getOrderId(), orderEvent.getEventType());
+                    orderEvent.getId(), orderEvent.getEventType());
         } catch (Exception e) {
             log.error("Lỗi khi gửi email thông báo: {}", e.getMessage(), e);
         }
@@ -147,15 +157,6 @@ public class EventConsumer {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         String totalAmount = currencyFormatter.format(orderEvent.getTongTien());
 
-        // Format ngày tháng
-        String orderDate;
-        if (orderEvent.getNgayDatHang() != null) {
-            orderDate = orderEvent.getNgayDatHang().toString().replace('T', ' ');
-        } else {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            orderDate = dateFormat.format(new Date());
-        }
-
         // Giả lập dữ liệu mẫu cho các sản phẩm trong đơn hàng
         String orderItems = "<tr>" +
                 "<td>Sản phẩm mẫu</td>" +
@@ -166,8 +167,8 @@ public class EventConsumer {
 
         // Thêm các placeholder vào Map
         placeholder.put("customerName", orderEvent.getCustomerId() != null ? orderEvent.getCustomerId() : "Khách hàng");
-        placeholder.put("orderId", orderEvent.getOrderId());
-        placeholder.put("orderDate", orderDate);
+        placeholder.put("orderId", orderEvent.getId());
+        placeholder.put("orderDate", orderEvent.getNgayDatHang());
         placeholder.put("paymentMethod", "Thanh toán khi nhận hàng");
         placeholder.put("orderStatus", orderEvent.getTrangThai());
         placeholder.put("orderItems", orderItems);

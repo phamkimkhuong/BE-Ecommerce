@@ -130,6 +130,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public String getEmailUser(Long accountId) {
+        log.info("getEmailUser accountId: {}", accountId);
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new UsernameNotFoundException("Account not found"));
+        return account.getEmail();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findAccountByUsername(username);
         if (username == null) {

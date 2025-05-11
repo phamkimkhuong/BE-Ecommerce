@@ -23,8 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -57,6 +59,13 @@ public class AccountController {
             response.put("data", accountService.signUp(signUpRequest));
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
+    }
+    @GetMapping("/account/get-email")
+    public ResponseEntity<?> getEmailUser(@RequestParam(value = "id") Long id) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("status", HttpStatus.OK.value());
+        response.put("data", accountService.getEmailUser(id));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/account/sign-in")

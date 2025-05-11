@@ -21,8 +21,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @created: 26-February-2025 10:53 PM
  */
 public interface AccountService extends UserDetailsService {
-    public ResponseEntity<?> signUp(SignUpRequest account);
-    public ResponseEntity<?> signIn(SignInRequest account, AuthenticationManager authenticationManager);
-    public Account findByUsername(String username);
+     ResponseEntity<?> signUp(SignUpRequest account);
+     ResponseEntity<?> signIn(SignInRequest account, AuthenticationManager authenticationManager);
+     Account findByUsername(String username);
+    String getEmailUser(Long id);
 }
 

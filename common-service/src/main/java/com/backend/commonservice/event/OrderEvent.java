@@ -23,23 +23,23 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class OrderEvent {
-    Long orderId;
+    Long id;
     Long customerId;
     OrderStatus trangThai;
     Double tongTien;
     LocalDateTime ngayDatHang;
-    ThanhToanType hinhThucTT;
+    ThanhToanType thanhToanType;
     String eventType; // Loại sự kiện: CREATE, UPDATE, CANCEL
 
     // Phương thức tiện ích để tạo sự kiện từ thông tin đơn hàng
     public static OrderEvent fromOrder(Long orderId, Long customerId, OrderStatus status, Double tongTien, ThanhToanType hinhThucTT, String eventType) {
         return OrderEvent.builder()
-                .orderId(orderId)
+                .id(orderId)
                 .customerId(customerId)
                 .trangThai(status)
                 .tongTien(tongTien)
                 .ngayDatHang(LocalDateTime.now())
-                .hinhThucTT(hinhThucTT)
+                .thanhToanType(hinhThucTT)
                 .eventType(eventType) // Hoặc "UPDATE", "CANCEL" tùy thuộc vào loại sự kiện
                 .build();
     }

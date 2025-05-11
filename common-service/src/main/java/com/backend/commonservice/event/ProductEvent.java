@@ -15,12 +15,14 @@ public class ProductEvent {
     Long customerId;
     Long productId;
     int quantity;
+    Long orderId;
 
-    public static ProductEvent fromOrder(Long customerId, Long productId, int quantity) {
+    public static ProductEvent fromOrder(Long customerId, Long productId, int quantity, Long orderId) {
         return ProductEvent.builder()
                 .customerId(customerId)
                 .productId(productId)
                 .quantity(quantity)
+                .orderId(orderId)
                 .build();
     }
 }

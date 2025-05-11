@@ -7,6 +7,7 @@ package com.backend.productservice.services.serviceImpl;
  * @created: 2/21/2025 12:55 PM
  */
 
+import com.backend.commonservice.event.ProductEvent;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
 import com.backend.productservice.dto.reponse.ProductReponse;
@@ -39,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
     CloudinaryService cloudinaryService;
 
     private static final int MAX_RETRIES = 3;
+
     @Transactional
     public boolean reduceStock(Long productId, int quantity) {
         int attempts = 0;
@@ -58,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
                 // Xảy ra xung đột, có thể một transaction khác đã cập nhật sản phẩm
                 attempts++;
                 if (attempts >= MAX_RETRIES) {
-                    throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,"Failed to update inventory after " + MAX_RETRIES + " attempts");
+                    throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND, "Failed to update inventory after " + MAX_RETRIES + " attempts");
                 }
                 // Chờ một chút trước khi thử lại
                 try {
@@ -70,6 +72,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return false;
     }
+
     // Convert Entity to DTO
     public ProductReponse toProductReponse(Product product) {
         return modelMapper.map(product, ProductReponse.class);
@@ -140,5 +143,30 @@ public class ProductServiceImpl implements ProductService {
             return toProductReponse(product);
         else
             throw new AppException(ErrorMessage.PRODUCT_QUANTITY_NOT_ENOUGH);
+    }
+
+    @Transactional
+    @Override
+    public void updateQuantityProduct(List<ProductEvent> ds) {
+        try {
+            log.info("Cập nhật số lượng sản phẩm");
+            for(ProductEvent productEvent : ds) {
+                Long productId = productEvent.getProductId();
+                int quantity = productEvent.getQuantity();
+                // Kiểm tra số lượng tồn kho
+                Product product = productRep.findById(productId)
+                        .orElseThrow(() -> new AppException(ErrorMessage.PRODUCT_NOT_FOUND));
+                // Kiểm tra số lượng tồn kho
+                if (product.getSoLuong() < quantity) {
+                    throw new AppException(ErrorMessage.PRODUCT_QUANTITY_NOT_ENOUGH);
+                }
+                // Cập nhật số lượng
+                product.setSoLuong(product.getSoLuong() - quantity);
+                productRep.save(product);
+            }
+        } catch (Exception e) {
+            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND);
+        }
+
     }
 }

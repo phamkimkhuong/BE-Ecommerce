@@ -69,7 +69,6 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem c = cartItemRepository.save(cartItemEntity);
         return toCartItemRes(c);
     }
-
     // Lấy tất cả chi tiết giỏ hàng của giỏ hàng cụ thể
     public List<CartItem> getCartItems(Long cartId) {
         return cartItemRepository.findByCartId(cartId); // Lấy tất cả CartItem theo cartId

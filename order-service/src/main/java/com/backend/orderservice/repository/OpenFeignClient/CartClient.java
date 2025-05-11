@@ -17,7 +17,6 @@ public interface CartClient {
     @GetMapping("/api/carts/id/{cartId}")
     ApiResponseDTO<CartResponse> getCartById(@PathVariable Long cartId);
 
-
 //    /**
 //     * Xóa các sản phẩm đã chọn khỏi giỏ hàng
 //     *
