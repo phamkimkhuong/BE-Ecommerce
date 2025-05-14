@@ -65,11 +65,19 @@ public class UserController {
         ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("users", userService.findAll());
-
         response.setCode(HttpStatus.OK.value());
         response.setMessage("Lấy danh sách người dùng thành công");
         response.setData(data);
+        return ResponseEntity.ok(response);
+    }
 
+    @GetMapping("/user/search")
+    public ResponseEntity<ApiResponseDTO<String>> searchUsers(@RequestParam() Long id) {
+        ApiResponseDTO<String> response = new ApiResponseDTO<>();
+        String email = userService.getEmailUser(id);
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Lấy danh sách người dùng thành công");
+        response.setData(email);
         return ResponseEntity.ok(response);
     }
 

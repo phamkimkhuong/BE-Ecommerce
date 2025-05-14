@@ -31,26 +31,33 @@ public class ProductCreationRequest {
     @Size(min = 3, max = 50, message = "Tên sản phẩm từ 3-50 ký tự")
     String tenSP;
     @Schema(description = "Mô tả sản phẩm", example = "Điện thoại Iphone 12 Pro Max")
+            @JsonProperty("mo_ta")
     String moTa;
     @NotNull(message = "Giá bán không được để trống")
     @Schema(description = "Giá bán sản phẩm", example = "30000000")
     @Positive(message = "Giá bán phải lớn hơn 0")
+    @JsonProperty("gia_ban")
     Double giaBan;
     @NotNull(message = "Giá nhập không được để trống")
     @Schema(description = "Giá nhập sản phẩm", example = "25000000")
     @Positive(message = "Giá nhập phải lớn hơn 0")
+    @JsonProperty("gia_nhap")
     Double giaNhap;
     @Schema(description = "Giá gốc sản phẩm", example = "25000000")
     @NotNull(message = "Giá gốc không được để trống")
     @Positive(message = "Giá gốc phải lớn hơn 0")
+    @JsonProperty("gia_goc")
     Double giaGoc;
     @Positive(message = "Số lượng phải lớn hơn 0")
+    @JsonProperty("so_luong")
     int soLuong;
     @NotEmpty(message = "Màu sắc không được để trống")
     @Schema(description = "Mau sac sản phẩm", example = "Đen")
+    @JsonProperty("mau_sac")
     String mauSac;
     @NotEmpty(message = "Kích cỡ không được để trống")
     @Schema(description = "Kích cỡ sản phẩm", example = "XL")
+    @JsonProperty("kich_co")
     String kichCo;
     @NotNull(message = "Thương hiệu không được để trống")
     @Schema(description = "Thương hiệu sản phẩm", example = "1")

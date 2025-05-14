@@ -1,4 +1,4 @@
-package com.backend.notificationservice.repository;
+package com.backend.userservice.repositories;
 
 import com.backend.commonservice.configuration.FeignClientConfig;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
@@ -11,6 +11,6 @@ import java.util.Map;
 
 @FeignClient(name = "auth-service", configuration = FeignClientConfig.class)
 public interface AuthClient {
-    @GetMapping("/account/get-email")
-    ResponseEntity<ApiResponseDTO<Map<String, Object>>> getEmailUser(@RequestParam(value = "id") Long id);
+    @GetMapping("/api/account/get-email")
+    ResponseEntity<Map<String, Object>> getEmailUser(@RequestParam(value = "id") Long id);
 }

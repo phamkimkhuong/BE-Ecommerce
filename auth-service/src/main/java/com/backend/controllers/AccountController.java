@@ -17,6 +17,7 @@ import com.backend.dtos.SignInRequest;
 import com.backend.dtos.SignUpRequest;
 import com.backend.services.AccountService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactor.util.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @RepositoryRestController
 public class AccountController {
 
@@ -61,7 +64,8 @@ public class AccountController {
         }
     }
     @GetMapping("/account/get-email")
-    public ResponseEntity<?> getEmailUser(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<?> getEmail(@RequestParam(value = "id") Long id) {
+        log.info("Get email user with id: {}", id);
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("status", HttpStatus.OK.value());
         response.put("data", accountService.getEmailUser(id));

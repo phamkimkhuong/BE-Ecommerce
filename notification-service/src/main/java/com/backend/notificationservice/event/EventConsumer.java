@@ -8,6 +8,7 @@ package com.backend.notificationservice.event;
  * @updated: 4/27/2025
  */
 
+import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.event.OrderEvent;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
@@ -27,7 +28,6 @@ import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -43,6 +43,7 @@ public class EventConsumer {
     EmailService emailService;
     UserClient userClient;
     AuthClient authClient;
+
     @RetryableTopic(
             // 2 lần thử lại + 1 lần DLQ
             // Mặc định là 3 lần thử lại
@@ -51,6 +52,7 @@ public class EventConsumer {
             dltStrategy = DltStrategy.FAIL_ON_ERROR,
             // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
             include = {RuntimeException.class, RetriableException.class})
+
     @KafkaListener(topics = "order-events-suspects", containerFactory = "kafkaListenerContainerFactory")
     public void consumeOrderEvent(String message) {
         try {
@@ -85,12 +87,13 @@ public class EventConsumer {
             OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
             // Xử lý sự kiện email
             String email = null;
-            try {
-                ResponseEntity<?> response = authClient.getEmailUser(orderEvent.getCustomerId());
-                email = (String) response.getBody();
-            } catch (Exception e) {
-                throw new AppException(ErrorMessage.AUTH_SERVER_ERROR);
-            }
+            log.info("check email");
+            // Get user information through Feign client
+            ResponseEntity<ApiResponseDTO<Map<String, Object>>> userResponse =
+                    authClient.getEmailUser(orderEvent.getCustomerId());
+            log.info("Response from auth-service: {}", userResponse);
+//                Map<String, Object> responseData = (Map<String, Object>) userResponse.getBody();
+//                email = (String) responseData.get("data");
             // Tạo Map chứa các placeholder cho template
             Map<String, Object> placeholder = createOrderEmailPlaceholders(orderEvent);
             // Gửi email sử dụng template và placeholder
@@ -98,9 +101,10 @@ public class EventConsumer {
             log.info("Đã gửi email thông báo đơn hàng thành công cho đơn hàng: {}", orderEvent.getId());
         } catch (Exception e) {
             log.error("Lỗi khi xử lý sự kiện email: {}", e.getMessage(), e);
-            throw new RuntimeException("Lỗi xử lý sự kiện email", e);
+            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND, e.getMessage());
         }
     }
+
     /*
      * @description: Xử lý sự kiện đơn hàng dựa trên loại sự kiện
      *

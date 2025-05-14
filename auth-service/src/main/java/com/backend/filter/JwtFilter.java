@@ -50,8 +50,10 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        logger.info("doFilterInternal method called =====================================");
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            logger.warn("Authorization header is missing or does not start with Bearer");
             filterChain.doFilter(request, response);
             return;
         }
@@ -68,22 +70,22 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            logger.info("Username: " + username);
             UserDetails userDetails = accountService.loadUserByUsername(username);
 
             if (jwtService.validateToken(token, userDetails)) {
                 Claims claims = jwtService.extractAllClaims(token);
-
                 List<String> roles = objectMapper.convertValue(claims.get("roles"), List.class);
                 List<GrantedAuthority> authorities = roles.stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                logger.info("SecurityContextHolder set with authentication");
             } else {
+                logger.warn("Invalid or expired JWT token");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Invalid or expired JWT token");
                 return;

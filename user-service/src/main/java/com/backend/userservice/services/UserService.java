@@ -30,4 +30,6 @@ public interface UserService {
     boolean existsByAccountId(Long accountId);
 
     void createUserRequest(CreateUserRequest request);
+
+    String getEmailUser(Long id);
 }

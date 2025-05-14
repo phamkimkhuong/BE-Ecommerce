@@ -8,7 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.errors.RetriableException;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.retrytopic.DltStrategy;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -28,6 +32,14 @@ import java.util.HashMap;
 public class PaymentResultConsumer {
     OrderServiceImpl orderService;
     ObjectMapper objectMapper;
+    @RetryableTopic(
+            // 2 lần thử lại + 1 lần DLQ
+            // Mặc định là 3 lần thử lại
+            attempts = "3",
+            backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
+            dltStrategy = DltStrategy.FAIL_ON_ERROR,
+            // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
+            include = {RuntimeException.class, RetriableException.class})
 
     /**
      * Lắng nghe sự kiện kết quả thanh toán từ payment-service

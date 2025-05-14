@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
-                        .pathMatchers("/products/**", "/user/**", "/order/**").authenticated()
+                        .pathMatchers("/products/**","/account/**", "/user/**", "/order/**").authenticated()
                         .anyExchange().permitAll()
                 );
 //                .addFilterBefore((WebFilter) new JwtGlobalFilter(), SecurityWebFiltersOrder.AUTHENTICATION);

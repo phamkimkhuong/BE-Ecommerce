@@ -17,6 +17,7 @@ public class Endpoints {
     public static final String[] PUBLIC_GET_ENDPOINS = {
             "/api/account/search/existsByTenDangNhap",
             "/api/account/search/existsByEmail",
+            "/api/account/get-email",
             "/swagger-ui/**",      // Cho phép Swagger UI
             "/v3/api-docs/**",     // Cho phép OpenAPI
             "/swagger-resources/**",

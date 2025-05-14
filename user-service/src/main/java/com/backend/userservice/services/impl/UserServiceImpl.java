@@ -18,16 +18,21 @@ import com.backend.commonservice.model.ErrorMessage;
 import com.backend.userservice.dtos.CreateUserRequest;
 import com.backend.userservice.dtos.UserDTO;
 import com.backend.userservice.entities.User;
+import com.backend.userservice.repositories.AuthClient;
 import com.backend.userservice.repositories.UserRepository;
 import com.backend.userservice.services.UserService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -35,9 +40,12 @@ public class UserServiceImpl implements UserService {
 
     final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    final AuthClient authClient;
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, AuthClient authClient) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.authClient = authClient;
     }
 
     private UserDTO convertToDTO(User user) {
@@ -103,5 +111,19 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(null);
         user.setGender(false); // mặc định
         userRepository.save(user);
+    }
+
+    @Override
+    public String getEmailUser(Long id) {
+        log.info("Get email user with id: {}", id);
+        ResponseEntity<Map<String, Object>> userResponse = authClient.getEmailUser(id);
+        log.info("Response from auth-service: {}", userResponse.getBody());
+        if(userResponse.getBody()!=null) {
+            Map<String, Object> data = userResponse.getBody();
+            if (data != null && data.containsKey("data")) {
+                return (String) data.get("data");
+            }
+        }
+        return null;
     }
 }
