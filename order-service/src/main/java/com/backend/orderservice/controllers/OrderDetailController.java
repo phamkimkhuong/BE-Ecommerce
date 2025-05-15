@@ -93,11 +93,11 @@ public class OrderDetailController {
                                                             )
                                                     )
 
-                                                        CreateOrderDetail orderDTO
+                                                    CreateOrderDetail orderDTO
 
 
     ) {
-        OrderDetailResponse c=  orderService.save(orderDTO);
+        OrderDetailResponse c = orderService.save(orderDTO);
         return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 
@@ -166,7 +166,7 @@ public class OrderDetailController {
                                                               )
                                                       ) CreateOrderDetail orderDTO
     ) {
-        OrderDetailResponse c= orderService.update(id, orderDTO);
+        OrderDetailResponse c = orderService.update(id, orderDTO);
         return new ResponseEntity<>(c, HttpStatus.OK);
 
     }

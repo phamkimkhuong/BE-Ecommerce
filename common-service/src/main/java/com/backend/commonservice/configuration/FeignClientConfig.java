@@ -1,6 +1,7 @@
 package com.backend.commonservice.configuration;
 
 import com.backend.commonservice.configuration.openFeign.CustomErrorDecoder;
+import com.backend.commonservice.model.TokenContext;
 import feign.Contract;
 import feign.Logger;
 import feign.RequestInterceptor;
@@ -27,9 +28,7 @@ public class FeignClientConfig {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            String token = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
-                    .getRequest()
-                    .getHeader("Authorization");
+            String token = TokenContext.getToken();
             if (token != null && token.startsWith("Bearer ")) {
                 requestTemplate.header("Authorization", token);
             }

@@ -73,6 +73,15 @@ public class UserServiceImpl implements UserService {
         return this.convertToDTO(user);
     }
 
+    @Override
+    public UserDTO findByAccountId(Long accountId) {
+        User user = userRepository.findByAccountId(accountId);
+        if (user == null) {
+            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND);
+        }
+        return this.convertToDTO(user);
+    }
+
     @Transactional
     @Override
     public List<UserDTO> findAll() {
@@ -117,8 +126,7 @@ public class UserServiceImpl implements UserService {
     public String getEmailUser(Long id) {
         log.info("Get email user with id: {}", id);
         ResponseEntity<Map<String, Object>> userResponse = authClient.getEmailUser(id);
-        log.info("Response from auth-service: {}", userResponse.getBody());
-        if(userResponse.getBody()!=null) {
+        if (userResponse.getBody() != null) {
             Map<String, Object> data = userResponse.getBody();
             if (data != null && data.containsKey("data")) {
                 return (String) data.get("data");

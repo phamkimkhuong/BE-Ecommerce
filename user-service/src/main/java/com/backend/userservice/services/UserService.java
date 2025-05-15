@@ -21,6 +21,8 @@ import java.util.List;
 public interface UserService {
     UserDTO findById(Long id);
 
+    UserDTO findByAccountId(Long accountId);
+
     List<UserDTO> findAll();
 
     UserDTO save(UserDTO nguoiDung);

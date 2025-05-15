@@ -15,4 +15,5 @@ public interface CartService {
     Cart updateCart(Long cartId, Cart cart);
 
     void deleteCart(Long cartId);
+    Optional<CartResponse> getCartForKafkaConsumer(Long customerId);
 }

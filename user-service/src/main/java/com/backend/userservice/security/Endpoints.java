@@ -35,7 +35,8 @@ public class Endpoints {
     };
 
     public static final String[] USER_GET_ENDPOINTS = {
-            "api/user/**"
+            "api/user/**",
+            "api/user/get-info",
     };
 
 }

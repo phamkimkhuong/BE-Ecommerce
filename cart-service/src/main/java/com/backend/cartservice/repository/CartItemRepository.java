@@ -14,5 +14,7 @@ import java.util.Optional;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     List<CartItem> findByCartId(Long cartId); // Tìm các chi tiết giỏ hàng của giỏ hàng cụ thể
 
+    void deleteCartItemByCart_Id(Long cartId);
+
     Optional<CartItem> findByCartIdAndProductId(Long cartId, @NotNull(message = "Mã sản phẩm không được để trống") Long productId);
 }

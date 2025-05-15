@@ -30,9 +30,10 @@ public class OrderEvent {
     LocalDateTime ngayDatHang;
     ThanhToanType thanhToanType;
     String eventType; // Loại sự kiện: CREATE, UPDATE, CANCEL
+    Long cartId; // ID giỏ hàng liên quan (nếu có)
 
     // Phương thức tiện ích để tạo sự kiện từ thông tin đơn hàng
-    public static OrderEvent fromOrder(Long orderId, Long customerId, OrderStatus status, Double tongTien, ThanhToanType hinhThucTT, String eventType) {
+    public static OrderEvent fromOrder(Long orderId, Long customerId,Long cartId, OrderStatus status, Double tongTien, ThanhToanType hinhThucTT, String eventType) {
         return OrderEvent.builder()
                 .id(orderId)
                 .customerId(customerId)
@@ -41,6 +42,7 @@ public class OrderEvent {
                 .ngayDatHang(LocalDateTime.now())
                 .thanhToanType(hinhThucTT)
                 .eventType(eventType) // Hoặc "UPDATE", "CANCEL" tùy thuộc vào loại sự kiện
+                .cartId(cartId)
                 .build();
     }
 }

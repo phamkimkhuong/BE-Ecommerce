@@ -22,6 +22,8 @@ public class PaymentInfo {
     private Long paymentId;
     @Column(name = "order_id")
     private Long orderId;
+    @Column(name = "customer_id")
+    private Long customerId;
     @Column(name = "amount")
     private Double amount;
     @Column(name = "payment_method")

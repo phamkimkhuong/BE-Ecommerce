@@ -20,6 +20,8 @@ public interface CartItemService {
     // Xóa chi tiết giỏ hàng
     boolean deleteCartItem(Long cartItemId);
 
+    void deleteCartItemByCartId(Long cartId);
+
     // Lấy chi tiết giỏ hàng theo ID
     CartItem getCartItemById(Long cartItemId);
 }

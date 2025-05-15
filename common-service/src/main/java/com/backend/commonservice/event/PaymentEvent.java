@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 public class PaymentEvent {
     Long paymentId;
     Long orderId;
+    Long customerId;
     Double amount;
     Boolean success;
     String paymentUrl; // VNPay payment URL

@@ -7,7 +7,6 @@ package com.backend.orderservice.event;
  * @created: 2023-05-15
  */
 
-import com.backend.commonservice.event.EmailOrderEvent;
 import com.backend.commonservice.event.OrderEvent;
 import com.backend.commonservice.event.ProductEvent;
 import com.backend.commonservice.service.KafkaService;
@@ -18,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -25,6 +25,7 @@ public class OrderProducer {
     private static final String ORDER_TOPIC = "order-events";
     private static final String PRODUCT_TOPIC = "product-events";
     private static final String EMAIL_TOPIC = "email-events";
+    private static final String CART_TOPIC = "cart-events";
 
     private final KafkaService kafkaService;
     private final ObjectMapper objectMapper;
@@ -37,15 +38,18 @@ public class OrderProducer {
     /**
      * Gửi sự kiện đơn hàng đến Kafka
      *
-     * @param order Đơn hàng cần gửi sự kiện
+     * @param mess Đơn hàng cần gửi sự kiện
      * @throws JsonProcessingException Nếu có lỗi khi chuyển đổi đơn hàng thành JSON
      * @throws Exception               Nếu có lỗi khi gửi sự kiện đến Kafka
      */
-    public void sendOrderEvent(Order order) throws Exception {
-        log.info("OrderProducer Nhận sự kiện đơn hàng {}", order);
+    public void sendOrderEvent(Map<String, Object> mess) throws Exception {
+        log.info("OrderProducer Nhận sự kiện đơn hàng ");
         try {
+            Order order = (Order) mess.get("order");
+            Long cartId = (Long) mess.get("cartId");
             OrderEvent event = OrderEvent.fromOrder(order.getId(),
                     order.getCustomerId(),
+                    cartId,
                     order.getTrangThai(),
                     order.getTongTien(),
                     order.getThanhToanType(),
@@ -61,22 +65,14 @@ public class OrderProducer {
             throw e; // Truyền lỗi lên cho người gọi xử lý
         }
     }
+
     /**
      * Gửi sự kiện email đến Kafka
      *
      * @param event Sự kiện email cần gửi
      */
-    public void sendEmailEvent(Order event){
-        log.info("OrderProducer Nhận sự kiện email");
-        try {
-            String message = objectMapper.writeValueAsString(event);
-            kafkaService.sendMessage(EMAIL_TOPIC, message);
-            log.info("Đã gửi sự kiện email đến topic: {}", EMAIL_TOPIC);
-        } catch (JsonProcessingException e) {
-            log.error("Lỗi khi chuyển đổi sự kiện email thành JSON: {}", e.getMessage());
-        } catch (Exception e) {
-            log.error("Lỗi khi gửi sự kiện email: {}", e.getMessage());
-        }
+    public void sendEmailEvent(Map<String, Object> event) {
+
     }
 
     public void sendProductEvent(List<ProductEvent> event) throws Exception {
@@ -92,6 +88,19 @@ public class OrderProducer {
         } catch (Exception e) {
             log.error("Lỗi khi gửi sự kiện trừ tồn kho: {}", e.getMessage());
             throw e; // Truyền lỗi lên cho người gọi xử lý
+        }
+    }
+
+    public void sendCartEvent(Long customerId) {
+        try {
+            String message = objectMapper.writeValueAsString(customerId);
+            log.info("Sự kiện xóa sản phẩm trong giỏ hàng {}", message);
+            kafkaService.sendMessage(CART_TOPIC, message);
+            log.info("Đã gửi sự kiện xóa sản phẩm trong giỏ hàng đến topic: {}", CART_TOPIC);
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi sự kiện xóa sản phẩm trong giỏ hàng thành JSON: {}", e.getMessage());
+        } catch (Exception e) {
+            log.error("Lỗi khi gửi sự kiện xóa sản phẩm trong giỏ hàng: {}", e.getMessage());
         }
     }
 }

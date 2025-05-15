@@ -1,5 +1,6 @@
 package com.backend.orderservice.dtos.response;
 
+import com.backend.commonservice.enums.OrderStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,6 @@ public class OrderResponse {
     Long id;
     LocalDateTime ngayDatHang;
     Double tongTien;
-    String status;
+    String trangThai;
     Long customerId;
 }

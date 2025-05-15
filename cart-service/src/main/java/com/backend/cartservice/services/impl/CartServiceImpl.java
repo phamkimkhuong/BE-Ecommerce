@@ -16,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +27,7 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
     CartItemRepository cartItemRepository;
     ModelMapper modelMapper;
+
     // Convert Entity to DTO
     public CartResponse toCartReponse(Cart cart) {
         return modelMapper.map(cart, CartResponse.class);
@@ -56,10 +56,11 @@ public class CartServiceImpl implements CartService {
     // Lấy giỏ hàng theo cartId
     public CartResponse getCartById(Long cartId) {
         log.info("CartServiceImpl Lấy giỏ hàng theo cartId: {}", cartId);
-        Cart c =cartRepository.findById(cartId).orElseThrow(() ->
+        Cart c = cartRepository.findById(cartId).orElseThrow(() ->
                 new AppException(ErrorMessage.CART_NOT_FOUND));
         return toCartReponse(c);
     }
+
     // Cập nhật giỏ hàng
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
@@ -73,7 +74,6 @@ public class CartServiceImpl implements CartService {
 
             // Cập nhật các thuộc tính của Cart (ví dụ: customerId)
             existingCart.setCustomerId(cart.getCustomerId());
-
             // Cập nhật các CartItem nếu cần
             for (CartItem updatedItem : cart.getCartItems()) {
                 Optional<CartItem> existingItemOpt = cartItemRepository.findById(updatedItem.getId());
@@ -85,7 +85,6 @@ public class CartServiceImpl implements CartService {
                     cartItemRepository.save(existingItem);
                 }
             }
-
             // Lưu lại giỏ hàng đã cập nhật
             cartRepository.save(existingCart);
             return existingCart;
@@ -94,7 +93,11 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-
+    @Transactional(readOnly = true)
+    public Optional<CartResponse> getCartForKafkaConsumer(Long customerId) {
+        Optional<Cart> c = cartRepository.findByCustomerId(customerId);
+        return c.map(this::toCartReponse);
+    }
     // Xóa giỏ hàng
     @PreAuthorize("hasAuthority('ADMIN') or @cartSecurityExpression.isCartOwner(#cartId)")
     public void deleteCart(Long cartId) {

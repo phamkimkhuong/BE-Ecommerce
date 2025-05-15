@@ -5,6 +5,7 @@ import com.backend.orderservice.dtos.request.CartOrderRequest;
 import com.backend.orderservice.dtos.response.OrderResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     List<OrderResponse> getAll();
@@ -16,4 +17,6 @@ public interface OrderService {
     OrderResponse update(Long id, OrderDTO order);
 
     boolean delete(Long id);
+
+    Map<String, Object> getUser(Long id);
 }

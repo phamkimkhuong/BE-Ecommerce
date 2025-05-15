@@ -1,7 +1,6 @@
 package com.backend.userservice.repositories;
 
 import com.backend.commonservice.configuration.FeignClientConfig;
-import com.backend.commonservice.dto.request.ApiResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

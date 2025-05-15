@@ -1,6 +1,5 @@
 package com.backend.productservice.event;
 
-import com.backend.commonservice.dto.request.ApiResponseDTO;
 import com.backend.commonservice.event.ProductEvent;
 import com.backend.productservice.services.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,12 +7,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.errors.RetriableException;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.retrytopic.DltStrategy;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Consumer để lắng nghe kết quả thanh toán từ payment-service
@@ -31,6 +34,15 @@ public class OrderResultConsumer {
     ObjectMapper objectMapper;
     ProductProduce productProduce;
 
+    @RetryableTopic(
+            // 2 lần thử lại + 1 lần DLQ
+            // Mặc định là 3 lần thử lại
+            attempts = "3",
+            backoff = @Backoff(delay = 1000, multiplier = 2.0, maxDelay = 10000),
+            dltStrategy = DltStrategy.FAIL_ON_ERROR,
+            // Thử lại khi ngoại lệ là RuntimeException hoặc RetriableException
+            include = {RuntimeException.class, RetriableException.class})
+
     /**
      * Lắng nghe sự kiện tôn kho từ order-service
      *
@@ -38,46 +50,26 @@ public class OrderResultConsumer {
      */
     @KafkaListener(topics = "product-events")
     public void consumeOrderResult(String orderResult) throws JsonProcessingException {
-        ApiResponseDTO<Object> response = new ApiResponseDTO<>();
+        Long orderId = null;
+        Long cartId = null;
         try {
-            log.info("Nhận được kết quả thanh toán: {}", orderResult);
+            log.info("Nhận được thông tin tồn kho từ order: {}", orderResult);
             List<ProductEvent> ds = objectMapper.readValue(
                     orderResult,
                     new com.fasterxml.jackson.core.type.TypeReference<>() {
                     });
             productService.updateQuantityProduct(ds);
-            response.setCode(200);
-            response.setMessage("Cập nhật tồn kho thành công");
-            response.setData(true);
-
+            orderId = ds.getFirst().getOrderId();
+            cartId = ds.getFirst().getCartId();
         } catch (Exception e) {
             log.error("Lỗi khi xử lý kết quả tồn kho: {}", e.getMessage(), e);
-            response.setCode(400);
-            response.setMessage("Cập nhật tồn kho thất bại: " + e.getMessage());
-
-            // Nếu có thông tin về orderId trong sự kiện, đưa vào response
-            try {
-                List<ProductEvent> events = objectMapper.readValue(
-                        orderResult,
-                        new com.fasterxml.jackson.core.type.TypeReference<>() {
-                        });
-                if (!events.isEmpty() && events.get(0).getOrderId() != null) {
-                    // Tạo dữ liệu tùy chỉnh với orderId
-                    Map<String, Object> customData = new HashMap<>();
-                    customData.put("orderId", events.get(0).getOrderId());
-                    customData.put("success", false);
-                    response.setData(customData);
-                } else {
-                    response.setData(false);
-                }
-            } catch (Exception ex) {
-                log.error("Không thể trích xuất orderId từ sự kiện: {}", ex.getMessage());
-                response.setData(false);
-            }
         }
-        String message = objectMapper.writeValueAsString(response);
+        // gủi cartid và orderId về cho order-service
+        Map<String, Long> payload = new HashMap<>();
+        payload.put("orderId", orderId);
+        payload.put("cartId", cartId);
         try {
-            productProduce.sendProductEvent(message);
+            productProduce.sendProductEvent(payload);
         } catch (Exception e) {
             log.error("Lỗi khi gửi sự kiện tồn kho đến Kafka: {}", e.getMessage(), e);
         }

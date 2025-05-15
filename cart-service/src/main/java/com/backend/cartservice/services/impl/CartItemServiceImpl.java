@@ -104,6 +104,13 @@ public class CartItemServiceImpl implements CartItemService {
         }
     }
 
+    @Override
+    @Transactional
+    public void deleteCartItemByCartId(Long cartId) {
+        log.info("CartItem gọi xóa tất cả sản phẩm trong giỏ hàng với ID: {}", cartId);
+        cartItemRepository.deleteCartItemByCart_Id(cartId);
+    }
+
     // Lấy chi tiết giỏ hàng theo ID
     public CartItem getCartItemById(Long cartItemId) {
         return cartItemRepository.findById(cartItemId).orElse(null); // Trả về null nếu không tìm thấy

@@ -52,11 +52,24 @@ public class UserController {
         ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("user", userService.findById(id));
-
         response.setCode(HttpStatus.OK.value());
         response.setMessage("Lấy thông tin người dùng thành công");
         response.setData(data);
+        return ResponseEntity.ok(response);
+    }
 
+    @GetMapping("/user/get-info")
+    public ResponseEntity<ApiResponseDTO<Map<String, Object>>> getUserInfo(@RequestParam(value = "id") Long id) {
+        log.info("Request to get user info with id: {}", id);
+        ApiResponseDTO<Map<String, Object>> response = new ApiResponseDTO<>();
+        Map<String, Object> data = new LinkedHashMap<>();
+        UserDTO user = userService.findByAccountId(id);
+        data.put("email", userService.getEmailUser(user.getAccountId()));
+        data.put("user", user);
+        log.info("User info: {}", data);
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Lấy thông tin người dùng thành công");
+        response.setData(data);
         return ResponseEntity.ok(response);
     }
 

@@ -58,9 +58,9 @@ public class EventConsumer {
         try {
             log.info("Nhận được sự kiện đơn hàng -> {}", message);
             // Chuyển đổi JSON thành đối tượng OrderEvent
-            OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
+//            OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
             // Xử lý sự kiện đơn hàng dựa trên loại sự kiện
-            processOrderEvent(orderEvent);
+//            processOrderEvent(orderEvent);
         } catch (Exception e) {
             log.error("Lỗi khi xử lý sự kiện đơn hàng: {}", e.getMessage(), e);
             throw new RuntimeException("Lỗi xử lý sự kiện đơn hàng", e);
