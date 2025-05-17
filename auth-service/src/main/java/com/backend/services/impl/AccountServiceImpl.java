@@ -22,6 +22,7 @@ import com.backend.entities.Role;
 import com.backend.repositories.AccountRepository;
 import com.backend.repositories.RoleRepository;
 import com.backend.services.AccountService;
+import com.backend.services.EmailService;
 import com.backend.services.JWTService;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,10 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     @Lazy
     JWTService jwtService;
+
+    @Autowired
+    private EmailService emailService;
+
 
     @Autowired
     public AccountServiceImpl(ModelMapper modelMapper, RoleRepository roleRepository,
@@ -138,6 +143,45 @@ public class AccountServiceImpl implements AccountService {
         log.info("getEmailUser accountId: {}", accountId);
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new UsernameNotFoundException("Account not found"));
         return account.getEmail();
+    }
+
+    @Override
+    public ResponseEntity<?> forgotPassword(String email) {
+        Account account = accountRepository.findAccountByEmail(email);
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại trong hệ thống.");
+        }
+
+        // Tạo mật khẩu mới ngẫu nhiên
+        String newPassword = generateRandomPassword(8); // Ví dụ: độ dài 8 ký tự
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // Cập nhật vào DB
+        account.setPassword(encodedPassword);
+        accountRepository.save(account);
+
+        // Gửi email
+        String subject = "Khôi phục mật khẩu tài khoản";
+        String content = "<p>Xin chào <strong>" + account.getUsername() + "</strong>,</p>" +
+                "<p>Bạn đã yêu cầu khôi phục mật khẩu.</p>" +
+                "<p>Mật khẩu mới của bạn là: <strong>" + newPassword + "</strong></p>" +
+                "<p>Vui lòng đăng nhập và đổi mật khẩu ngay sau đó.</p>";
+        try {
+            emailService.sendMessage("no-reply@webecommerce.vn", email, subject, content);
+            return ResponseEntity.ok("Mật khẩu mới đã được gửi về email của bạn.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể gửi email: " + e.getMessage());
+        }
+    }
+
+    private String generateRandomPassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * characters.length());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString();
     }
 
     @Override

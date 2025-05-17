@@ -55,6 +55,7 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
     private final List<OpenApiEndpoint> openApiEndpoints = Arrays.asList(
             new OpenApiEndpoint("POST", "/api/account/sign-up"),
             new OpenApiEndpoint("POST", "/api/account/sign-in"),
+            new OpenApiEndpoint("POST", "/api/account/forgot-password"),
             new OpenApiEndpoint("GET", "/api/v1/products"),
             new OpenApiEndpoint("POST", "/api/user"),
             new OpenApiEndpoint("POST", "/api/user/create"),
