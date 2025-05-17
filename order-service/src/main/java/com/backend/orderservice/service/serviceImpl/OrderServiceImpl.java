@@ -18,6 +18,7 @@ import com.backend.commonservice.event.PaymentEvent;
 import com.backend.commonservice.event.ProductEvent;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import com.backend.commonservice.model.TokenContext;
 import com.backend.orderservice.domain.Order;
 import com.backend.orderservice.domain.OrderDetail;
 import com.backend.orderservice.dtos.OrderDTO;
@@ -26,6 +27,7 @@ import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.event.OrderProducer;
 import com.backend.orderservice.exception.PaymentException;
 import com.backend.orderservice.repository.OpenFeignClient.CartClient;
+import com.backend.orderservice.repository.OpenFeignClient.GatewayClient;
 import com.backend.orderservice.repository.OpenFeignClient.ProductClient;
 import com.backend.orderservice.repository.OpenFeignClient.UserClient;
 import com.backend.orderservice.repository.OrderDetailRepository;
@@ -57,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
     OrderDetailRepository orderDetailRepository;
     ProductClient productClient;
     UserClient userClient;
+    GatewayClient gatewayClient;
 
     // Convert Entity to DTO
     public Order convertToEntity(OrderDTO product) {
@@ -192,6 +195,8 @@ public class OrderServiceImpl implements OrderService {
                 rollbackOrderCreation(createdOrderId);
             }
             throw new AppException(ErrorMessage.PAYMENT_FAILED);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -299,10 +304,14 @@ public class OrderServiceImpl implements OrderService {
 //                orderProducer.sendCartEvent(order.getCustomerId());
                 Map<String, Object> map = new HashMap<>();
                 map.put("order", order);
+                ResponseEntity<String> getToken = gatewayClient.getToken(order.getId());
+                String tokenFromGateway = getToken.getBody();
+                TokenContext.setToken(tokenFromGateway);
                 Map<String, Object> user = getUser(order.getCustomerId());
                 map.put("user", user);
                 orderProducer.sendEmailEvent(map);
                 log.info("Đã gửi sự kiện đơn hàng đã thanh toán đến notifycation-service:");
+                TokenContext.clear();
             } catch (Exception e) {
                 log.error("Lỗi khi gửi sự kiện đơn hàng đã thanh toán đến inventory-service: {}", e.getMessage());
                 throw new AppException(ErrorMessage.KAFKA_ERROR, e.getMessage());

@@ -13,5 +13,5 @@ WORKDIR /app
 
 COPY --from=user-builder /app/user-service/target/*.jar ./user-service.jar
 
-EXPOSE 9898
+EXPOSE 9995
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "user-service.jar"]

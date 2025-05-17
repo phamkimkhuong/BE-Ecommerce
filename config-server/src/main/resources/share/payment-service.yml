@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/payment_service?createDatabaseIfNotExist=true
+    url: ${MARIA_DB_PAYMENT_SERVICE:jdbc:mariadb://localhost:3306/payment_service?createDatabaseIfNotExist=true}
     username: root
     password: root
   # JPA configuration
@@ -20,7 +20,9 @@ spring:
     #      mode: always
 #      mode: never
 #      data-locations: classpath:/sql/data.sql
-
+gateway:
+  service:
+    url: ${GATEWAY_SERVICE_URL:http://localhost:8080}
 #  data:
 #    rest:
 #      base-path: /api/v1

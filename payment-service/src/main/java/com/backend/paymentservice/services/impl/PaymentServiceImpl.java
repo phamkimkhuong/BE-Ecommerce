@@ -16,10 +16,12 @@ package com.backend.paymentservice.services.impl;
 import com.backend.commonservice.enums.PaymentEventType;
 import com.backend.commonservice.model.AppException;
 import com.backend.commonservice.model.ErrorMessage;
+import com.backend.commonservice.model.TokenContext;
 import com.backend.paymentservice.configs.VNPayConfig;
 import com.backend.paymentservice.entity.PaymentInfo;
 import com.backend.paymentservice.event.PaymentProducer;
 import com.backend.paymentservice.repository.PaymentInfoRepository;
+import com.backend.paymentservice.repository.feignClient.GatewayClient;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,7 @@ import java.util.*;
 public class PaymentServiceImpl implements PaymentService {
     PaymentInfoRepository paymentInfoRep;
     PaymentProducer paymentProducer;
+    GatewayClient gatewayClient;
 
     /**
      * Tạo đường dẫn thanh toán VNPay cho đơn hàng
@@ -51,69 +54,86 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public String createVNPPayment(HttpServletRequest request, long orderId) {
-        PaymentInfo paymentInfo = paymentInfoRep.findByOrderId(orderId);
-        if (paymentInfo == null) {
-            throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
-                    "Không tìm thấy thông tin thanh toán cho đơn hàng: " + orderId);
-        }
+        try {
+            PaymentInfo paymentInfo = paymentInfoRep.findByOrderId(orderId);
+            if (paymentInfo == null) {
+                throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
+                        "Không tìm thấy thông tin thanh toán cho đơn hàng: " + orderId);
+            }
 //        if (paymentInfo.getPaymentUrl() != null) {
 //            log.info("Đường dẫn thanh toán đã tồn tại: {}", paymentInfo.getPaymentUrl());
 //            return paymentInfo.getPaymentUrl();
 //        }
-        log.info("Tạo VNPay payment cho đơn hàng: {}", paymentInfo);
-        String orderType = "other";
-        long amount = (long) (paymentInfo.getAmount() * 100L);
-        String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
-        String vnp_IpAddr = VNPayConfig.getIpAddress(request);
-        String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
+            log.info("Tạo VNPay payment cho đơn hàng:");
+            String orderType = "other";
+            long amount = (long) (paymentInfo.getAmount() * 100L);
+            String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
+            String vnp_IpAddr = VNPayConfig.getIpAddress(request);
+            String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
 
-        Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", VNPayConfig.vnp_Version);
-        vnp_Params.put("vnp_Command", VNPayConfig.vnp_Command);
-        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(amount));
-        vnp_Params.put("vnp_CurrCode", "VND");
-        vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
-        vnp_Params.put("vnp_OrderType", orderType);
-        vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_ReturnUrl);
-        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+            Map<String, String> vnp_Params = new HashMap<>();
+            vnp_Params.put("vnp_Version", VNPayConfig.vnp_Version);
+            vnp_Params.put("vnp_Command", VNPayConfig.vnp_Command);
+            vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+            vnp_Params.put("vnp_Amount", String.valueOf(amount));
+            vnp_Params.put("vnp_CurrCode", "VND");
+            vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
+            vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+            vnp_Params.put("vnp_OrderType", orderType);
+            vnp_Params.put("vnp_Locale", "vn");
+            String returnUrl = VNPayConfig.vnp_ReturnUrl;
+            vnp_Params.put("vnp_ReturnUrl", returnUrl);
+            vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
-        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String vnp_CreateDate = formatter.format(cld.getTime());
-        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+            // With this code
+//            Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+            TimeZone vnpTimeZone = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
+            Calendar cld = Calendar.getInstance(vnpTimeZone);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            formatter.setTimeZone(vnpTimeZone);
+            String vnp_CreateDate = formatter.format(cld.getTime());
 
-        cld.add(Calendar.MINUTE, 15);
-        String vnp_ExpireDate = formatter.format(cld.getTime());
-        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+            vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-        List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
-        Collections.sort(fieldNames);
-        StringBuilder hashData = new StringBuilder();
-        StringBuilder query = new StringBuilder();
-        for (int i = 0; i < fieldNames.size(); i++) {
-            String fieldName = fieldNames.get(i);
-            String fieldValue = vnp_Params.get(fieldName);
-            if (fieldValue != null && !fieldValue.isEmpty()) {
-                hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
-                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII)).append('=')
-                        .append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
-                if (i < fieldNames.size() - 1) {
-                    hashData.append('&');
-                    query.append('&');
+            cld.add(Calendar.MINUTE, 15);
+            String vnp_ExpireDate = formatter.format(cld.getTime());
+            vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+            List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            StringBuilder query = new StringBuilder();
+            for (int i = 0; i < fieldNames.size(); i++) {
+                String fieldName = fieldNames.get(i);
+                String fieldValue = vnp_Params.get(fieldName);
+                if (fieldValue != null && !fieldValue.isEmpty()) {
+                    hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+                    query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII)).append('=')
+                            .append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+                    if (i < fieldNames.size() - 1) {
+                        hashData.append('&');
+                        query.append('&');
+                    }
                 }
             }
+            String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
+            query.append("&vnp_SecureHash=").append(vnp_SecureHash);
+            String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + query;
+            paymentInfo.setPaymentUrl(paymentUrl);
+            paymentInfo.setVnpTxnRef(vnp_TxnRef);
+            paymentInfoRep.save(paymentInfo);
+            // Lấy JWT token từ request header
+            String token = request.getHeader("Authorization");
+            // Lưu token vào cache với key là orderId
+            gatewayClient.storeToken(orderId, token);
+            return paymentUrl;
+        } catch (Exception e) {
+            log.error("Lỗi khi tạo VNPay payment cho đơn hàng {}: {}", orderId, e.getMessage(), e);
+            throw new AppException(ErrorMessage.INTERNAL_SERVER_ERROR,
+                    "Lỗi khi tạo VNPay payment cho đơn hàng: " + orderId);
         }
-        String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
-        query.append("&vnp_SecureHash=").append(vnp_SecureHash);
-        String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + query;
-        paymentInfo.setPaymentUrl(paymentUrl);
-        paymentInfo.setVnpTxnRef(vnp_TxnRef);
-        paymentInfoRep.save(paymentInfo);
-        return VNPayConfig.vnp_PayUrl + "?" + query;
     }
+
     /**
      * Xử lý hoàn tiền cho đơn hàng
      *
@@ -139,6 +159,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     /**
      * Lưu thông tin thanh toán
+     *
      * @param paymentInfo Thông tin thanh toán cần lưu
      */
     @Override
@@ -149,6 +170,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     /**
      * Cập nhật thông tin thanh toán từ VNPay callback
+     *
      * @param request Tham số từ VNPay
      */
     @Override
@@ -161,6 +183,7 @@ public class PaymentServiceImpl implements PaymentService {
         String cardType = request.getParameter("vnp_CardType");
         String bankCode = request.getParameter("vnp_BankCode");
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+        String token = request.getParameter("token");
         PaymentInfo paymentInfo = paymentInfoRep.findByVnpTxnRef((vnp_TxnRef));
         if (paymentInfo == null) {
             throw new AppException(ErrorMessage.RESOURCE_NOT_FOUND,
@@ -174,11 +197,14 @@ public class PaymentServiceImpl implements PaymentService {
         paymentInfo.setPaymentEventType(PaymentEventType.PAYMENT_SUCCESS);
         paymentInfoRep.save(paymentInfo);
         try {
+            log.info("lấy token ra xem {}", token);
+            TokenContext.setToken(token);
             paymentProducer.sendPaymentEvent(paymentInfo);
         } catch (Exception e) {
-            throw  new AppException(ErrorMessage.KAFKA_ERROR);
+            throw new AppException(ErrorMessage.KAFKA_ERROR);
         }
     }
+
     /**
      * Xử lý callback từ VNPay
      *

@@ -72,16 +72,28 @@ public class OrderProducer {
      * @param event Sự kiện email cần gửi
      */
     public void sendEmailEvent(Map<String, Object> event) {
-
+        log.info("ProductProducer Nhận sự kiện email {}", event);
+        try {
+            String message = objectMapper.writeValueAsString(event);
+            log.info("Sự kiện email {}", message);
+            kafkaService.sendMessage(EMAIL_TOPIC, message);
+            log.info("Đã gửi sự kiện email đến topic: {}", EMAIL_TOPIC);
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi sự kiện email thành JSON: {}", e.getMessage());
+//            throw e; // Truyền lỗi lên cho người gọi xử lý
+        } catch (Exception e) {
+            log.error("Lỗi khi gửi sự kiện trừ tồn kho: {}", e.getMessage());
+//            throw e; // Truyền lỗi lên cho người gọi xử lý
+        }
     }
 
     public void sendProductEvent(List<ProductEvent> event) throws Exception {
-        log.info("ProductProducer Nhận sự kiện trừ tồn kho {}", event);
+        log.info("ProductProducer Nhận sự kiện email {}", event);
         try {
             String message = objectMapper.writeValueAsString(event);
             log.info("Sự kiện trừ tồn kho {}", message);
             kafkaService.sendMessage(PRODUCT_TOPIC, message);
-            log.info("Đã gửi sự kiện trừ tồn kho đến topic: {}", PRODUCT_TOPIC);
+            log.info("Đã gửi sự kiện email đến topic: {}", PRODUCT_TOPIC);
         } catch (JsonProcessingException e) {
             log.error("Lỗi khi chuyển đổi sự kiện trừ tồn kho thành JSON: {}", e.getMessage());
             throw e; // Truyền lỗi lên cho người gọi xử lý

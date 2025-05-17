@@ -10,12 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.util.Objects;
 
 @Configuration
 @Slf4j
@@ -28,9 +24,29 @@ public class FeignClientConfig {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            String token = TokenContext.getToken();
-            if (token != null && token.startsWith("Bearer ")) {
+            // Thử lấy token từ RequestContextHolder (cho HTTP request thông thường)
+            String token = null;
+            try {
+                ServletRequestAttributes requestAttributes =
+                        (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+                if (requestAttributes != null) {
+                    token = requestAttributes.getRequest().getHeader("Authorization");
+                    log.info("Token from RequestContextHolder: {}", token);
+                }
+                // LẤY ĐỊA CHỈ api REQUEST
+            } catch (Exception e) {
+                log.warn("Could not get token from RequestContextHolder", e);
+            }
+            // Nếu không có token từ RequestContextHolder, thử lấy từ nguồn khác (ThreadLocal riêng)
+            if (token == null) {
+                token = TokenContext.getToken();
+                log.info("Token from TokenContext: {}", token);
+            }
+            // Thêm token vào header nếu tồn tại
+            if (token != null && !token.isEmpty()) {
                 requestTemplate.header("Authorization", token);
+            } else {
+                log.warn("No token available for Feign request");
             }
         };
     }

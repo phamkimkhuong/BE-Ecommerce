@@ -15,6 +15,7 @@ import com.backend.commonservice.model.ErrorMessage;
 import com.backend.commonservice.service.EmailService;
 import com.backend.notificationservice.repository.AuthClient;
 import com.backend.notificationservice.repository.UserClient;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -84,16 +85,16 @@ public class EventConsumer {
         try {
             log.info("Nhận được sự kiện email -> {}", message);
             // Chuyển đổi JSON thành đối tượng OrderEvent
-            OrderEvent orderEvent = objectMapper.readValue(message, OrderEvent.class);
-            // Xử lý sự kiện email
-            String email = null;
-            log.info("check email");
-            // Get user information through Feign client
-            ResponseEntity<ApiResponseDTO<Map<String, Object>>> userResponse =
-                    authClient.getEmailUser(orderEvent.getCustomerId());
-            log.info("Response from auth-service: {}", userResponse);
-//                Map<String, Object> responseData = (Map<String, Object>) userResponse.getBody();
-//                email = (String) responseData.get("data");
+            Map<String, Object> payload = objectMapper.readValue(message, new TypeReference<>() {
+            });
+            // chuyển đổi object payload thành OrderEvent
+            OrderEvent orderEvent = objectMapper.convertValue(payload.get("order"), OrderEvent.class);
+            log.info("OrderEvent: {}", orderEvent);
+            Map<String, Object> user = objectMapper.convertValue(payload.get("user"), new TypeReference<>() {
+            });
+            log.info("User: {}", user);
+            String email = (String) user.get("email");
+            log.info("Email: {}", email);
             // Tạo Map chứa các placeholder cho template
             Map<String, Object> placeholder = createOrderEmailPlaceholders(orderEvent);
             // Gửi email sử dụng template và placeholder

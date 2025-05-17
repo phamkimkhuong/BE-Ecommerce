@@ -9,6 +9,9 @@ services:
       context: .
       dockerfile: Dockerfile
     image: base-builder:latest
+    container_name: base-builder
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
     # Không cần chạy container này, chỉ build image
 
   # Database service
@@ -57,12 +60,12 @@ services:
     networks:
       - microservices-networks
 
-  api-gateway:
+  gateway-service:
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
-    image: api-gateway:1.0.0
-    container_name: ${API_GATEWAY:-api-gateway}
+    image: gateway-service:1.0.0
+    container_name: ${API_GATEWAY:-gateway-service}
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -75,8 +78,28 @@ services:
         condition: service_started
     networks:
       - microservices-networks
-
-  # Service sử dụng base-builder
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    image: auth-service:1.0.0
+    ports:
+      - "9996:9996"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+    # Service sử dụng base-builder
   product-service:
     build:
       context: .
@@ -105,27 +128,6 @@ services:
         condition: service_started
     networks:
       - microservices-networks
-  auth-service:
-    build:
-      context: ./auth-service
-      dockerfile: Dockerfile
-    image: auth-service:1.0.0
-    ports:
-      - "9996:9996"
-    restart: unless-stopped
-    env_file:
-      - local.env
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      service-registry:
-        condition: service_started
-      config-server:
-        condition: service_started
-      mariadb:
-        condition: service_started
-    networks:
-      - microservices-networks
   user-service:
     build:
       context: .
@@ -145,6 +147,102 @@ services:
         condition: service_started
     networks:
       - microservices-networks
+  cart-service:
+    build:
+      context: .
+      dockerfile: cart-service/Dockerfile
+    image: cart-service:1.0.0
+    ports:
+      - "8088:8088"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  order-service:
+    build:
+      context: .
+      dockerfile: order-service/Dockerfile
+    image: order-service:1.0.0
+    ports:
+      - "9292:9292"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  payment-service:
+    build:
+      context: .
+      dockerfile: payment-service/Dockerfile
+    image: payment-service:1.0.0
+    ports:
+      - "9997:9997"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  notification-service:
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
+    image: notification-service:1.0.0
+    ports:
+      - "9003:9003"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    networks:
+      - microservices-networks
+#  payment-service:
+#    build:
+#      context: .
+#      dockerfile: payment-service/Dockerfile
+#    image: payment-service:1.0.0
+#    ports:
+#      - "9997:9997"
+#    restart: unless-stopped
+#    env_file:
+#      - local.env
+#    environment:
+#      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+#    depends_on:
+#      service-registry:
+#        condition: service_started
+#      config-server:
+#        condition: service_started
+#      mariadb:
+#        condition: service_started
+#    networks:
+#      - microservices-networks
 volumes:
   mariadb_data:
 

@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/order_service?createDatabaseIfNotExist=true
-    username: root
-    password: root
+    url: ${MARIA_DB_ORDER_SERVICE:jdbc:mariadb://localhost:3306/order_service?createDatabaseIfNotExist=true}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:root}
   # JPA configuration
   jpa:
     hibernate:
@@ -26,7 +26,9 @@ spring:
     #      mode: always
 #      mode: never
 #      data-locations: classpath:/sql/data.sql
-
+gateway:
+  service:
+    url: ${GATEWAY_SERVICE_URL:http://localhost:8080}
 #  data:
 #    rest:
 #      base-path: /api/v1

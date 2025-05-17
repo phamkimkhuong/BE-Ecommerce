@@ -9,6 +9,7 @@ package com.backend.commonservice.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.annotation.PostConstruct;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -26,10 +27,16 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-        @Value("${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}")
+        @Value("${spring.kafka.bootstrap-servers}")
         private String bootstrapServer;
-        @Value("${spring.kafka.consumer.group-id:default-group")
+        @Value("${spring.kafka.consumer.group-id}")
         private String comsumerGroupId;
+
+        @PostConstruct
+        public void init() {
+                System.out.println("Bootstrap server: " + bootstrapServer);
+                System.out.println("Consumer group ID: " + comsumerGroupId);
+        }
 
         @Bean
         public ProducerFactory<String, String> producerFactory() {

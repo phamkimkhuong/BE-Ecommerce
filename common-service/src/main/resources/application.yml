@@ -1,8 +1,9 @@
 spring:
-  profiles:
-    active: local
+#  Chọn application profile cần sử dụng cho dev hoặc prod
+#  profiles:
+#    active:
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     consumer:
       group-id: ${KAFKA_GROUP_ID:default-group}
       auto-offset-reset: earliest

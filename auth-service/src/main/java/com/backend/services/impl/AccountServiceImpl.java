@@ -23,6 +23,7 @@ import com.backend.repositories.AccountRepository;
 import com.backend.repositories.RoleRepository;
 import com.backend.services.AccountService;
 import com.backend.services.JWTService;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,21 +48,22 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private AccountRepository accountRepository;
-    private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final RestTemplate restTemplate;
+    AccountRepository accountRepository;
+    final RoleRepository roleRepository;
+    final ModelMapper modelMapper;
+    final BCryptPasswordEncoder passwordEncoder;
+    final RestTemplate restTemplate;
     @Autowired
     @Lazy
-    private JWTService jwtService;
+    JWTService jwtService;
 
     @Autowired
     public AccountServiceImpl(ModelMapper modelMapper, RoleRepository roleRepository,
-            BCryptPasswordEncoder passwordEncoder, AccountRepository accountRepository, RestTemplate restTemplate) {
+                              BCryptPasswordEncoder passwordEncoder, AccountRepository accountRepository, RestTemplate restTemplate) {
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
         this.restTemplate = restTemplate;
@@ -96,7 +98,8 @@ public class AccountServiceImpl implements AccountService {
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(createUserRequest, headers);
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(
-                    "http://localhost:8080/api/user/create", // Gọi qua API Gateway
+//                    "http://localhost:8080/api/user/create", // Gọi qua API Gateway
+                    "http://gateway-service:8080/api/user/create", // Gọi qua API Gateway
                     request,
                     String.class);
             if (response.getStatusCode() != HttpStatus.CREATED) {
@@ -109,6 +112,7 @@ public class AccountServiceImpl implements AccountService {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("Account created successfully!");
     }
+
     @Override
     public ResponseEntity<?> signIn(SignInRequest signInRequest, AuthenticationManager authenticationManager) {
         try {

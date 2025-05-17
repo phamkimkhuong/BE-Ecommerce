@@ -13,8 +13,3 @@ RUN cd multi-module-project && mvn install -N -DskipTests
 
 # Hiển thị cấu trúc thư mục Maven repository để kiểm tra
 RUN ls -la /root/.m2/repository/com/backend/
-
-# Không cần sao chép các thư mục này vì chúng đã có sẵn trong .m2 cache sau khi build
-# RUN mkdir -p /root/.m2/repository/com/backend/
-# RUN cp -r /root/.m2/repository/com/backend/commonservice /root/.m2/repository/com/backend/
-# RUN cp -r /root/.m2/repository/com/backend/multi-module-project /root/.m2/repository/com/backend/

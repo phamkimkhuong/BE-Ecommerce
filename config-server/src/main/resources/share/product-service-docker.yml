@@ -5,9 +5,6 @@ cloudinary:
   cloud-name: ${CLOUD-NAME}
   api-key: ${API-KEY-CLOUDINARY}
   api-secret: ${API-SECRET-KEY-CLOUDINARY}
-#  cloud-name: khnguo
-#  api-key: 628811148441892
-#  api-secret: SvYSr1U91ZK-E3SbR_NXIWTZb0I
 spring:
   application:
     name: product-service

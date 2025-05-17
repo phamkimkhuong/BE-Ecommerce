@@ -9,6 +9,9 @@ spring:
     redis:
       port: 6379
       host: ${REDIS_HOST:localhost}
+
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     gateway:
       default-filters:
