@@ -25,5 +25,5 @@ public interface AccountService extends UserDetailsService {
      ResponseEntity<?> signIn(SignInRequest account, AuthenticationManager authenticationManager);
      Account findByUsername(String username);
     String getEmailUser(Long id);
+    ResponseEntity<?> forgotPassword(String email);
 }
-

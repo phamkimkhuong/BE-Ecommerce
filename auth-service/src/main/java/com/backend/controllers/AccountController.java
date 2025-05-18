@@ -92,4 +92,16 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
     }
+
+    @PostMapping("/account/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        ResponseEntity<?> result = accountService.forgotPassword(email);
+
+        response.put("status", result.getStatusCode().value());
+        response.put("message", result.getBody());
+
+        return ResponseEntity.status(result.getStatusCode()).body(response);
+    }
+
 }
