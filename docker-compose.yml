@@ -4,31 +4,31 @@ networks:
 
 services:
   # Base builder image
-#  base-builder:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
+  base-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
 #    image: base-builder:latest
-#    container_name: base-builder
-#    environment:
-#      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
-#    # Không cần chạy container này, chỉ build image
-#
-#  # Database service
-#  mariadb:
-#    image: mariadb:latest
-#    container_name: mariadb
-#    restart: unless-stopped
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=product_service
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - mariadb_data:/var/lib/mysql
-#    networks:
-#      - microservices-networks
-#
+    container_name: base-builder
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    # Không cần chạy container này, chỉ build image
+
+  # Database service
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=product_service
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - microservices-networks
+
   config-server:
     build:
       context: ./config-server
@@ -78,150 +78,150 @@ services:
         condition: service_started
     networks:
       - microservices-networks
-#  auth-service:
-#    build:
-#      context: ./auth-service
-#      dockerfile: Dockerfile
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
 #    image: auth-service:1.0.0
-#    ports:
-#      - "9996:9996"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#    # Service sử dụng base-builder
-#  product-service:
-#    build:
-#      context: .
-#      dockerfile: product-service/Dockerfile
+    ports:
+      - "9996:9996"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+    # Service sử dụng base-builder
+  product-service:
+    build:
+      context: .
+      dockerfile: product-service/Dockerfile
 #    image: product-service:1.0.0
-#    ports:
-#      - "9898:9898"
-#    #  không tự động khởi chạy container
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
-#      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
-#      - DATABASE_URL=jdbc:mariadb://mariadb:3306/product_service
-#      - DATABASE_USERNAME=root
-#      - DATABASE_PASSWORD=root
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#  user-service:
-#    build:
-#      context: .
-#      dockerfile: user-service/Dockerfile
+    ports:
+      - "9898:9898"
+    #  không tự động khởi chạy container
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+      - DATABASE_URL=jdbc:mariadb://mariadb:3306/product_service
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
 #    image: user-service:1.0.0
-#    ports:
-#      - "9995:9995"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#  cart-service:
-#    build:
-#      context: .
-#      dockerfile: cart-service/Dockerfile
+    ports:
+      - "9995:9995"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  cart-service:
+    build:
+      context: .
+      dockerfile: cart-service/Dockerfile
 #    image: cart-service:1.0.0
-#    ports:
-#      - "8088:8088"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#  order-service:
-#    build:
-#      context: .
-#      dockerfile: order-service/Dockerfile
+    ports:
+      - "8088:8088"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  order-service:
+    build:
+      context: .
+      dockerfile: order-service/Dockerfile
 #    image: order-service:1.0.0
-#    ports:
-#      - "9292:9292"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    environment:
-#      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#  payment-service:
-#    build:
-#      context: .
-#      dockerfile: payment-service/Dockerfile
+    ports:
+      - "9292:9292"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  payment-service:
+    build:
+      context: .
+      dockerfile: payment-service/Dockerfile
 #    image: payment-service:1.0.0
-#    ports:
-#      - "9997:9997"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    environment:
-#      - TZ=Asia/Ho_Chi_Minh
-#    depends_on:
-#      service-registry:
-#        condition: service_started
-#      config-server:
-#        condition: service_started
-#      mariadb:
-#        condition: service_started
-#    networks:
-#      - microservices-networks
-#  notification-service:
-#    build:
-#      context: .
-#      dockerfile: notification-service/Dockerfile
+    ports:
+      - "9997:9997"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    depends_on:
+      service-registry:
+        condition: service_started
+      config-server:
+        condition: service_started
+      mariadb:
+        condition: service_started
+    networks:
+      - microservices-networks
+  notification-service:
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
 #    image: notification-service:1.0.0
-#    ports:
-#      - "9003:9003"
-#    restart: unless-stopped
-#    env_file:
-#      - local.env
-#    environment:
-#      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
-#    networks:
-#      - microservices-networks
+    ports:
+      - "9003:9003"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    networks:
+      - microservices-networks
 volumes:
   mariadb_data:
 

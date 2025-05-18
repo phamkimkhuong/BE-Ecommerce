@@ -25,7 +25,19 @@ spec:
           envFrom:
             - configMapRef:
                 name: app-config
-
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/share
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 20
+            periodSeconds: 5
+      volumes:
+        - name: config-volume
+          configMap:
+            name:
 ---
 apiVersion: v1
 kind: Service
@@ -39,7 +51,7 @@ spec:
       targetPort: 8888
   selector:
     app: config-server-deployment
-
+---
 # Service Registry
 ---
 apiVersion: apps/v1
@@ -77,8 +89,8 @@ spec:
       targetPort: 8761
   selector:
     app: service-registry-deployment
-
-# API Gateway
+---
+# Service Gateway
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -122,3 +134,60 @@ spec:
       targetPort: 8080
   selector:
     app: api-gateway-deployment
+---
+# Auth Service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment
+  labels:
+    app: auth-service-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-service-deployment
+  template:
+    metadata:
+      labels:
+        app: auth-service-deployment
+    spec:
+      containers:
+        - name: auth-service-deployment
+          image: web-ecommerce--auth-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9996
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://config-server:8888"
+          envFrom:
+            - configMapRef:
+                name: app-config
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9996
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      initContainers:
+        - name: wait-for-config-server
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z config-server 8888; do echo "Waiting for config-server"; sleep 2; done;' ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80 # Port sẽ được expose ra bên ngoài
+      targetPort: 9996
+  selector:
+    app: auth-service-deployment
+---
+# Product Service
+---
