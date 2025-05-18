@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-#    image: base-builder:latest
+    image: base-builder:latest
     container_name: base-builder
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=broker:9092
