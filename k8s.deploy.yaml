@@ -1,0 +1,193 @@
+# Config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server-deployment
+  labels:
+    app: config-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server-deployment
+  template:
+    metadata:
+      labels:
+        app: config-server-deployment
+    spec:
+      containers:
+        - name: config-server-deployment
+          image: web-ecommerce--config-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8888
+          envFrom:
+            - configMapRef:
+                name: app-config
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/share
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 20
+            periodSeconds: 5
+      volumes:
+        - name: config-volume
+          configMap:
+            name:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+  selector:
+    app: config-server-deployment
+---
+# Service Registry
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-registry-deployment
+  labels:
+    app: service-registry-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-registry-deployment
+  template:
+    metadata:
+      labels:
+        app: service-registry-deployment
+    spec:
+      containers:
+        - name: service-registry-deployment
+          image: web-ecommerce--service-registry:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8761
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-registry
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8761
+      targetPort: 8761
+  selector:
+    app: service-registry-deployment
+---
+# Service Gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-deployment
+  labels:
+    app: api-gateway-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway-deployment
+  template:
+    metadata:
+      labels:
+        app: api-gateway-deployment
+    spec:
+      containers:
+        - name: api-gateway-deployment
+          image: web-ecommerce--gateway-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: EUREKA_SERVER_URL
+              value: "http://service-registry:8761/eureka"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+            - name: HOST_IP_ADDRESS
+              value: "service-registry"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80 # Port sẽ được expose ra bên ngoài
+      targetPort: 8080
+  selector:
+    app: api-gateway-deployment
+---
+# Auth Service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment
+  labels:
+    app: auth-service-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-service-deployment
+  template:
+    metadata:
+      labels:
+        app: auth-service-deployment
+    spec:
+      containers:
+        - name: auth-service-deployment
+          image: web-ecommerce--auth-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9996
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: "http://config-server:8888"
+          envFrom:
+            - configMapRef:
+                name: app-config
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9996
+            initialDelaySeconds: 30
+            periodSeconds: 10
+      initContainers:
+        - name: wait-for-config-server
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z config-server 8888; do echo "Waiting for config-server"; sleep 2; done;' ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80 # Port sẽ được expose ra bên ngoài
+      targetPort: 9996
+  selector:
+    app: auth-service-deployment
+---
+# Product Service
+---
