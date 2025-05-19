@@ -1,16 +1,15 @@
 package com.backend.aichatbox.controller;
 
 import com.backend.aichatbox.service.ChatService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/chat")
@@ -23,6 +22,11 @@ class MyController {
         String question = message.get("question");
         String response = chatClient.getChatResponse(question);
 
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/openai")
+    public ResponseEntity<String> getChatResponseStream(@RequestBody String message) {
+        String response = chatClient.getChatResponseOpenAi(message);
         return ResponseEntity.ok(response);
     }
 }
