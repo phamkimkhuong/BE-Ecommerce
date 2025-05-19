@@ -3,6 +3,19 @@ networks:
     driver: bridge
 
 services:
+  #Chat box
+  chat-box:
+    build:
+      context: .
+      dockerfile: chat-box/Dockerfile
+    container_name: chat-box
+    ports:
+      - "8345:8345"
+    restart: unless-stopped
+    env_file:
+      - local.env
+    networks:
+      - microservices-networks
   # Base builder image
   base-builder:
     build:
@@ -28,14 +41,14 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - microservices-networks
-#    env_file:
-#      - local.env
+  #    env_file:
+  #      - local.env
 
   config-server:
     build:
       context: ./config-server
       dockerfile: Dockerfile
-#    image: config-server:1.0.0
+    #    image: config-server:1.0.0
     container_name: ${CONFIG_SERVER:-config-server}
     ports:
       - "8888:8888"
@@ -52,7 +65,7 @@ services:
     build:
       context: ./service-registry
       dockerfile: Dockerfile
-#    image: service-registry:1.0.0
+    #    image: service-registry:1.0.0
     container_name: ${SERVICE_REGISTRY:-service-registry}
     ports:
       - "8761:8761"
@@ -66,7 +79,7 @@ services:
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
-#    image: gateway-service:1.0.0
+    #    image: gateway-service:1.0.0
     container_name: ${API_GATEWAY:-gateway-service}
     ports:
       - "8080:8080"
@@ -84,7 +97,7 @@ services:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
-#    image: auth-service:1.0.0
+    #    image: auth-service:1.0.0
     ports:
       - "9996:9996"
     restart: unless-stopped
@@ -106,7 +119,7 @@ services:
     build:
       context: .
       dockerfile: product-service/Dockerfile
-#    image: product-service:1.0.0
+    #    image: product-service:1.0.0
     ports:
       - "9898:9898"
     #  không tự động khởi chạy container
@@ -119,8 +132,6 @@ services:
       - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
       - DATABASE_URL=jdbc:mariadb://mariadb:3306/product_service
-      - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=root
     depends_on:
       service-registry:
         condition: service_started
@@ -134,7 +145,7 @@ services:
     build:
       context: .
       dockerfile: user-service/Dockerfile
-#    image: user-service:1.0.0
+    #    image: user-service:1.0.0
     ports:
       - "9995:9995"
     restart: unless-stopped
@@ -153,7 +164,7 @@ services:
     build:
       context: .
       dockerfile: cart-service/Dockerfile
-#    image: cart-service:1.0.0
+    #    image: cart-service:1.0.0
     ports:
       - "8088:8088"
     restart: unless-stopped
@@ -172,7 +183,7 @@ services:
     build:
       context: .
       dockerfile: order-service/Dockerfile
-#    image: order-service:1.0.0
+    #    image: order-service:1.0.0
     ports:
       - "9292:9292"
     restart: unless-stopped
@@ -193,7 +204,7 @@ services:
     build:
       context: .
       dockerfile: payment-service/Dockerfile
-#    image: payment-service:1.0.0
+    #    image: payment-service:1.0.0
     ports:
       - "9997:9997"
     restart: unless-stopped
@@ -214,7 +225,7 @@ services:
     build:
       context: .
       dockerfile: notification-service/Dockerfile
-#    image: notification-service:1.0.0
+    #    image: notification-service:1.0.0
     ports:
       - "9003:9003"
     restart: unless-stopped
