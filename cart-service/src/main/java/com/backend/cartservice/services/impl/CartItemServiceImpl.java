@@ -116,6 +116,24 @@ public class CartItemServiceImpl implements CartItemService {
         return cartItemRepository.findById(cartItemId).orElse(null); // Trả về null nếu không tìm thấy
     }
 
+    @Override
+    public boolean plus(CartItem cartItem) {
+        cartItem.setQuantity(cartItem.getQuantity() + 1);
+        cartItemRepository.save(cartItem);
+        return true;
+    }
+
+    @Override
+    public boolean minus(CartItem cartItem) {
+        cartItem.setQuantity(cartItem.getQuantity() - 1);
+        if(cartItem.getQuantity() > 1) {
+            cartItemRepository.save(cartItem);
+        }else {
+            cartItemRepository.delete(cartItem);
+        }
+        return true;
+    }
+
     private void checkProductAvailability(Long productId, int quantity) {
         try {
             productClient.checkProductAvailability(productId, quantity);

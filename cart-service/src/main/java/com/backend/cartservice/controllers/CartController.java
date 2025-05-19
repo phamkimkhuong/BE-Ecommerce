@@ -74,4 +74,14 @@ public class CartController {
         cartService.deleteCart(cartId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/count/{customerId}")
+    public int getCountCart(@PathVariable Long customerId) {
+        try {
+            Optional<CartResponse> cart = cartService.getCart(customerId);
+            return cart.map(cartResponse -> cartResponse.getCartItems().size()).orElse(0);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }

@@ -2,8 +2,8 @@ package com.backend.cartservice.services;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
 import com.backend.cartservice.dto.request.UpdateCartItem;
-import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
+import com.backend.commonservice.dto.reponse.CartItemReponse;
 
 import java.util.List;
 
@@ -24,4 +24,8 @@ public interface CartItemService {
 
     // Lấy chi tiết giỏ hàng theo ID
     CartItem getCartItemById(Long cartItemId);
+
+    boolean plus(CartItem cartItem);
+
+    boolean minus(CartItem cartItem);
 }

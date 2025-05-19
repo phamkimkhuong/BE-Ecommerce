@@ -68,4 +68,18 @@ public class CartItemController {
         response.setData(check + "");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PostMapping("/plus/{cartItemId}")
+    public ResponseEntity<String> plus(@PathVariable Long cartItemId){
+        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
+        cartItemService.plus(cartItem);
+        return new ResponseEntity<>("Plus ok", HttpStatus.OK);
+    }
+
+    @PostMapping("/minus/{cartItemId}")
+    public ResponseEntity<String> minus(@PathVariable Long cartItemId){
+        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
+        cartItemService.minus(cartItem);
+        return new ResponseEntity<>("Minus ok", HttpStatus.OK);
+    }
+
 }
