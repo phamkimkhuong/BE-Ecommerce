@@ -7,7 +7,7 @@ services:
   chat-box:
     build:
       context: .
-      dockerfile: chat-box/Dockerfile
+      dockerfile: ai-chatbox/Dockerfile
     container_name: chat-box
     ports:
       - "8345:8345"
