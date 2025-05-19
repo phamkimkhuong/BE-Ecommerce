@@ -6,8 +6,8 @@ services:
   #Chat box
   chat-box:
     build:
-      context: .
-      dockerfile: ai-chatbox/Dockerfile
+      context: ./ai-chatbox
+      dockerfile: Dockerfile
     container_name: chat-box
     ports:
       - "8345:8345"
@@ -19,7 +19,7 @@ services:
   # Base builder image
   base-builder:
     build:
-      context: .
+      context:
       dockerfile: Dockerfile
     image: base-builder:latest
     container_name: base-builder
