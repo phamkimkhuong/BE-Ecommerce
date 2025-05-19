@@ -28,6 +28,8 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - microservices-networks
+#    env_file:
+#      - local.env
 
   config-server:
     build:
