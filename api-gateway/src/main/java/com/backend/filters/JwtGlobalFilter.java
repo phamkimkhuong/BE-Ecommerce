@@ -183,8 +183,21 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
     // Kiểm tra xem đường dẫn có nằm trong danh sách các endpoint không yêu cầu xác thực hay không
     private boolean isOpenEndpoint(String method, String path) {
         return openApiEndpoints.stream()
-                .anyMatch(endpoint -> endpoint.getMethod().equalsIgnoreCase(method)
-                        && endpoint.getPath().equalsIgnoreCase(path));
+                .anyMatch(endpoint -> {
+                    if (!endpoint.getMethod().equalsIgnoreCase(method)) {
+                        return false;
+                    }
+
+                    String pattern = endpoint.getPath();
+                    // Handle ** wildcard
+                    if (pattern.endsWith("/**")) {
+                        String prefix = pattern.substring(0, pattern.length() - 3);
+                        return path.startsWith(prefix);
+                    }
+
+                    // Handle other cases like single * or exact matches
+                    return pattern.equalsIgnoreCase(path);
+                });
     }
 
     // Trích xuất claims từ token
