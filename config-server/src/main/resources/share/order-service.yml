@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: ${MARIA_DB_ORDER_SERVICE:jdbc:mariadb://localhost:3306/order_service?createDatabaseIfNotExist=true}
+    url: ${MARIA_DB_ORDER_SERVICE}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
   # JPA configuration
