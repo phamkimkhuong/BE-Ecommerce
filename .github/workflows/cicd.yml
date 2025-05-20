@@ -92,12 +92,15 @@ jobs:
           uses: actions/checkout@v4
         - name: Execute remote SSH commands using password
           uses: appleboy/ssh-action@v1
+          env:
+              DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           with:
             host: ${{ secrets.SEVER_HOST }}
             username: ${{ secrets.SEVER_USERNAME }}
             key: ${{ secrets.SEVER_KEY }}
             port: ${{ secrets.SEVER_PORT }}
-            script: whoami
+            envs: DOCKERHUB_USERNAME
+            script_path: sripts/deploy.sh
 
 
 
