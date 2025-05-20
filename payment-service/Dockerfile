@@ -1,5 +1,8 @@
+# Khai báo ARG trước khi sử dụng trong FROM
+ARG DOCKERHUB_USERNAME
+
 # Sử dụng base-builder từ base-builder.Dockerfile
-FROM base-builder AS payment-builder
+FROM ${DOCKERHUB_USERNAME}/base-builder:latest AS payment-builder
 
 # Copy và build payment-service
 COPY ./payment-service/pom.xml ./payment-service/

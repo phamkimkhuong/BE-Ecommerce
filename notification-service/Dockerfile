@@ -1,5 +1,8 @@
 # Sử dụng base-builder từ base-builder.Dockerfile
-FROM base-builder AS notify-builder
+# Khai báo ARG trước khi sử dụng trong FROM
+ARG DOCKERHUB_USERNAME
+
+FROM ${DOCKERHUB_USERNAME}/base-builder:latest AS notify-builder
 
 # Copy và build notify-service
 COPY ./notification-service/pom.xml ./notification-service/

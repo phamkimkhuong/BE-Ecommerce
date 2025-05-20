@@ -1,5 +1,8 @@
+# Khai báo ARG trước khi sử dụng trong FROM
+ARG DOCKERHUB_USERNAME
+
 # Sử dụng base-builder từ base-builder.Dockerfile
-FROM base-builder AS order-builder
+FROM ${DOCKERHUB_USERNAME}/base-builder:latest AS order-builder
 
 # Copy và build order-service
 COPY ./order-service/pom.xml ./order-service/

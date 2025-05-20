@@ -1,5 +1,8 @@
+# Khai báo ARG trước khi sử dụng trong FROM
+ARG DOCKERHUB_USERNAME
+
 # Sử dụng base-builder từ base-builder.Dockerfile
-FROM base-builder AS product-builder
+FROM ${DOCKERHUB_USERNAME}/base-builder:latest AS product-builder
 
 # Copy và build product-service
 COPY ./product-service/pom.xml ./product-service/

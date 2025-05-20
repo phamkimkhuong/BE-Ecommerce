@@ -118,6 +118,8 @@ services:
     build:
       context: .
       dockerfile: product-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/product-service:latest"
     ports:
       - "9898:9898"
@@ -144,6 +146,8 @@ services:
     build:
       context: .
       dockerfile: user-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/user-service:latest"
     ports:
       - "9995:9995"
@@ -163,6 +167,8 @@ services:
     build:
       context: .
       dockerfile: cart-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/cart-service:latest"
     ports:
       - "8088:8088"
@@ -182,6 +188,8 @@ services:
     build:
       context: .
       dockerfile: order-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/order-service:latest"
     ports:
       - "9292:9292"
@@ -203,6 +211,8 @@ services:
     build:
       context: .
       dockerfile: payment-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/payment-service:latest"
     ports:
       - "9997:9997"
@@ -224,6 +234,8 @@ services:
     build:
       context: .
       dockerfile: notification-service/Dockerfile
+      args:
+        - DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
     image: "${DOCKERHUB_USERNAME}/notification-service:latest"
     ports:
       - "9003:9003"

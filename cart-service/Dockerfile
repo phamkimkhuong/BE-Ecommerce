@@ -1,5 +1,8 @@
+# Khai báo ARG trước khi sử dụng trong FROM
+ARG DOCKERHUB_USERNAME
+
 # Sử dụng base-builder từ base-builder.Dockerfile
-FROM base-builder AS cart-builder
+FROM ${DOCKERHUB_USERNAME}/base-builder:latest AS cart-builder
 
 # Copy và build user-service
 COPY ./cart-service/pom.xml ./cart-service/
