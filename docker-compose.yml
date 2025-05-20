@@ -8,6 +8,7 @@ services:
     build:
       context: ./ai-chatbox
       dockerfile: Dockerfile
+    image: "${DOCKERHUB_USERNAME}/chat-box:latest"
     container_name: chat-box
     ports:
       - "8345:8345"
@@ -21,7 +22,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: base-builder:latest
+    image: "${DOCKERHUB_USERNAME}/base-builder:latest"
     container_name: base-builder
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=broker:9092
@@ -29,7 +30,7 @@ services:
 
   # Database service
   mariadb:
-    image: mariadb:latest
+    image: "${DOCKERHUB_USERNAME}/mariadb:latest"
     container_name: mariadb
     restart: unless-stopped
     environment:
@@ -41,14 +42,12 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - microservices-networks
-  #    env_file:
-  #      - local.env
 
   config-server:
     build:
       context: ./config-server
       dockerfile: Dockerfile
-    #    image: config-server:1.0.0
+    image: "${DOCKERHUB_USERNAME}/config-server:latest"
     container_name: ${CONFIG_SERVER:-config-server}
     ports:
       - "8888:8888"
@@ -65,7 +64,7 @@ services:
     build:
       context: ./service-registry
       dockerfile: Dockerfile
-    #    image: service-registry:1.0.0
+    image: "${DOCKERHUB_USERNAME}/service-registry:latest"
     container_name: ${SERVICE_REGISTRY:-service-registry}
     ports:
       - "8761:8761"
@@ -79,7 +78,7 @@ services:
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
-    #    image: gateway-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/gateway-service:latest"
     container_name: ${API_GATEWAY:-gateway-service}
     ports:
       - "8080:8080"
@@ -97,7 +96,7 @@ services:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
-    #    image: auth-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/auth-service:latest"
     ports:
       - "9996:9996"
     restart: unless-stopped
@@ -119,7 +118,7 @@ services:
     build:
       context: .
       dockerfile: product-service/Dockerfile
-    #    image: product-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/product-service:latest"
     ports:
       - "9898:9898"
     #  không tự động khởi chạy container
@@ -145,7 +144,7 @@ services:
     build:
       context: .
       dockerfile: user-service/Dockerfile
-    #    image: user-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/user-service:latest"
     ports:
       - "9995:9995"
     restart: unless-stopped
@@ -164,7 +163,7 @@ services:
     build:
       context: .
       dockerfile: cart-service/Dockerfile
-    #    image: cart-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/cart-service:latest"
     ports:
       - "8088:8088"
     restart: unless-stopped
@@ -183,7 +182,7 @@ services:
     build:
       context: .
       dockerfile: order-service/Dockerfile
-    #    image: order-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/order-service:latest"
     ports:
       - "9292:9292"
     restart: unless-stopped
@@ -204,7 +203,7 @@ services:
     build:
       context: .
       dockerfile: payment-service/Dockerfile
-    #    image: payment-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/payment-service:latest"
     ports:
       - "9997:9997"
     restart: unless-stopped
@@ -225,7 +224,7 @@ services:
     build:
       context: .
       dockerfile: notification-service/Dockerfile
-    #    image: notification-service:1.0.0
+    image: "${DOCKERHUB_USERNAME}/notification-service:latest"
     ports:
       - "9003:9003"
     restart: unless-stopped

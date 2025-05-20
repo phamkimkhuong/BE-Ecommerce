@@ -8,11 +8,28 @@ on:
 
 jobs:
 
-  build:
+  build-and-push:
 
-    runs-on: ubuntu-latest
+      runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Login to Docker Hub
+            uses: docker/login-action@v3
+            with:
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+          - name: Build and Push Docker Image
+            env:
+              DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+            run : |
+              docker compose -f docker-compose.yml build base-builder
+              docker compose -f docker-compose.yml push base-builder
+              docker compose -f docker-compose.yml build
+              docker compose -f docker-compose.yml push
+
+
+
