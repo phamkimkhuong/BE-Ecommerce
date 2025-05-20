@@ -1,6 +1,7 @@
 package com.backend.productservice.controllers;
 
 import com.backend.commonservice.dto.request.ApiResponseDTO;
+import com.backend.productservice.ProductServiceApplication;
 import com.backend.productservice.dto.reponse.ProductReponse;
 import com.backend.productservice.dto.request.ProductCreationRequest;
 import com.backend.productservice.services.ProductService;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ import java.util.List;
 @RequestMapping("/products")
 @Tag(name = "Product Query", description = "Product API")
 public class ProductController {
+        private final Logger logger = org.slf4j.LoggerFactory.getLogger(ProductServiceApplication.class);
+
         private final ProductService productService;
 
         public ProductController(ProductService productService) {
@@ -54,6 +58,7 @@ public class ProductController {
                 response.setCode(HttpStatus.OK.value());
                 response.setMessage("Get all products successfully");
                 response.setData(products);
+            logger.info("Get all products successfully{}", response);
                 return response;
         }
 
