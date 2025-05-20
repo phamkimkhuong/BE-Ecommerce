@@ -84,5 +84,20 @@ jobs:
               docker compose -f docker-compose.yml build
               docker compose -f docker-compose.yml push
 
+  deploy:
+      needs: build-and-push
+      runs-on: ubuntu-latest
+      steps:
+        - name: deploy
+          uses: actions/checkout@v4
+        - name: Execute remote SSH commands using password
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.SEVER_HOST }}
+            username: ${{ secrets.SEVER_USERNAME }}
+            key: ${{ secrets.SEVER_KEY }}
+            port: ${{ secrets.SEVER_PORT }}
+            script: whoami
+
 
 
