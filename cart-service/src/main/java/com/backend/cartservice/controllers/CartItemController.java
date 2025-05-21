@@ -2,9 +2,9 @@ package com.backend.cartservice.controllers;
 
 import com.backend.cartservice.dto.request.CreateCartItem;
 import com.backend.cartservice.dto.request.UpdateCartItem;
-import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.cartservice.entity.CartItem;
 import com.backend.cartservice.services.CartItemService;
+import com.backend.commonservice.dto.reponse.CartItemReponse;
 import com.backend.commonservice.dto.request.ApiResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -68,15 +68,20 @@ public class CartItemController {
         response.setData(check + "");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @PostMapping("/plus/{cartItemId}")
-    public ResponseEntity<String> plus(@PathVariable Long cartItemId){
+    public ApiResponseDTO<CartItemReponse> plus(@PathVariable Long cartItemId) {
+        ApiResponseDTO<CartItemReponse> response = new ApiResponseDTO<>();
         CartItem cartItem = cartItemService.getCartItemById(cartItemId);
-        cartItemService.plus(cartItem);
-        return new ResponseEntity<>("Plus ok", HttpStatus.OK);
+        CartItemReponse cart = cartItemService.plus(cartItem);
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Cập nhật số lượng sản phẩm giỏ hàng thành công");
+        response.setData(cart);
+        return response;
     }
 
     @PostMapping("/minus/{cartItemId}")
-    public ResponseEntity<String> minus(@PathVariable Long cartItemId){
+    public ResponseEntity<String> minus(@PathVariable Long cartItemId) {
         CartItem cartItem = cartItemService.getCartItemById(cartItemId);
         cartItemService.minus(cartItem);
         return new ResponseEntity<>("Minus ok", HttpStatus.OK);

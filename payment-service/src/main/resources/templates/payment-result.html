@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vn">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả thanh toán</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .payment-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .success-card {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        .failed-card {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .success-icon {
+            color: #28a745;
+            font-size: 60px;
+        }
+        .failed-icon {
+            color: #dc3545;
+            font-size: 60px;
+        }
+        .payment-details {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div th:class="${success ? 'payment-card success-card' : 'payment-card failed-card'}">
+        <div class="text-center">
+            <i th:class="${success ? 'bi bi-check-circle success-icon' : 'bi bi-x-circle failed-icon'}"></i>
+            <h2 th:text="${message}">Kết quả thanh toán</h2>
+
+            <div th:if="${success}" class="payment-details">
+                <table class="table">
+                    <tr>
+                        <th>Mã đơn hàng:</th>
+                        <td th:text="${orderCode}"></td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền:</th>
+                        <td th:text="${#numbers.formatDecimal(T(java.lang.Integer).parseInt(amount)/100, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'"></td>
+                    </tr>
+                    <tr>
+                        <th>Ngân hàng:</th>
+                        <td th:text="${bankCode}"></td>
+                    </tr>
+                </table>
+
+                <div class="mt-4">
+                    <a href="http://localhost:3000/orders" class="btn btn-primary">Xem đơn hàng</a>
+                    <a href="http://localhost:9090/index" class="btn btn-secondary">Tiếp tục mua sắm</a>
+                </div>
+            </div>
+
+            <div th:if="${!success}" class="mt-4">
+                <p>Giao dịch không thành công. Vui lòng thử lại hoặc liên hệ với chúng tôi nếu cần hỗ trợ.</p>
+                <a href="http://localhost:3000/cart" class="btn btn-primary">Quay lại giỏ hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

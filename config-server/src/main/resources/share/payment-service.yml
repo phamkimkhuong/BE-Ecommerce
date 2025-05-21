@@ -2,6 +2,11 @@ server:
   port: 9997
   # Datasource configuration
 spring:
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: ${MARIA_DB_PAYMENT_SERVICE}

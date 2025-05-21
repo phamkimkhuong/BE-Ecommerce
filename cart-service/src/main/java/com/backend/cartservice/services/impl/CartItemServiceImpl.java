@@ -117,16 +117,16 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public boolean plus(CartItem cartItem) {
+    public CartItemReponse plus(CartItem cartItem) {
         cartItem.setQuantity(cartItem.getQuantity() + 1);
-        cartItemRepository.save(cartItem);
-        return true;
+        CartItem cartItemSave = cartItemRepository.save(cartItem);
+        return toCartItemRes(cartItemSave);
     }
 
     @Override
     public boolean minus(CartItem cartItem) {
         cartItem.setQuantity(cartItem.getQuantity() - 1);
-        if(cartItem.getQuantity() > 1) {
+        if(cartItem.getQuantity() > 0) {
             cartItemRepository.save(cartItem);
         }else {
             cartItemRepository.delete(cartItem);

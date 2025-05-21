@@ -40,6 +40,10 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.backend</groupId>
             <artifactId>commonservice</artifactId>
             <version>1.0.0</version>

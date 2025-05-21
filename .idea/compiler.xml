@@ -62,8 +62,8 @@
         <module name="api-gateway" />
         <module name="cart-service" />
         <module name="order-service" />
-        <module name="payment-service" />
         <module name="user-service" />
+        <module name="payment-service" />
         <module name="danhgia_service" />
       </profile>
     </annotationProcessing>

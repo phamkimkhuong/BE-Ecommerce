@@ -14,13 +14,13 @@ package com.backend.paymentservice.controllers;
  */
 
 import com.backend.commonservice.dto.request.ApiResponseDTO;
-import com.backend.paymentservice.repository.feignClient.GatewayClient;
 import com.backend.paymentservice.services.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
 
@@ -50,20 +50,21 @@ public class PaymentController {
     }
 
     @GetMapping("/vn-pay/payment-info")
-    public ApiResponseDTO<?> paymentSuccess(HttpServletRequest request, @RequestParam("vnp_ResponseCode") String status) {
+    public ModelAndView paymentSuccess(HttpServletRequest request, @RequestParam("vnp_ResponseCode") String status){
         log.info("Xem trạng thái thanh toán: {}", status);
-        ApiResponseDTO<Boolean> response = new ApiResponseDTO<>();
+        ModelAndView modelAndView = new ModelAndView("payment-result");
         if ("00".equals(status)) {
-            response.setCode(200);
-            response.setMessage("Thanh toán thành công");
-            response.setData(true);
             paymentService.update(request);
+            modelAndView.addObject("success", true);
+            modelAndView.addObject("message", "Thanh toán thành công");
+            modelAndView.addObject("orderCode", request.getParameter("vnp_TxnRef"));
+            modelAndView.addObject("amount", request.getParameter("vnp_Amount"));
+            modelAndView.addObject("bankCode", request.getParameter("vnp_BankCode"));
         } else {
-            response.setCode(400);
-            response.setMessage("Thanh toán thất bại");
-            response.setData(false);
+            modelAndView.addObject("success", false);
+            modelAndView.addObject("message", "Thanh toán thất bại");
         }
-        return response;
+        return modelAndView;
     }
 
 }

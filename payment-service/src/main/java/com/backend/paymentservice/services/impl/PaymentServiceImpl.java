@@ -122,6 +122,7 @@ public class PaymentServiceImpl implements PaymentService {
             paymentInfo.setPaymentUrl(paymentUrl);
             paymentInfo.setVnpTxnRef(vnp_TxnRef);
             paymentInfoRep.save(paymentInfo);
+            log.info("UPDATE VNPAY PAYMENT thành công");
             // Lấy JWT token từ request header
             String token = request.getHeader("Authorization");
             // Lưu token vào cache với key là orderId

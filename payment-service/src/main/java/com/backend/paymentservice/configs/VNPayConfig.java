@@ -29,7 +29,7 @@ public class VNPayConfig {
     public static String vnp_HashSecret = "CXVOERDOGSLQV1R0P3KNBGQ1TJBCME1V";
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
-    public static String vnp_ReturnUrl = "http://localhost:8080/api/payment/vn-pay/payment-info";
+    public static String vnp_ReturnUrl = "http://45.63.79.165:8080/api/payment/vn-pay/payment-info";
 
     public static String hmacSHA512(final String key, final String data) {
         try {
