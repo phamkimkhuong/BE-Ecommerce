@@ -19,4 +19,6 @@ public interface OrderService {
     boolean delete(Long id);
 
     Map<String, Object> getUser(Long id);
+
+    OrderResponse updateStatus(Long id, String status);
 }

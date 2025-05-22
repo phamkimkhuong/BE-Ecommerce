@@ -55,8 +55,7 @@ services:
     env_file:
       - local.env
     environment:
-      - SPRING_PROFILES_ACTIVE=native
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_ENABLED=false
+      - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-networks
 

@@ -426,4 +426,17 @@ public class OrderServiceImpl implements OrderService {
         }
         return productEvents;
     }
+
+    @Transactional
+    @Override
+    public OrderResponse updateStatus(Long id, String status) {
+        Order existingOrder = orderRep.findById(id).orElseThrow(
+                () -> new AppException(ErrorMessage.RESOURCE_NOT_FOUND));
+        // Lưu trạng thái cũ để kiểm tra xem có thay đổi không
+        OrderStatus orderStatus = OrderStatus.fromVietnameseLabel(status);
+        existingOrder.setTrangThai(orderStatus);
+        orderRep.save(existingOrder);
+
+        return convertToDTO(existingOrder);
+    }
 }

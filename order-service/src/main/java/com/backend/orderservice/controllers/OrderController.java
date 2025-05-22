@@ -211,7 +211,11 @@ public class OrderController {
     ) {
         return new ResponseEntity<>(orderService.getById(id), HttpStatus.OK);
     }
-
+    @PutMapping("/updateStatus/{id}")
+    public ResponseEntity updateStatus(@PathVariable Long id, @RequestParam String status){
+        OrderResponse orderDTO =  orderService.updateStatus(id, status);
+        return new ResponseEntity<>(orderDTO, HttpStatus.OK);
+    }
     @PostMapping("/sendMessage")
     public void sendMessage(@RequestBody String message) {
         kafkaService.sendMessage("test", message);

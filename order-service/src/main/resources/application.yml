@@ -2,7 +2,7 @@ spring:
   application:
     name: order-service
   config:
-    import: configserver:${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
+    import: configserver:${SPRING_CLOUD_CONFIG_URI}
   cloud:
     config:
       fail-fast: true

@@ -11,6 +11,7 @@ package com.backend.orderservice.controllers;
 import com.backend.orderservice.dtos.OrderDetailDTO;
 import com.backend.orderservice.dtos.request.CreateOrderDetail;
 import com.backend.orderservice.dtos.response.OrderDetailResponse;
+import com.backend.orderservice.dtos.response.OrderResponse;
 import com.backend.orderservice.service.OrderDetailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/order-details")
+@RequestMapping("/order-details")
 @Tag(name = "Order Detail Query", description = "Order Detail API")
 public class OrderDetailController {
     private final OrderDetailService orderService;
@@ -208,5 +209,6 @@ public class OrderDetailController {
     ) {
         return new ResponseEntity<>(orderService.getById(id), HttpStatus.OK);
     }
+
 
 }
