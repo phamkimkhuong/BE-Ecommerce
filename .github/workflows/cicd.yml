@@ -99,7 +99,7 @@ jobs:
             key: ${{ secrets.SEVER_KEY }}
             port: ${{ secrets.SEVER_PORT }}
             envs: DOCKERHUB_USERNAME
-            script_path: sripts/deploy-swarm.sh
+            script_path: sripts/deploy-swram.sh
 
 
 
