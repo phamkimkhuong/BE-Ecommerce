@@ -1,22 +1,17 @@
+version: '3.8'
+
 networks:
   microservices-networks:
     driver: overlay
     attachable: true
-
 services:
-  # Database service - đặt trên VPS có nhiều storage
   mariadb:
     image: mariadb:latest
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1  # Hoặc node có nhiều storage nhất
-      resources:
-        limits:
-          memory: 1G
-        reservations:
-          memory: 512M
+          - node.hostname == vps2  # Hoặc node có nhiều storage nhất
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=product_service
@@ -31,82 +26,73 @@ services:
   config-server:
     image: "${DOCKERHUB_USERNAME}/config-server:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
+          - node.hostname == vps2
     ports:
       - "8888:8888"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   service-registry:
     image: "${DOCKERHUB_USERNAME}/service-registry:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
           - node.hostname == vps2
-      resources:
-        limits:
-          memory: 512M
     ports:
       - "8761:8761"
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   gateway-service:
     image: "${DOCKERHUB_USERNAME}/gateway-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
           - node.hostname == vps2
-      resources:
-        limits:
-          memory: 512M
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   # Business services - phân bổ trên VPS2
   auth-service:
     image: "${DOCKERHUB_USERNAME}/auth-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
           - node.hostname == vps2
-      resources:
-        limits:
-          memory: 512M
     ports:
       - "9996:9996"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   product-service:
     image: "${DOCKERHUB_USERNAME}/product-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
           - node.hostname == vps2
-      resources:
-        limits:
-          memory: 512M
     ports:
       - "9898:9898"
     environment:
@@ -117,103 +103,99 @@ services:
       - DATABASE_URL=jdbc:mariadb://mariadb:3306/product_service
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   user-service:
     image: "${DOCKERHUB_USERNAME}/user-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
           - node.hostname == vps2
-      resources:
-        limits:
-          memory: 512M
     ports:
       - "9995:9995"
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   # Support services - phân bổ trên VPS3
   cart-service:
     image: "${DOCKERHUB_USERNAME}/cart-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
+          - node.hostname == vps2
     ports:
       - "8088:8088"
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   order-service:
     image: "${DOCKERHUB_USERNAME}/order-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
+          - node.hostname == vps2
     ports:
       - "9292:9292"
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=broker:9092
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   payment-service:
     image: "${DOCKERHUB_USERNAME}/payment-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
+          - node.hostname == vps2
     ports:
       - "9997:9997"
     environment:
       - TZ=Asia/Ho_Chi_Minh
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   notification-service:
     image: "${DOCKERHUB_USERNAME}/notification-service:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
+          - node.hostname == vps2
     ports:
       - "9003:9003"
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=broker:9092
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
   chat-box:
     image: "${DOCKERHUB_USERNAME}/chat-box:latest"
     deploy:
-      replicas: 1
+#      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps1
-      resources:
-        limits:
-          memory: 512M
+          - node.hostname == vps2
     ports:
       - "8345:8345"
     networks:
       - microservices-networks
+    env_file:
+      - local.env
 
 volumes:
   mariadb_data:
