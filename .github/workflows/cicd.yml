@@ -79,10 +79,10 @@ jobs:
             env:
               DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
             run : |
-              docker compose -f docker-compose.yml build base-builder
-              docker compose -f docker-compose.yml push base-builder
-              docker compose -f docker-compose.yml build
-              docker compose -f docker-compose.yml push
+              docker compose -f docker-compose-swarm.yml build base-builder
+              docker compose -f docker-compose-swarm.yml push base-builder
+              docker compose -f docker-compose-swarm.yml build
+              docker compose -f docker-compose-swarm.yml push
 
   deploy:
       needs: build-and-push
