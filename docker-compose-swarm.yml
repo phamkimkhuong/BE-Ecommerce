@@ -92,7 +92,7 @@ services:
 #      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps2
+          - node.hostname == vps1
     ports:
       - "9898:9898"
     environment:
@@ -127,7 +127,7 @@ services:
 #      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps2
+          - node.hostname == vps1
     ports:
       - "8088:8088"
     networks:
@@ -141,7 +141,7 @@ services:
 #      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps2
+          - node.hostname == vps1
     ports:
       - "9292:9292"
     environment:
@@ -157,7 +157,7 @@ services:
 #      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps2
+          - node.hostname == vps1
     ports:
       - "9997:9997"
     environment:
@@ -173,7 +173,7 @@ services:
 #      replicas: 1
       placement:
         constraints:
-          - node.hostname == vps2
+          - node.hostname == vps1
     ports:
       - "9003:9003"
     environment:
