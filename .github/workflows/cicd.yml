@@ -11,7 +11,6 @@ jobs:
   build-and-push:
 
       runs-on: ubuntu-latest
-
       steps:
           - name: Checkout code
             uses: actions/checkout@v4
@@ -100,7 +99,7 @@ jobs:
             key: ${{ secrets.SEVER_KEY }}
             port: ${{ secrets.SEVER_PORT }}
             envs: DOCKERHUB_USERNAME
-            script_path: sripts/deploy.sh
+            script_path: sripts/deploy-swram.sh
 
 
 

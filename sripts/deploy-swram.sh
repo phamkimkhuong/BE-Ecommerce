@@ -27,9 +27,9 @@ echo "Waiting for stack to be completely removed..."
 sleep 10
 
 # down container
-docker-compose -f docker-compose-swarm.yml down
+docker compose -f docker-compose-swarm.yml down
 # pull images latest
-docker-compose -f docker-compose-swarm.yml pull
+docker compose -f docker-compose-swarm.yml pull
 
 # 3. DEPLOY STACK MỚI
 echo "Deploying new stack..."
